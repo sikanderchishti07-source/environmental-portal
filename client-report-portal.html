@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AECON – Client Report Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — match AECON site palette
+       ============================================================ */
+    :root {
+      --bg-deep:    #090e12;
+      --bg-card:    #0d1a22;
+      --bg-panel:   #101f2a;
+      --border:     #1a3040;
+      --border-hi:  #1e8a5e;
+      --accent:     #1db87a;      /* AECON green */
+      --accent-dim: #0f6b48;
+      --accent-glow:#1db87a33;
+      --text-primary: #e8f0ec;
+      --text-muted:   #6b8a7a;
+      --text-dim:     #3d5c4a;
+      --danger:     #e05252;
+      --danger-bg:  #1c0a0a;
+      --success-bg: #071a12;
+      --font-main:  'Sora', sans-serif;
+      --font-mono:  'IBM Plex Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: var(--font-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9,14,18,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .nav-logo {
+      width: 38px; height: 38px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 700;
+      color: #000;
+      letter-spacing: -0.5px;
+      flex-shrink: 0;
+    }
+
+    .nav-brand-text {
+      line-height: 1.1;
+    }
+    .nav-brand-text .name  { font-size: .95rem; font-weight: 700; color: var(--text-primary); letter-spacing: .04em; }
+    .nav-brand-text .sub   { font-size: .65rem; color: var(--text-muted); letter-spacing: .1em; text-transform: uppercase; }
+
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: .85rem;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+
+    /* ── HERO BANNER ──────────────────────────────────────────── */
+    .hero {
+      border-bottom: 1px solid var(--border);
+      padding: 3.5rem 2rem 3rem;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 40%, #0f4d3020 0%, transparent 70%),
+        radial-gradient(ellipse 40% 80% at 10% 80%, #1db87a08 0%, transparent 60%);
+    }
+
+    .hero-grid-overlay {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: .15;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 760px;
+      position: relative;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      color: var(--accent);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      border: 1px solid var(--border-hi);
+      background: #0f3024;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .4; transform: scale(.8); }
+    }
+
+    .hero h1 {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      color: var(--text-primary);
+      margin-bottom: .8rem;
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: .95rem;
+      line-height: 1.7;
+      max-width: 540px;
+    }
+
+    /* ── MAIN LAYOUT ─────────────────────────────────────────── */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 0;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      main { grid-template-columns: 1fr; }
+      .panel-right { display: none; }
+    }
+
+    /* ── ACCESS CARD ─────────────────────────────────────────── */
+    .access-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .access-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .card-title {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title svg { color: var(--accent); flex-shrink: 0; }
+
+    .field-label {
+      display: block;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: .5rem;
+    }
+
+    .key-input-wrap {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .key-input {
+      width: 100%;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .85rem 3rem .85rem 1rem;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: .95rem;
+      letter-spacing: .1em;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .key-input:focus {
+      border-color: var(--accent-dim);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .key-input::placeholder { color: var(--text-dim); letter-spacing: .05em; font-size: .85rem; }
+
+    .toggle-visibility {
+      position: absolute;
+      right: 12px; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none;
+      cursor: pointer; color: var(--text-muted);
+      padding: 2px;
+      display: flex; align-items: center;
+      transition: color .2s;
+    }
+    .toggle-visibility:hover { color: var(--accent); }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      padding: .9rem 1.5rem;
+      font-family: var(--font-main);
+      font-size: .9rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background .2s, transform .1s, box-shadow .2s;
+    }
+
+    .submit-btn:hover {
+      background: #22d48d;
+      box-shadow: 0 4px 24px #1db87a44;
+    }
+    .submit-btn:active { transform: scale(.98); }
+
+    .submit-btn svg { flex-shrink: 0; }
+
+    /* Messages */
+    .msg {
+      margin-top: 1.2rem;
+      border-radius: 10px;
+      padding: .9rem 1rem;
+      font-size: .85rem;
+      line-height: 1.6;
+      display: none;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .msg.error {
+      display: flex;
+      background: var(--danger-bg);
+      border: 1px solid #5a1a1a;
+      color: #f08080;
+    }
+
+    .msg.success {
+      display: flex;
+      background: var(--success-bg);
+      border: 1px solid var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .msg svg { flex-shrink: 0; margin-top: 2px; }
+
+    /* Attempt counter */
+    .attempts-note {
+      margin-top: .75rem;
+      font-size: .72rem;
+      color: var(--text-dim);
+      text-align: center;
+      font-family: var(--font-mono);
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 1.8rem 0;
+    }
+
+    /* Security info */
+    .security-info {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+
+    .security-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .security-item svg { color: var(--accent-dim); flex-shrink: 0; margin-top: 1px; }
+
+    /* ── REPORT VIEWER ───────────────────────────────────────── */
+    #report-section {
+      display: none;
+      margin-top: 2rem;
+      animation: fadeUp .4s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    #report-section.visible { display: block; }
+
+    .report-header {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px 14px 0 0;
+      border-bottom: none;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .report-meta { display: flex; flex-direction: column; gap: 4px; }
+    .report-title-label { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); }
+    .report-title-text { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+
+    .report-actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+
+    .btn-secondary {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      border-radius: 8px;
+      padding: .55rem 1rem;
+      font-family: var(--font-main);
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--accent-dim); color: var(--accent); }
+
+    .btn-primary-sm {
+      background: var(--accent);
+      border: none;
+      color: #000;
+      border-radius: 8px;
+      padding: .55rem 1rem;
+      font-family: var(--font-main);
+      font-size: .8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: background .2s;
+    }
+
+    .btn-primary-sm:hover { background: #22d48d; }
+
+    .report-frame-wrap {
+      border: 1px solid var(--border);
+      border-radius: 0 0 14px 14px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .report-frame-wrap iframe {
+      width: 100%;
+      height: 680px;
+      display: block;
+      border: none;
+    }
+
+    /* Fallback when iframe is PDF link */
+    .pdf-fallback {
+      padding: 3rem 2rem;
+      background: var(--bg-panel);
+      text-align: center;
+      display: none;
+    }
+
+    .pdf-icon {
+      width: 60px; height: 60px;
+      background: #1c0800;
+      border: 1px solid #5a2a0a;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem;
+      color: #e0834a;
+    }
+
+    /* ── RIGHT PANEL (info column) ───────────────────────────── */
+    .panel-right {
+      padding-left: 3rem;
+    }
+
+    .info-block {
+      margin-bottom: 2rem;
+    }
+
+    .info-block h3 {
+      font-size: .7rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .9rem;
+    }
+
+    .step-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: .82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .step-num {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-hi);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: .65rem;
+      font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .contact-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem;
+    }
+
+    .contact-box p { font-size: .82rem; color: var(--text-muted); line-height: 1.7; }
+    .contact-box a { color: var(--accent); text-decoration: none; }
+    .contact-box a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer p { font-size: .73rem; color: var(--text-dim); }
+    footer a { color: var(--text-muted); text-decoration: none; font-size: .73rem; }
+    footer a:hover { color: var(--accent); }
+
+    /* ── LOCKOUT OVERLAY ─────────────────────────────────────── */
+    #lockout-overlay {
+      display: none;
+      background: #0a0000;
+      border: 1px solid #5a1a1a;
+      border-radius: 10px;
+      padding: 1.2rem;
+      margin-top: 1.2rem;
+      text-align: center;
+    }
+
+    #lockout-overlay.visible { display: block; }
+    #lockout-overlay p { font-size: .82rem; color: #f08080; }
+    #lockout-countdown { font-family: var(--font-mono); font-weight: 600; color: var(--danger); }
+
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══════════════════════════════════════════════════ -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <div class="nav-logo">A</div>
+      <div class="nav-brand-text">
+        <div class="name">AECON</div>
+        <div class="sub">ALEMAD ALARABI</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="client-report-portal.html" class="active">Client Portal</a>
+    </div>
+  </nav>
+
+  <!-- ══ HERO ══════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-grid-overlay"></div>
+    <div class="hero-inner">
+      <div class="hero-tag">Secure Client Portal</div>
+      <h1>Access Your <span>Environmental</span><br>Reports &amp; Data</h1>
+      <p>Enter the unique security key sent to you via SMS to access your confidential monitoring reports, EIA documents, and compliance data.</p>
+    </div>
+  </section>
+
+  <!-- ══ MAIN ══════════════════════════════════════════════════ -->
+  <main>
+
+    <!-- LEFT: Access Card -->
+    <div>
+      <div class="access-card">
+        <div class="card-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Secure Access
+        </div>
+
+        <label class="field-label" for="securityKey">Security Key</label>
+        <div class="key-input-wrap">
+          <input
+            type="password"
+            id="securityKey"
+            class="key-input"
+            placeholder="Enter your key (e.g. AECON-XXXX-XXXX)"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button class="toggle-visibility" onclick="toggleVisibility()" title="Show / hide key" type="button">
+            <svg id="eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+
+        <button class="submit-btn" onclick="verifyKey()" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Access My Reports
+        </button>
+
+        <!-- Error message -->
+        <div class="msg error" id="msg-error">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span id="error-text">Invalid security key. Please check the key sent to your registered mobile number and try again.</span>
+        </div>
+
+        <!-- Success message -->
+        <div class="msg success" id="msg-success">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span>Identity verified. Your report is ready below.</span>
+        </div>
+
+        <div class="attempts-note" id="attempts-note"></div>
+
+        <!-- Lockout -->
+        <div id="lockout-overlay">
+          <p>Too many failed attempts. Please wait <span id="lockout-countdown">60</span>s before trying again.</p>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="security-info">
+          <div class="security-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span>Your security key was sent by SMS from AECON to your registered mobile number.</span>
+          </div>
+          <div class="security-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Keys are unique to each project and expire after 90 days. Contact AECON if yours has expired.</span>
+          </div>
+          <div class="security-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Reports are strictly confidential. Do not share your key with unauthorised individuals.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Report viewer (revealed on success) -->
+      <div id="report-section">
+        <div class="report-header">
+          <div class="report-meta">
+            <div class="report-title-label">Project Report</div>
+            <div class="report-title-text" id="report-title">–</div>
+          </div>
+          <div class="report-actions">
+            <a id="report-download" class="btn-secondary" href="#" download target="_blank">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download PDF
+            </a>
+            <a id="report-new-tab" class="btn-primary-sm" href="#" target="_blank" rel="noopener">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Open in New Tab
+            </a>
+          </div>
+        </div>
+        <div class="report-frame-wrap">
+          <iframe id="report-iframe" title="Client Report" allow="fullscreen"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Info panel -->
+    <div class="panel-right">
+      <div class="info-block">
+        <h3>How to access your report</h3>
+        <ul class="step-list">
+          <li>
+            <div class="step-num">1</div>
+            <span>Locate the security key sent to your registered mobile number via SMS from AECON.</span>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <span>Type or paste the key exactly as received — including any hyphens — into the field on the left.</span>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <span>Click <strong style="color:var(--text-primary)">Access My Reports</strong>. Your report will appear instantly below the form.</span>
+          </li>
+          <li>
+            <div class="step-num">4</div>
+            <span>Use the <strong style="color:var(--text-primary)">Download PDF</strong> button to save a local copy of your report.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="info-block">
+        <h3>Need assistance?</h3>
+        <div class="contact-box">
+          <p>
+            If your key is not working or has expired, please contact the AECON project team directly:<br/><br/>
+            📧 <a href="mailto:enviro@aecon-sa.com">enviro@aecon-sa.com</a><br/>
+            📞 <a href="tel:+966115124979">+966 11 512 4979</a><br/><br/>
+            Office hours: Sun – Thu, 08:00 – 17:00 AST
+          </p>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <h3>Security notice</h3>
+        <div class="contact-box">
+          <p>
+            All report access is logged for security and compliance purposes. Keys are single-client and expire automatically. AECON will <strong style="color:var(--text-primary)">never</strong> ask you to share your key via email or phone.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════════ -->
+  <footer>
+    <p>© 2025 AECON – ALEMAD ALARABI Environmental Consultancy. All rights reserved.</p>
+    <a href="index.html">← Back to main site</a>
+  </footer>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       CONFIGURATION — Add / edit your client keys and reports here
+       ══════════════════════════════════════════════════════════
+
+  Each entry in REPORT_KEYS must have:
+
+    key          — The unique security key you SMS to the client
+                   (case-insensitive comparison is applied automatically)
+
+    title        — Human-readable project name shown above the report viewer
+
+    reportUrl    — URL to the PDF or HTML report.
+                   Options:
+                     • A PDF hosted on Google Drive (use the /preview embed link)
+                     • A PDF on any public URL
+                     • An HTML page URL
+                     • A relative path if hosted on the same server
+
+  GOOGLE DRIVE TIP:
+    Share the file → "Anyone with the link can view" → Copy the file ID
+    Then use: https://drive.google.com/file/d/FILE_ID/preview
+
+  ══════════════════════════════════════════════════════════ -->
+  <script>
+
+    // ─────────────────────────────────────────────────────────
+    //  REPORT KEYS CONFIG  ← EDIT THIS SECTION
+    // ─────────────────────────────────────────────────────────
+    const REPORT_KEYS = [
+
+      {
+        key: "AECON-DEMO-2025",
+        title: "Riyadh Cement Plant – Annual Air Quality Report 2024",
+        reportUrl: "https://www.w3.org/WAI/WCAG21/Techniques/pdf/PDF1.pdf"
+        // ^ Replace with your actual PDF link or Google Drive /preview link
+      },
+
+      {
+        key: "AECON-KSP-7741",
+        title: "King Salman Park – Environmental Monitoring Q3 2024",
+        reportUrl: "https://drive.google.com/file/d/REPLACE_WITH_FILE_ID/preview"
+        // ^ Replace with your Google Drive embed URL
+      },
+
+      {
+        key: "AECON-RSP-4402",
+        title: "Red Sea Project – ESIA Final Report",
+        reportUrl: "https://drive.google.com/file/d/REPLACE_WITH_FILE_ID/preview"
+      },
+
+      {
+        key: "AECON-QDD-9913",
+        title: "Qiddiya Entertainment City – Air Quality Baseline Study",
+        reportUrl: "https://drive.google.com/file/d/REPLACE_WITH_FILE_ID/preview"
+      },
+
+      {
+        key: "AECON-IAQ-0058",
+        title: "Office Complex A – Indoor Air Quality Assessment",
+        reportUrl: "https://drive.google.com/file/d/REPLACE_WITH_FILE_ID/preview"
+      }
+
+      // ─────────────────────────────────────────────────────
+      // ADD MORE CLIENTS BELOW, following the same pattern:
+      //
+      // ,{
+      //   key: "AECON-XXXX-XXXX",
+      //   title: "Project Name – Report Type",
+      //   reportUrl: "https://..."
+      // }
+      // ─────────────────────────────────────────────────────
+
+    ];
+    // ─────────────────────────────────────────────────────────
+    //  END CONFIG
+    // ─────────────────────────────────────────────────────────
+
+
+    // ── Runtime state ─────────────────────────────────────────
+    const MAX_ATTEMPTS = 5;
+    const LOCKOUT_SECONDS = 60;
+    let attempts = 0;
+    let lockedOut = false;
+    let lockoutTimer = null;
+    let passwordVisible = false;
+
+    // ── Toggle key visibility ─────────────────────────────────
+    function toggleVisibility() {
+      const input = document.getElementById('securityKey');
+      const icon  = document.getElementById('eye-icon');
+      passwordVisible = !passwordVisible;
+      input.type = passwordVisible ? 'text' : 'password';
+      icon.innerHTML = passwordVisible
+        ? `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>`
+        : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
+    }
+
+    // ── Allow Enter key to submit ─────────────────────────────
+    document.getElementById('securityKey').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') verifyKey();
+    });
+
+    // ── Main verification function ────────────────────────────
+    function verifyKey() {
+      if (lockedOut) return;
+
+      const inputVal = document.getElementById('securityKey').value.trim();
+      const errorEl  = document.getElementById('msg-error');
+      const successEl = document.getElementById('msg-success');
+      const errorText = document.getElementById('error-text');
+      const attemptsNote = document.getElementById('attempts-note');
+
+      // Hide previous messages
+      errorEl.style.display = 'none';
+      successEl.style.display = 'none';
+
+      if (!inputVal) {
+        errorEl.style.display = 'flex';
+        errorText.textContent = 'Please enter your security key before submitting.';
+        return;
+      }
+
+      // Look up the key (case-insensitive)
+      const match = REPORT_KEYS.find(
+        r => r.key.toLowerCase() === inputVal.toLowerCase()
+      );
+
+      if (match) {
+        // ✅ SUCCESS
+        attempts = 0;
+        attemptsNote.textContent = '';
+        successEl.style.display = 'flex';
+
+        // Populate report viewer
+        document.getElementById('report-title').textContent = match.title;
+        document.getElementById('report-iframe').src = match.reportUrl;
+        document.getElementById('report-download').href = match.reportUrl;
+        document.getElementById('report-new-tab').href = match.reportUrl;
+
+        const reportSection = document.getElementById('report-section');
+        reportSection.classList.add('visible');
+        setTimeout(() => reportSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+
+      } else {
+        // ❌ FAILURE
+        attempts++;
+        const remaining = MAX_ATTEMPTS - attempts;
+
+        if (remaining > 0) {
+          errorEl.style.display = 'flex';
+          errorText.textContent = `Invalid security key. Please check the key sent to your registered mobile number and try again.`;
+          attemptsNote.textContent = `${remaining} attempt${remaining === 1 ? '' : 's'} remaining before temporary lockout.`;
+        } else {
+          // Trigger lockout
+          errorEl.style.display = 'none';
+          startLockout();
+        }
+      }
+    }
+
+    // ── Lockout logic ─────────────────────────────────────────
+    function startLockout() {
+      lockedOut = true;
+      let seconds = LOCKOUT_SECONDS;
+      const overlay = document.getElementById('lockout-overlay');
+      const countdown = document.getElementById('lockout-countdown');
+      const attemptsNote = document.getElementById('attempts-note');
+
+      overlay.classList.add('visible');
+      attemptsNote.textContent = '';
+      countdown.textContent = seconds;
+
+      lockoutTimer = setInterval(() => {
+        seconds--;
+        countdown.textContent = seconds;
+        if (seconds <= 0) {
+          clearInterval(lockoutTimer);
+          lockedOut = false;
+          attempts = 0;
+          overlay.classList.remove('visible');
+          document.getElementById('securityKey').value = '';
+        }
+      }, 1000);
+    }
+
+  </script>
+
+</body>
+</html>
