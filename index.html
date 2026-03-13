@@ -1287,7 +1287,7 @@ function sendQuick(msg) { document.getElementById('chatInput').value = msg; send
 ═════════════════════════════════════════════ -->
 <script>
 const CONFIG = {
-  GNEWS_API_KEY: 'YOUR_GNEWS_API_KEY',
+  GNEWS_API_KEY: 'aa10790c9a07c8f488147dcc45b6ded9,
   ARTICLE_COUNT: 6,
   REFRESH_MS:    45 * 60 * 1000,
 };
@@ -1355,7 +1355,9 @@ function filterArticles(a){if(activeFilter==='all')return a;return a.filter(x=>(
 
 function renderCard(article,index){
   const cat=getCategory(article);
-  const img=article.image||unsplashUrl(article);
+  const img = (article.image && article.image.startsWith('http'))
+  ? article.image
+  : unsplashUrl(article);
   const ago=timeAgo(article.publishedAt);
   const featured=index===0;
   return `<div class="news-card${featured?' featured':''}"><div class="card-img-wrap"><img src="${img}" alt="${(article.title||'').replace(/"/g,'')}" loading="lazy" onerror="this.src='https://source.unsplash.com/800x450/?saudi-arabia,environment&sig=${Math.random()}'"/><div class="card-img-overlay"></div><span class="card-badge" style="background:${cat.bg};color:${cat.color};">${cat.label}</span><span class="card-source">${article.source?.name||'News'}</span></div><div class="card-body"><h3 class="card-title">${article.title}</h3><p class="card-desc">${article.description||'Read the full article for details on this environmental development.'}</p><div class="card-footer"><span class="card-time">${ago}</span><a href="${article.url}" target="_blank" rel="noopener" class="read-more">Read More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div></div>`;
