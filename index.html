@@ -1339,10 +1339,30 @@ function stripHtml(h){const d=document.createElement('div');d.innerHTML=h;return
 
 async function fetchNews(){
   const q='Saudi Arabia environment OR "air quality" OR sustainability OR "green initiative" OR climate';
-  if(CONFIG.GNEWS_API_KEY&&CONFIG.GNEWS_API_KEY!=='YOUR_GNEWS_API_KEY'){
-    try{const res=await fetch(`https://gnews.io/api/v4/search?q=${encodeURIComponent(q)}&lang=en&country=sa&max=${CONFIG.ARTICLE_COUNT}&apikey=${CONFIG.GNEWS_API_KEY}`);if(!res.ok)throw new Error();const data=await res.json();if(data.articles?.length)return data.articles.map(a=>({title:a.title,description:a.description,url:a.url,source:{name:a.source?.name||'News'},publishedAt:a.publishedAt,image:a.image||null}));}catch{console.warn('[AECON News] GNews unavailable.');}
+
+  // Try GNews only if a real API key is provided
+  if(CONFIG.GNEWS_API_KEY && CONFIG.GNEWS_API_KEY !== 'YOUR_GNEWS_API_KEY'){
+    try{
+      const res = await fetch(`https://gnews.io/api/v4/search?q=${encodeURIComponent(q)}&lang=en&country=sa&max=${CONFIG.ARTICLE_COUNT}&apikey=${CONFIG.GNEWS_API_KEY}`);
+      if(!res.ok) throw new Error();
+      const data = await res.json();
+      if(data.articles?.length) return data.articles.map(a=>({title:a.title,description:a.description,url:a.url,source:{name:a.source?.name||'News'},publishedAt:a.publishedAt,image:a.image||null}));
+    }catch{ console.warn('[AECON News] GNews unavailable.'); }
   }
-  try{const rss='https://news.google.com/rss/search?q=Saudi+Arabia+environment+sustainability&hl=en-SA&gl=SA&ceid=SA:en';const res=await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}&count=${CONFIG.ARTICLE_COUNT}`);if(!res.ok)throw new Error();const data=await res.json();if(data.items?.length)return data.items.slice(0,CONFIG.ARTICLE_COUNT).map(i=>({title:stripHtml(i.title),description:stripHtml(i.description||i.summary||'').slice(0,260)+'...',url:i.link,source:{name:i.author||'Google News'},publishedAt:i.pubDate||new Date().toISOString(),image:i.thumbnail||i.enclosure?.link||null}));}catch{console.warn('[AECON News] RSS unavailable.');}
+
+  // Try RSS2JSON with a short timeout to avoid hanging
+  try{
+    const controller = new AbortController();
+    const timer = setTimeout(()=>controller.abort(), 4000);
+    const rss = 'https://news.google.com/rss/search?q=Saudi+Arabia+environment+sustainability&hl=en-SA&gl=SA&ceid=SA:en';
+    const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}&count=${CONFIG.ARTICLE_COUNT}`, {signal: controller.signal});
+    clearTimeout(timer);
+    if(!res.ok) throw new Error();
+    const data = await res.json();
+    if(data.items?.length) return data.items.slice(0,CONFIG.ARTICLE_COUNT).map(i=>({title:stripHtml(i.title),description:stripHtml(i.description||i.summary||'').slice(0,260)+'...',url:i.link,source:{name:i.author||'Google News'},publishedAt:i.pubDate||new Date().toISOString(),image:i.thumbnail||i.enclosure?.link||null}));
+  }catch{ console.warn('[AECON News] RSS unavailable, using curated content.'); }
+
+  // Always falls back to curated FALLBACK articles
   return FALLBACK;
 }
 
@@ -1383,14 +1403,26 @@ async function loadNews(manual=false){
   if($gr)$gr.style.display='none';
   if($er)$er.style.display='none';
   try{
-    const articles=await fetchNews();
-    allArticles=articles;
+    // Race fetchNews against a 6 second timeout — always shows something
+    const articles = await Promise.race([
+      fetchNews(),
+      new Promise(res => setTimeout(() => res(FALLBACK), 6000))
+    ]);
+    allArticles = articles;
     renderTicker(articles);
     if($sk)$sk.style.display='none';
     if($gr)$gr.style.display='grid';
     renderGrid();
     if($up){const now=new Date();$up.textContent=`Updated ${now.toLocaleTimeString('en-SA',{hour:'2-digit',minute:'2-digit'})}`;}
-  }catch(err){console.error('[AECON News]',err);if($sk)$sk.style.display='none';if($er)$er.style.display='block';}
+  }catch(err){
+    console.error('[AECON News]',err);
+    // Even on hard error, show fallback rather than blank skeleton
+    allArticles = FALLBACK;
+    if($sk)$sk.style.display='none';
+    if($gr)$gr.style.display='grid';
+    renderGrid();
+    if($up) $up.textContent='Showing curated content';
+  }
   finally{if($ic)$ic.style.animation='';}
   if(refreshTimer)clearInterval(refreshTimer);
   if(countdownTimer)clearInterval(countdownTimer);
