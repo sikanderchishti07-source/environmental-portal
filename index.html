@@ -793,7 +793,7 @@
                 <p class="text-gray-600 text-lg mb-8">Ready to support your environmental monitoring and compliance requirements. Contact our team of specialists today.</p>
                 <div class="space-y-6">
                     <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-map-marker-alt text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Head Office</h4><p class="text-gray-600">3083 North Ring Rd, 8241 Al Muruj District<br>Riyadh 12284, Kingdom of Saudi Arabia</p></div></div>
-                    <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-envelope text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Email</h4><p class="text-gray-600"><a href="/cdn-cgi/l/email-protection#5f3a3129362d301f3e3a3c3031722c3e713c3032" class="hover:text-aecon-primary transition-colors"><span class="__cf_email__" data-cfemail="61040f1708130e210004020e0f4c12004f020e0c">[email&#160;protected]</span></a></p></div></div>
+                    <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-envelope text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Email</h4><p class="text-gray-600"><a href="mailto:enviro@aecon-sa.com" class="hover:text-aecon-primary transition-colors">enviro@aecon-sa.com</a></p></div></div>
                     <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-phone text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Phone</h4><p class="text-gray-600">+966 11 512 4979</p></div></div>
                     <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-globe text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Website</h4><p class="text-gray-600">www.aecon-sa.com</p></div></div>
                 </div>
@@ -1042,7 +1042,7 @@
 <!-- ════════════════════════════════════════════
      JAVASCRIPT — Main site
 ═════════════════════════════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── Particles ──────────────────────────────
 function createParticles() {
     const c = document.getElementById('particles');
@@ -1292,22 +1292,21 @@ const CONFIG = {
   REFRESH_MS:    45 * 60 * 1000,
 };
 
-// Picsum photo IDs mapped by topic (reliable, no API key needed)
 const UNSPLASH = {
-  'air':       [1108,342,421,325],
-  'pollution': [1108,342,421,166],
-  'water':     [133,443,547,417],
-  'solar':     [356,462,586,593],
-  'green':     [15,17,107,145],
-  'climate':   [1036,1042,1069,342],
-  'desert':    [258,167,392,237],
-  'tree':      [15,107,145,317],
-  'carbon':    [166,342,1108,421],
-  'recycl':    [317,145,107,15],
-  'energy':    [356,462,586,325],
-  'monitor':   [180,271,366,443],
-  'coast':     [133,417,443,547],
-  'default':   [15,107,133,145],
+  'air':       'air-pollution,industrial-emissions,smog',
+  'pollution': 'pollution,factory-smoke,environment',
+  'water':     'water-conservation,ocean,river-landscape',
+  'solar':     'solar-energy,solar-panel,renewable',
+  'green':     'sustainability,green-nature,reforestation',
+  'climate':   'climate-change,earth,atmosphere',
+  'desert':    'saudi-arabia,desert-landscape,arid',
+  'tree':      'forest,reforestation,tree-planting',
+  'carbon':    'carbon-emissions,industrial-plant',
+  'recycl':    'recycling,waste-management',
+  'energy':    'renewable-energy,wind-turbine,clean-energy',
+  'monitor':   'environmental-monitoring,technology,sensors',
+  'coast':     'coastline,sea,marine-environment',
+  'default':   'saudi-arabia-nature,middle-east-environment,desert-oasis',
 };
 
 const CATEGORIES = {
@@ -1332,37 +1331,17 @@ const FALLBACK = [
 let allArticles=[], activeFilter='all', refreshTimer=null, countdownTimer=null, nextRefresh=null;
 
 function getImgKey(text){const t=(text||'').toLowerCase();for(const k of Object.keys(UNSPLASH)){if(t.includes(k))return k;}return 'default';}
-function unsplashUrl(a){const key=getImgKey((a.title||'')+' '+(a.description||''));const ids=UNSPLASH[key]||UNSPLASH['default'];const seed=encodeURIComponent((a.title||'env').slice(0,20).replace(/\s/g,'-').toLowerCase());return `https://picsum.photos/seed/${seed}/800/450`;}
+function unsplashUrl(a){const key=getImgKey((a.title||'')+' '+(a.description||''));const q=UNSPLASH[key]||UNSPLASH['default'];const sig=encodeURIComponent((a.title||'').slice(0,28)+Math.random());return `https://source.unsplash.com/800x450/?${q}&sig=${sig}`;}
 function getCategory(a){const t=((a.title||'')+' '+(a.description||'')).toLowerCase();if(t.includes('air')||t.includes('pm2.5')||t.includes('emission'))return CATEGORIES['air'];if(t.includes('water')||t.includes('desalin')||t.includes('coast'))return CATEGORIES['water'];if(t.includes('climate')||t.includes('carbon')||t.includes('co2'))return CATEGORIES['climate'];if(t.includes('solar')||t.includes('renewable')||t.includes('wind'))return CATEGORIES['energy'];if(t.includes('regulat')||t.includes('complia')||t.includes('law'))return CATEGORIES['regulation'];if(t.includes('green')||t.includes('sustainab')||t.includes('tree'))return CATEGORIES['green'];return CATEGORIES['default'];}
 function timeAgo(d){const s=Math.floor((Date.now()-new Date(d))/1000);if(s<60)return s+'s ago';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';return Math.floor(s/86400)+'d ago';}
 function stripHtml(h){const d=document.createElement('div');d.innerHTML=h;return d.textContent||d.innerText||'';}
 
 async function fetchNews(){
   const q='Saudi Arabia environment OR "air quality" OR sustainability OR "green initiative" OR climate';
-
-  // Try GNews only if a real API key is provided
-  if(CONFIG.GNEWS_API_KEY && CONFIG.GNEWS_API_KEY !== 'YOUR_GNEWS_API_KEY'){
-    try{
-      const res = await fetch(`https://gnews.io/api/v4/search?q=${encodeURIComponent(q)}&lang=en&country=sa&max=${CONFIG.ARTICLE_COUNT}&apikey=${CONFIG.GNEWS_API_KEY}`);
-      if(!res.ok) throw new Error();
-      const data = await res.json();
-      if(data.articles?.length) return data.articles.map(a=>({title:a.title,description:a.description,url:a.url,source:{name:a.source?.name||'News'},publishedAt:a.publishedAt,image:a.image||null}));
-    }catch{ console.warn('[AECON News] GNews unavailable.'); }
+  if(CONFIG.GNEWS_API_KEY&&CONFIG.GNEWS_API_KEY!=='YOUR_GNEWS_API_KEY'){
+    try{const res=await fetch(`https://gnews.io/api/v4/search?q=${encodeURIComponent(q)}&lang=en&country=sa&max=${CONFIG.ARTICLE_COUNT}&apikey=${CONFIG.GNEWS_API_KEY}`);if(!res.ok)throw new Error();const data=await res.json();if(data.articles?.length)return data.articles.map(a=>({title:a.title,description:a.description,url:a.url,source:{name:a.source?.name||'News'},publishedAt:a.publishedAt,image:a.image||null}));}catch{console.warn('[AECON News] GNews unavailable.');}
   }
-
-  // Try RSS2JSON with a short timeout to avoid hanging
-  try{
-    const controller = new AbortController();
-    const timer = setTimeout(()=>controller.abort(), 4000);
-    const rss = 'https://news.google.com/rss/search?q=Saudi+Arabia+environment+sustainability&hl=en-SA&gl=SA&ceid=SA:en';
-    const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}&count=${CONFIG.ARTICLE_COUNT}`, {signal: controller.signal});
-    clearTimeout(timer);
-    if(!res.ok) throw new Error();
-    const data = await res.json();
-    if(data.items?.length) return data.items.slice(0,CONFIG.ARTICLE_COUNT).map(i=>({title:stripHtml(i.title),description:stripHtml(i.description||i.summary||'').slice(0,260)+'...',url:i.link,source:{name:i.author||'Google News'},publishedAt:i.pubDate||new Date().toISOString(),image:i.thumbnail||i.enclosure?.link||null}));
-  }catch{ console.warn('[AECON News] RSS unavailable, using curated content.'); }
-
-  // Always falls back to curated FALLBACK articles
+  try{const rss='https://news.google.com/rss/search?q=Saudi+Arabia+environment+sustainability&hl=en-SA&gl=SA&ceid=SA:en';const res=await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}&count=${CONFIG.ARTICLE_COUNT}`);if(!res.ok)throw new Error();const data=await res.json();if(data.items?.length)return data.items.slice(0,CONFIG.ARTICLE_COUNT).map(i=>({title:stripHtml(i.title),description:stripHtml(i.description||i.summary||'').slice(0,260)+'...',url:i.link,source:{name:i.author||'Google News'},publishedAt:i.pubDate||new Date().toISOString(),image:i.thumbnail||i.enclosure?.link||null}));}catch{console.warn('[AECON News] RSS unavailable.');}
   return FALLBACK;
 }
 
@@ -1379,7 +1358,7 @@ function renderCard(article,index){
   const img=article.image||unsplashUrl(article);
   const ago=timeAgo(article.publishedAt);
   const featured=index===0;
-  return `<div class="news-card${featured?' featured':''}"><div class="card-img-wrap"><img src="${img}" alt="${(article.title||'').replace(/"/g,'')}" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/env-fallback/800/450'"/><div class="card-img-overlay"></div><span class="card-badge" style="background:${cat.bg};color:${cat.color};">${cat.label}</span><span class="card-source">${article.source?.name||'News'}</span></div><div class="card-body"><h3 class="card-title">${article.title}</h3><p class="card-desc">${article.description||'Read the full article for details on this environmental development.'}</p><div class="card-footer"><span class="card-time">${ago}</span><a href="${article.url}" target="_blank" rel="noopener" class="read-more">Read More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div></div>`;
+  return `<div class="news-card${featured?' featured':''}"><div class="card-img-wrap"><img src="${img}" alt="${(article.title||'').replace(/"/g,'')}" loading="lazy" onerror="this.src='https://source.unsplash.com/800x450/?saudi-arabia,environment&sig=${Math.random()}'"/><div class="card-img-overlay"></div><span class="card-badge" style="background:${cat.bg};color:${cat.color};">${cat.label}</span><span class="card-source">${article.source?.name||'News'}</span></div><div class="card-body"><h3 class="card-title">${article.title}</h3><p class="card-desc">${article.description||'Read the full article for details on this environmental development.'}</p><div class="card-footer"><span class="card-time">${ago}</span><a href="${article.url}" target="_blank" rel="noopener" class="read-more">Read More <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div></div>`;
 }
 
 function renderGrid(){
@@ -1403,26 +1382,14 @@ async function loadNews(manual=false){
   if($gr)$gr.style.display='none';
   if($er)$er.style.display='none';
   try{
-    // Race fetchNews against a 6 second timeout — always shows something
-    const articles = await Promise.race([
-      fetchNews(),
-      new Promise(res => setTimeout(() => res(FALLBACK), 6000))
-    ]);
-    allArticles = articles;
+    const articles=await fetchNews();
+    allArticles=articles;
     renderTicker(articles);
     if($sk)$sk.style.display='none';
     if($gr)$gr.style.display='grid';
     renderGrid();
     if($up){const now=new Date();$up.textContent=`Updated ${now.toLocaleTimeString('en-SA',{hour:'2-digit',minute:'2-digit'})}`;}
-  }catch(err){
-    console.error('[AECON News]',err);
-    // Even on hard error, show fallback rather than blank skeleton
-    allArticles = FALLBACK;
-    if($sk)$sk.style.display='none';
-    if($gr)$gr.style.display='grid';
-    renderGrid();
-    if($up) $up.textContent='Showing curated content';
-  }
+  }catch(err){console.error('[AECON News]',err);if($sk)$sk.style.display='none';if($er)$er.style.display='block';}
   finally{if($ic)$ic.style.animation='';}
   if(refreshTimer)clearInterval(refreshTimer);
   if(countdownTimer)clearInterval(countdownTimer);
@@ -1435,4 +1402,11 @@ document.querySelectorAll('.filter-pill').forEach(btn=>{
   btn.addEventListener('click',()=>{document.querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeFilter=btn.dataset.topic;renderGrid();});
 });
 
-const _sty=docume
+const _sty=document.createElement('style');
+_sty.textContent='@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}';
+document.head.appendChild(_sty);
+
+document.addEventListener('DOMContentLoaded',()=>loadNews());
+</script>
+</body>
+</html>
