@@ -1,6 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
+  <style>
+    /* ================================================================
+       CSS VARIABLES — Exactly matched to your AECON website screenshot
+       ================================================================ */
+    :root {
+      --aecon-page-bg:    #f0f4f1;   /* site body — very light gray-green */
+      --aecon-card-bg:    #ffffff;   /* white cards, same as stats cards */
+      --aecon-hero:       #1a5c47;   /* deep teal (hero gradient / nav bg) */
+      --aecon-hero-mid:   #1f6b52;   /* mid teal */
+      --aecon-teal:       #1f6b52;   /* primary teal-green accent */
+      --aecon-teal-dark:  #164d3c;   /* darker teal for hover states */
+      --aecon-teal-light: #2d8a68;   /* lighter teal for accents */
+      --aecon-text:       #1e3d32;   /* dark heading text */
+      --aecon-muted:      #5a7a6a;   /* body / muted text */
+      --aecon-faint:      #8aaa99;   /* timestamp / very subtle */
+      --aecon-stat:       #2a6e54;   /* stat numbers (10+ 1000+ etc.) */
+      --aecon-border:     rgba(31,107,82,0.13);
+      --aecon-border-md:  rgba(31,107,82,0.22);
+    }
+
+    /* ================================================================
+       SECTION BASE
+       ================================================================ */
+    #env-news-section {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--aecon-page-bg);
+      color: var(--aecon-text);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ================================================================
+       TICKER — same deep teal as your hero section
+       ================================================================ */
+    .ticker-wrap {
+      background: var(--aecon-hero);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 10px 0;
+    }
+    .ticker-track {
+      display: inline-block;
+      animation: scroll-ticker 70s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    @keyframes scroll-ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ================================================================
+       TYPOGRAPHY
+       ================================================================ */
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--aecon-text);
+    }
+
+    /* ================================================================
+       LIVE DOT
+       ================================================================ */
+    .live-dot {
+      width: 8px; height: 8px;
+      background: var(--aecon-teal-light);
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(45,138,104,0.55); }
+      50%       { box-shadow: 0 0 0 7px rgba(45,138,104,0); }
+    }
+
+    /* ================================================================
+       FILTER PILLS — styled like your site pill buttons
+       ================================================================ */
+    .filter-pill {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem; font-weight: 500;
+      padding: 6px 16px; border-radius: 999px;
+      border: 1.5px solid var(--aecon-border-md);
+      cursor: pointer;
+      transition: all 0.22s ease;
+      background: var(--aecon-card-bg);
+      color: var(--aecon-muted);
+    }
+    .filter-pill:hover {
+      border-color: var(--aecon-teal);
+      color: var(--aecon-teal);
+      background: rgba(31,107,82,0.05);
+    }
+    .filter-pill.active {
+      background: var(--aecon-teal);
+      color: #ffffff;
+      border-color: var(--aecon-teal);
+      box-shadow: 0 4px 14px rgba(31,107,82,0.28);
+    }
+
+    /* ================================================================
+       NEWS CARDS — white cards with soft shadow like your stats cards
+       ================================================================ */
+    .news-card {
+      background: var(--aecon-card-bg);
+      border: 1px solid var(--aecon-border);
+      border-radius: 16px; overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      animation: card-enter 0.55s ease both;
+      position: relative;
+      box-shadow: 0 2px 14px rgba(31,107,82,0.07);
+    }
+    .news-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 50px rgba(31,107,82,0.14), 0 0 0 1px rgba(31,107,82,0.18);
+      border-color: rgba(31,107,82,0.22);
+    }
+    @keyframes card-enter {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .news-card:nth-child(1) { animation-delay: 0.05s; }
+    .news-card:nth-child(2) { animation-delay: 0.12s; }
+    .news-card:nth-child(3) { animation-delay: 0.19s; }
+    .news-card:nth-child(4) { animation-delay: 0.26s; }
+    .news-card:nth-child(5) { animation-delay: 0.33s; }
+    .news-card:nth-child(6) { animation-delay: 0.40s; }
+
+    .card-img-wrap {
+      position: relative; height: 200px; overflow: hidden;
+    }
+    .card-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.55s ease;
+    }
+    .news-card:hover .card-img-wrap img { transform: scale(1.05); }
+    .card-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 45%, rgba(255,255,255,0.55) 100%);
+    }
+    .card-badge {
+      position: absolute; top: 12px; left: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.67rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 4px 11px; border-radius: 999px;
+      backdrop-filter: blur(10px);
+    }
+    .card-source {
+      position: absolute; bottom: 10px; right: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem; color: rgba(255,255,255,0.8);
+      letter-spacing: 0.04em; text-shadow: 0 1px 4px rgba(0,0,0,0.45);
+    }
+    .card-body { padding: 18px 20px 20px; }
+    .card-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700; font-size: 1rem; line-height: 1.5;
+      color: var(--aecon-text); margin-bottom: 9px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .card-desc {
+      font-size: 0.82rem; color: var(--aecon-muted);
+      line-height: 1.65; margin-bottom: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--aecon-border);
+    }
+    .card-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.63rem; color: var(--aecon-faint); letter-spacing: 0.04em;
+    }
+    .read-more {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--aecon-teal); text-decoration: none;
+      transition: gap 0.2s ease, color 0.2s ease;
+    }
+    .read-more:hover { gap: 9px; color: var(--aecon-teal-dark); }
+
+    .news-card.featured .card-img-wrap { height: 240px; }
+    .news-card.featured .card-title    { font-size: 1.18rem; }
+
+    /* ================================================================
+       SKELETON LOADER
+       ================================================================ */
+    .skeleton {
+      background: linear-gradient(90deg, #e6ece8 25%, #d6e4da 50%, #e6ece8 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.6s infinite;
+      border-radius: 16px;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ================================================================
+       REFRESH BUTTON — like your "Client Portal" dark pill button
+       ================================================================ */
+    .refresh-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 18px; border-radius: 999px;
+      border: 1.5px solid var(--aecon-border-md);
+      background: var(--aecon-card-bg);
+      color: var(--aecon-teal);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; letter-spacing: 0.02em;
+      transition: all 0.22s ease;
+      box-shadow: 0 2px 8px rgba(31,107,82,0.08);
+    }
+    .refresh-btn:hover {
+      background: var(--aecon-teal);
+      color: #ffffff; border-color: var(--aecon-teal);
+      box-shadow: 0 4px 16px rgba(31,107,82,0.28);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--aecon-page-bg); }
+    ::-webkit-scrollbar-thumb { background: #b0ccc0; border-radius: 4px; }
+  </style>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
