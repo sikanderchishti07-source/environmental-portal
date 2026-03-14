@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AECON · Saudi Environmental Regulation Search</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f0f5f2;
+  --white:#ffffff;
+  --panel:#f7faf8;
+  --border:#dce8e1;
+  --border-mid:#c8ddd4;
+  --green-900:#0d2b1e;
+  --green-800:#1a3828;
+  --green-700:#1f6b52;
+  --green-600:#2a8a68;
+  --green-100:#d4ede3;
+  --green-50:#edf7f2;
+  --text-900:#0d2b1e;
+  --text-500:#4a7a62;
+  --text-300:#8aaa96;
+  --text-200:#b8d4c2;
+  --yellow-bg:rgba(234,179,8,0.08);
+  --yellow-color:#a16207;
+  --yellow-border:rgba(234,179,8,0.2);
+  --red-bg:rgba(220,38,38,0.07);
+  --red-color:#b91c1c;
+  --red-border:rgba(220,38,38,0.2);
+  --blue-bg:rgba(26,92,160,0.07);
+  --blue-color:#1a5ca0;
+  --blue-border:rgba(26,92,160,0.2);
+  --sans:'DM Sans',sans-serif;
+  --display:'Playfair Display',serif;
+  --mono:'JetBrains Mono',monospace;
+  --arabic:'Noto Naskh Arabic',serif;
+}
+
+body{background:var(--bg);color:var(--text-900);font-family:var(--sans);min-height:100vh;}
+
+/* ── Navbar ───────────────────────────────────────────── */
+.navbar{
+  background:var(--white);border-bottom:1px solid var(--border);
+  padding:14px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+}
+.nav-left{display:flex;align-items:center;gap:12px;}
+.nav-logo{width:38px;height:38px;border-radius:8px;background:var(--green-700);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:1.1rem;color:#fff;}
+.nav-brand{font-family:var(--display);font-size:1rem;font-weight:800;color:var(--green-900);}
+.nav-sub{font-size:0.6rem;color:var(--text-300);letter-spacing:0.1em;text-transform:uppercase;font-family:var(--mono);}
+.nav-links{display:flex;gap:28px;}
+.nav-link{font-size:0.82rem;font-weight:500;color:var(--text-500);text-decoration:none;transition:color 0.15s;}
+.nav-link:hover,.nav-link.active{color:var(--green-700);}
+.nav-cta{background:var(--green-700);color:#fff;padding:8px 18px;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;transition:background 0.15s;}
+.nav-cta:hover{background:var(--green-600);}
+
+/* ── Hero ─────────────────────────────────────────────── */
+.hero{
+  background:linear-gradient(135deg,var(--green-900) 0%,var(--green-700) 100%);
+  padding:52px 40px 44px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle at 80% 50%,rgba(255,255,255,0.04) 0%,transparent 60%),
+    linear-gradient(0deg,rgba(255,255,255,0.02) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+  background-size:auto,48px 48px,48px 48px;
+  pointer-events:none;
+}
+.hero-inner{position:relative;z-index:1;max-width:720px;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
+  border-radius:20px;padding:4px 12px;margin-bottom:14px;
+}
+.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.hero-eyebrow-text{font-family:var(--mono);font-size:0.6rem;font-weight:600;color:rgba(255,255,255,0.8);letter-spacing:0.12em;text-transform:uppercase;}
+.hero-title{font-family:var(--display);font-size:2.2rem;font-weight:800;color:#fff;line-height:1.15;margin-bottom:10px;letter-spacing:-0.02em;}
+.hero-title em{font-style:normal;color:#86efac;}
+.hero-desc{font-size:0.88rem;color:rgba(255,255,255,0.65);line-height:1.7;max-width:560px;margin-bottom:24px;}
+.hero-stats{display:flex;gap:24px;flex-wrap:wrap;}
+.hero-stat{text-align:left;}
+.hero-stat-num{font-family:var(--display);font-size:1.6rem;font-weight:800;color:#fff;line-height:1;}
+.hero-stat-lbl{font-size:0.65rem;color:rgba(255,255,255,0.5);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;}
+
+/* ── Main layout ──────────────────────────────────────── */
+.main{padding:32px 40px 60px;max-width:1400px;margin:0 auto;}
+
+/* Search bar */
+.search-section{margin-bottom:24px;}
+.search-wrap{
+  position:relative;background:var(--white);
+  border:1.5px solid var(--border-mid);
+  border-radius:12px;
+  box-shadow:0 4px 20px rgba(31,107,82,0.08);
+  display:flex;align-items:center;
+  overflow:hidden;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.search-wrap:focus-within{border-color:var(--green-700);box-shadow:0 4px 24px rgba(31,107,82,0.14),0 0 0 3px rgba(31,107,82,0.08);}
+.search-icon{padding:0 16px;color:var(--text-300);font-size:1.1rem;flex-shrink:0;}
+.search-input{
+  flex:1;border:none;outline:none;
+  font-family:var(--sans);font-size:0.95rem;
+  color:var(--text-900);background:transparent;
+  padding:16px 0;
+}
+.search-input::placeholder{color:var(--text-300);}
+.search-clear{
+  padding:0 16px;color:var(--text-300);cursor:pointer;
+  font-size:1rem;display:none;transition:color 0.15s;
+  background:none;border:none;
+}
+.search-clear:hover{color:var(--text-900);}
+.search-btn{
+  background:var(--green-700);color:#fff;
+  border:none;padding:12px 24px;
+  font-family:var(--sans);font-size:0.82rem;font-weight:600;
+  cursor:pointer;transition:background 0.15s;
+  border-radius:0 10px 10px 0;
+  white-space:nowrap;
+}
+.search-btn:hover{background:var(--green-600);}
+
+/* Quick search tags */
+.quick-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;align-items:center;}
+.quick-label{font-size:0.68rem;color:var(--text-300);font-family:var(--mono);}
+.quick-tag{
+  padding:4px 12px;border-radius:20px;
+  background:var(--white);border:1px solid var(--border);
+  font-size:0.72rem;color:var(--text-500);cursor:pointer;
+  transition:all 0.15s;font-weight:500;
+}
+.quick-tag:hover{background:var(--green-50);border-color:var(--green-700);color:var(--green-700);}
+
+/* ── Toolbar ──────────────────────────────────────────── */
+.toolbar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;flex-wrap:wrap;gap:10px;
+}
+.filter-tabs{display:flex;gap:6px;flex-wrap:wrap;}
+.filter-tab{
+  padding:6px 14px;border-radius:8px;
+  background:var(--white);border:1.5px solid var(--border);
+  font-size:0.72rem;font-weight:600;color:var(--text-500);
+  cursor:pointer;transition:all 0.15s;
+}
+.filter-tab:hover{border-color:var(--green-700);color:var(--green-700);}
+.filter-tab.active{background:var(--green-700);border-color:var(--green-700);color:#fff;}
+.results-meta{font-family:var(--mono);font-size:0.65rem;color:var(--text-300);}
+.results-meta span{color:var(--green-700);font-weight:600;}
+
+/* ── Results grid ─────────────────────────────────────── */
+.results-grid{display:flex;flex-direction:column;gap:12px;}
+
+/* Empty state */
+.empty-state{
+  text-align:center;padding:60px 20px;
+  background:var(--white);border:1px solid var(--border);border-radius:12px;
+}
+.empty-icon{font-size:2.4rem;margin-bottom:12px;}
+.empty-title{font-family:var(--display);font-size:1.1rem;color:var(--green-900);margin-bottom:6px;}
+.empty-sub{font-size:0.78rem;color:var(--text-300);}
+
+/* ── Regulation Card ──────────────────────────────────── */
+.reg-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;
+  transition:box-shadow 0.2s,border-color 0.2s;
+  cursor:pointer;
+}
+.reg-card:hover{border-color:var(--border-mid);box-shadow:0 6px 24px rgba(31,107,82,0.1);}
+.reg-card.expanded{border-color:var(--green-700);box-shadow:0 6px 28px rgba(31,107,82,0.12);}
+
+.reg-card-header{
+  padding:18px 20px;
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:14px;
+}
+.reg-card-left{flex:1;min-width:0;}
+.reg-card-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+
+.reg-article{
+  font-family:var(--mono);font-size:0.6rem;font-weight:600;
+  color:var(--green-700);background:var(--green-50);
+  border:1px solid var(--green-100);border-radius:4px;
+  padding:2px 8px;letter-spacing:0.05em;
+}
+.reg-category{
+  font-family:var(--mono);font-size:0.58rem;font-weight:600;
+  padding:2px 8px;border-radius:4px;border:1px solid;
+  text-transform:uppercase;letter-spacing:0.06em;
+}
+.reg-severity{
+  font-family:var(--mono);font-size:0.58rem;font-weight:700;
+  padding:2px 8px;border-radius:4px;border:1px solid;
+}
+
+.reg-title-en{
+  font-family:var(--display);font-size:1rem;font-weight:700;
+  color:var(--green-900);line-height:1.35;margin-bottom:4px;
+}
+.reg-title-ar{
+  font-family:var(--arabic);font-size:0.9rem;font-weight:600;
+  color:var(--text-500);line-height:1.5;direction:rtl;text-align:right;
+}
+
+.reg-card-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;}
+.reg-deadline{
+  display:flex;flex-direction:column;align-items:flex-end;
+}
+.deadline-label{font-family:var(--mono);font-size:0.55rem;color:var(--text-300);text-transform:uppercase;letter-spacing:0.1em;}
+.deadline-val{
+  font-family:var(--mono);font-size:0.72rem;font-weight:700;
+  padding:3px 10px;border-radius:6px;border:1px solid;margin-top:2px;
+}
+.expand-btn{
+  width:28px;height:28px;border-radius:50%;
+  border:1.5px solid var(--border);background:var(--panel);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.65rem;color:var(--text-300);
+  transition:all 0.2s;cursor:pointer;flex-shrink:0;
+}
+.reg-card.expanded .expand-btn{
+  background:var(--green-700);border-color:var(--green-700);
+  color:#fff;transform:rotate(180deg);
+}
+
+/* Summary row */
+.reg-summary{
+  padding:0 20px 14px;
+  font-size:0.78rem;color:var(--text-500);line-height:1.6;
+  border-bottom:1px solid var(--border);
+}
+
+/* Expanded detail */
+.reg-detail{
+  display:none;padding:18px 20px;
+  background:var(--panel);
+  border-top:1px solid var(--border);
+  animation:slideDown 0.22s ease;
+}
+@keyframes slideDown{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+.reg-card.expanded .reg-detail{display:block;}
+
+.detail-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:14px;margin-bottom:16px;
+}
+.detail-block{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:8px;padding:12px 14px;
+}
+.detail-block-title{
+  font-family:var(--mono);font-size:0.58rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.1em;
+  color:var(--text-300);margin-bottom:8px;
+}
+.detail-row{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  font-size:0.72rem;padding:5px 0;
+  border-bottom:1px solid var(--panel);gap:8px;
+}
+.detail-row:last-child{border-bottom:none;}
+.detail-key{color:var(--text-300);flex-shrink:0;}
+.detail-val{color:var(--text-900);font-weight:600;text-align:right;font-family:var(--mono);font-size:0.68rem;}
+
+/* Arabic full text */
+.arabic-block{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:8px;padding:14px;
+  margin-bottom:14px;
+  direction:rtl;text-align:right;
+}
+.arabic-block-title{
+  font-family:var(--mono);font-size:0.58rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.1em;
+  color:var(--text-300);margin-bottom:8px;direction:ltr;text-align:left;
+}
+.arabic-text{
+  font-family:var(--arabic);font-size:0.85rem;
+  color:var(--text-500);line-height:1.9;
+}
+
+/* Action buttons */
+.detail-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.action-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:8px;
+  font-size:0.75rem;font-weight:600;
+  cursor:pointer;transition:all 0.15s;
+  border:1.5px solid;font-family:var(--sans);
+}
+.action-btn-primary{
+  background:var(--green-700);border-color:var(--green-700);color:#fff;
+}
+.action-btn-primary:hover{background:var(--green-600);border-color:var(--green-600);}
+.action-btn-secondary{
+  background:var(--white);border-color:var(--border-mid);color:var(--text-500);
+}
+.action-btn-secondary:hover{border-color:var(--green-700);color:var(--green-700);}
+
+/* ── Sidebar ──────────────────────────────────────────── */
+.content-wrap{display:grid;grid-template-columns:1fr 280px;gap:20px;align-items:start;}
+.sidebar{display:flex;flex-direction:column;gap:14px;position:sticky;top:80px;}
+.sidebar-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:12px;padding:16px;
+}
+.sidebar-title{
+  font-family:var(--mono);font-size:0.6rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.12em;
+  color:var(--text-300);margin-bottom:12px;
+  display:flex;align-items:center;gap:6px;
+}
+.sidebar-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.category-btn{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 10px;border-radius:7px;
+  cursor:pointer;transition:all 0.15s;margin-bottom:4px;
+  border:1px solid transparent;
+}
+.category-btn:hover{background:var(--green-50);border-color:var(--green-100);}
+.category-btn.active{background:var(--green-50);border-color:var(--green-700);}
+.cat-left{display:flex;align-items:center;gap:8px;}
+.cat-icon{font-size:1rem;}
+.cat-name{font-size:0.75rem;font-weight:600;color:var(--text-900);}
+.cat-count{
+  font-family:var(--mono);font-size:0.6rem;font-weight:700;
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:10px;padding:1px 7px;color:var(--text-300);
+}
+.category-btn.active .cat-count{background:var(--green-700);border-color:var(--green-700);color:#fff;}
+
+.aecon-tip{
+  background:linear-gradient(135deg,var(--green-900),var(--green-700));
+  border-radius:12px;padding:16px;color:#fff;
+}
+.tip-label{font-family:var(--mono);font-size:0.55rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:8px;}
+.tip-text{font-size:0.75rem;color:rgba(255,255,255,0.85);line-height:1.6;margin-bottom:12px;}
+.tip-btn{
+  background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);
+  color:#fff;padding:7px 14px;border-radius:7px;
+  font-size:0.72rem;font-weight:600;cursor:pointer;
+  transition:background 0.15s;font-family:var(--sans);width:100%;text-align:center;
+}
+.tip-btn:hover{background:rgba(255,255,255,0.22);}
+
+/* Severity badges shared */
+.sev-high{background:var(--red-bg);color:var(--red-color);border-color:var(--red-border);}
+.sev-medium{background:var(--yellow-bg);color:var(--yellow-color);border-color:var(--yellow-border);}
+.sev-low{background:rgba(31,107,82,0.08);color:var(--green-700);border-color:rgba(31,107,82,0.2);}
+
+/* Responsive */
+@media(max-width:1024px){.content-wrap{grid-template-columns:1fr;}.sidebar{position:static;}}
+@media(max-width:768px){
+  .navbar{padding:12px 16px;}.nav-links{display:none;}
+  .hero{padding:36px 16px 32px;}.hero-title{font-size:1.6rem;}
+  .main{padding:20px 16px 40px;}
+  .detail-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-left">
+    <div class="nav-logo">A</div>
+    <div>
+      <div class="nav-brand">AECON · ALEMAD ALARABI</div>
+      <div class="nav-sub">Environmental Consulting</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#" class="nav-link">Overview</a>
+    <a href="#" class="nav-link">Services</a>
+    <a href="#" class="nav-link">Technology</a>
+    <a href="#" class="nav-link">Process</a>
+    <a href="#" class="nav-link">Clients</a>
+    <a href="#" class="nav-link active">Tools</a>
+    <a href="#" class="nav-link">News</a>
+  </div>
+  <a href="#" class="nav-cta">👤 Client Portal</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      <span class="hero-eyebrow-text">Saudi Arabia · GAMEP · Vision 2030 Compliance</span>
+    </div>
+    <h1 class="hero-title">Environmental <em>Regulation</em><br>Search Database</h1>
+    <p class="hero-desc">Instantly search Saudi Arabia's environmental laws, GAMEP regulations, and Vision 2030 compliance requirements. Available in English and Arabic with compliance deadlines and article references.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">48</div><div class="hero-stat-lbl">Regulations</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">8</div><div class="hero-stat-lbl">Categories</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">2024</div><div class="hero-stat-lbl">Last Updated</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+  <!-- Search -->
+  <div class="search-section">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="search-input" type="text" placeholder="Search regulations… e.g. 'industrial wastewater', 'air emissions', 'EIA requirements'"/>
+      <button class="search-clear" id="search-clear">✕</button>
+      <button class="search-btn" onclick="doSearch()">Search</button>
+    </div>
+    <div class="quick-tags">
+      <span class="quick-label">Quick search:</span>
+      <span class="quick-tag" onclick="setSearch('wastewater')">Wastewater</span>
+      <span class="quick-tag" onclick="setSearch('air emissions')">Air Emissions</span>
+      <span class="quick-tag" onclick="setSearch('EIA')">EIA</span>
+      <span class="quick-tag" onclick="setSearch('noise')">Noise</span>
+      <span class="quick-tag" onclick="setSearch('hazardous waste')">Hazardous Waste</span>
+      <span class="quick-tag" onclick="setSearch('carbon')">Carbon</span>
+      <span class="quick-tag" onclick="setSearch('coastal')">Coastal</span>
+      <span class="quick-tag" onclick="setSearch('NEOM')">NEOM / Giga Projects</span>
+    </div>
+  </div>
+
+  <div class="content-wrap">
+
+    <!-- Results -->
+    <div>
+      <div class="toolbar">
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-cat="all">All</button>
+          <button class="filter-tab" data-cat="air">💨 Air</button>
+          <button class="filter-tab" data-cat="water">💧 Water</button>
+          <button class="filter-tab" data-cat="waste">🗑️ Waste</button>
+          <button class="filter-tab" data-cat="noise">🔊 Noise</button>
+          <button class="filter-tab" data-cat="eia">📋 EIA</button>
+          <button class="filter-tab" data-cat="industrial">🏭 Industrial</button>
+          <button class="filter-tab" data-cat="marine">🌊 Marine</button>
+          <button class="filter-tab" data-cat="climate">🌍 Climate</button>
+        </div>
+        <div class="results-meta">Showing <span id="result-count">48</span> regulations</div>
+      </div>
+      <div class="results-grid" id="results-grid"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-title">Browse by Category</div>
+        <div id="category-list"></div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-title">Severity Guide</div>
+        <div style="display:flex;flex-direction:column;gap:7px;font-size:0.72rem;">
+          <div style="display:flex;align-items:center;gap:8px;"><span style="padding:2px 9px;border-radius:4px;font-family:var(--mono);font-size:0.6rem;font-weight:700;border:1px solid;" class="sev-high">HIGH</span><span style="color:var(--text-500);">Criminal penalties apply, immediate action required</span></div>
+          <div style="display:flex;align-items:center;gap:8px;"><span style="padding:2px 9px;border-radius:4px;font-family:var(--mono);font-size:0.6rem;font-weight:700;border:1px solid;" class="sev-medium">MEDIUM</span><span style="color:var(--text-500);">Financial penalties, corrective action plan needed</span></div>
+          <div style="display:flex;align-items:center;gap:8px;"><span style="padding:2px 9px;border-radius:4px;font-family:var(--mono);font-size:0.6rem;font-weight:700;border:1px solid;" class="sev-low">LOW</span><span style="color:var(--text-500);">Administrative notice, monitoring required</span></div>
+        </div>
+      </div>
+      <div class="aecon-tip">
+        <div class="tip-label">AECON Advisory</div>
+        <div class="tip-text">Need help achieving compliance? Our specialists provide certified audits, EIA studies, and compliance roadmaps tailored to Saudi regulations.</div>
+        <button class="tip-btn" onclick="alert('Contact AECON at info@aecon.sa')">Contact Our Team →</button>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-title">Key Authorities</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:0.72rem;color:var(--text-500);">
+          <div><strong style="color:var(--green-900);display:block;">GAMEP</strong>General Authority for Meteorology &amp; Environmental Protection</div>
+          <div><strong style="color:var(--green-900);display:block;">NCEC</strong>National Centre for Environmental Compliance</div>
+          <div><strong style="color:var(--green-900);display:block;">MEWA</strong>Ministry of Environment, Water &amp; Agriculture</div>
+          <div><strong style="color:var(--green-900);display:block;">NWC</strong>National Water Company</div>
+          <div><strong style="color:var(--green-900);display:block;">RCRC</strong>Royal Commission for Riyadh City</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   REGULATION DATABASE
+   48 regulations covering all major Saudi env. categories
+═══════════════════════════════════════════════════════ */
+const REGULATIONS = [
+
+/* ── AIR QUALITY ──────────────────────────────────────── */
+{id:'AIR-001',category:'air',article:'GAMEP Article 12',
+ title_en:'Ambient Air Quality Standards for Industrial Zones',
+ title_ar:'معايير جودة الهواء المحيط للمناطق الصناعية',
+ summary_en:'Industrial facilities must not exceed established ambient air quality limits for PM2.5, PM10, NO₂, SO₂, CO, and O₃. Continuous monitoring required at all major emission points.',
+ summary_ar:'يجب ألا تتجاوز المنشآت الصناعية الحدود المحددة لجودة الهواء المحيط لـ PM2.5 وPM10 وثاني أكسيد النيتروجين وثاني أكسيد الكبريت وأول أكسيد الكربون والأوزون.',
+ severity:'high',deadline:'Ongoing — Annual reporting by 31 March',deadline_color:'red',
+ authority:'GAMEP',penaltyNote:'SAR 100,000–1,000,000 per violation',
+ details:[
+   {k:'PM2.5 Limit',v:'35 µg/m³ (24h avg)'},
+   {k:'PM10 Limit',v:'70 µg/m³ (24h avg)'},
+   {k:'NO₂ Limit',v:'200 µg/m³ (hourly)'},
+   {k:'SO₂ Limit',v:'350 µg/m³ (hourly)'},
+   {k:'Monitoring Frequency',v:'Continuous CEMS'},
+   {k:'Report Submission',v:'Monthly to GAMEP portal'},
+ ],
+ keywords:'air emission pm2.5 pm10 industrial monitoring pollution ambient',
+},
+{id:'AIR-002',category:'air',article:'GAMEP Article 18',
+ title_en:'Stack Emission Limits for Power Generation Facilities',
+ title_ar:'حدود انبعاثات المداخن لمنشآت توليد الكهرباء',
+ summary_en:'Power plants and cogeneration facilities must install certified stack emission monitoring systems and comply with NOₓ, SO₂, and particulate limits defined by GAMEP.',
+ summary_ar:'يجب على محطات الطاقة ومنشآت التوليد المشترك تركيب أنظمة مراقبة انبعاثات مداخن معتمدة والالتزام بالحدود المحددة من قبل الهيئة.',
+ severity:'high',deadline:'Compliance by Q1 2025',deadline_color:'red',
+ authority:'GAMEP / SEC',penaltyNote:'Facility shutdown order possible',
+ details:[
+   {k:'NOₓ Limit',v:'400 mg/Nm³'},
+   {k:'SO₂ Limit',v:'600 mg/Nm³'},
+   {k:'Particulates',v:'50 mg/Nm³'},
+   {k:'CEMS Required',v:'Yes — certified by GAMEP'},
+   {k:'Calibration',v:'Quarterly'},
+ ],
+ keywords:'air stack emission power plant NOx SO2 cems',
+},
+{id:'AIR-003',category:'air',article:'Royal Decree M/165',
+ title_en:'Vehicle Emission Standards and Inspection Requirements',
+ title_ar:'معايير انبعاثات المركبات ومتطلبات الفحص',
+ summary_en:'All vehicles operating in Saudi Arabia must comply with Euro 5 emission standards. Commercial fleet operators must maintain emission inspection records.',
+ summary_ar:'يجب أن تلتزم جميع المركبات العاملة في المملكة العربية السعودية بمعايير الانبعاثات اليورو 5.',
+ severity:'medium',deadline:'Ongoing — Biennial vehicle inspection',deadline_color:'yellow',
+ authority:'GAMEP / MOT',penaltyNote:'SAR 500–5,000 per vehicle',
+ details:[
+   {k:'Standard',v:'Euro 5 minimum'},
+   {k:'CO Limit',v:'1.0 g/km'},
+   {k:'NOₓ Limit',v:'0.06 g/km'},
+   {k:'Inspection Cycle',v:'Every 2 years'},
+   {k:'Fleet > 50 vehicles',v:'Internal audit required'},
+ ],
+ keywords:'air vehicle emission transport fleet inspection euro',
+},
+
+/* ── WATER ────────────────────────────────────────────── */
+{id:'WAT-001',category:'water',article:'GAMEP Article 34',
+ title_en:'Industrial Wastewater Discharge Standards',
+ title_ar:'معايير تصريف مياه الصرف الصناعي',
+ summary_en:'Industrial facilities discharging wastewater into municipal networks or water bodies must comply with maximum permissible limits for BOD, COD, TSS, heavy metals, and pH. Pre-treatment mandatory.',
+ summary_ar:'يجب على المنشآت الصناعية التي تصرف مياه الصرف في شبكات الصرف البلدي أو المسطحات المائية الالتزام بالحدود القصوى المسموح بها لـ BOD وCOD والمواد الصلبة العالقة والمعادن الثقيلة.',
+ severity:'high',deadline:'Ongoing — Quarterly lab testing required',deadline_color:'red',
+ authority:'GAMEP / NWC',penaltyNote:'SAR 200,000 + facility suspension',
+ details:[
+   {k:'BOD Limit',v:'50 mg/L'},
+   {k:'COD Limit',v:'150 mg/L'},
+   {k:'TSS Limit',v:'60 mg/L'},
+   {k:'pH Range',v:'6.0 – 9.0'},
+   {k:'Oil & Grease',v:'10 mg/L max'},
+   {k:'Heavy Metals',v:'As per Schedule 3'},
+   {k:'Testing Frequency',v:'Monthly minimum'},
+ ],
+ keywords:'wastewater industrial discharge water quality BOD COD TSS treatment',
+},
+{id:'WAT-002',category:'water',article:'GAMEP Article 41',
+ title_en:'Treated Sewage Effluent Reuse Standards',
+ title_ar:'معايير إعادة استخدام مياه الصرف الصحي المعالجة',
+ summary_en:'Treated wastewater reused for irrigation, construction, or industrial cooling must meet tertiary treatment standards including microbial limits and nutrient thresholds.',
+ summary_ar:'يجب أن تستوفي مياه الصرف المعالجة المعادة للاستخدام في الري أو البناء معايير المعالجة الثلاثية بما في ذلك حدود الكائنات الدقيقة.',
+ severity:'medium',deadline:'New projects: compliance before commissioning',deadline_color:'yellow',
+ authority:'MEWA / NWC',penaltyNote:'SAR 50,000–300,000',
+ details:[
+   {k:'Treatment Level',v:'Tertiary minimum'},
+   {k:'E.coli Limit',v:'< 2.2 MPN/100mL (irrigation)'},
+   {k:'Turbidity',v:'< 2 NTU'},
+   {k:'Residual Chlorine',v:'0.5 – 1.5 mg/L'},
+   {k:'Irrigation Use',v:'Non-food crops only (unrestricted)'},
+ ],
+ keywords:'wastewater reuse treated sewage irrigation recycled water TSE',
+},
+{id:'WAT-003',category:'water',article:'Royal Decree M/34',
+ title_en:'Groundwater Protection and Extraction Permits',
+ title_ar:'حماية المياه الجوفية وتصاريح الاستخراج',
+ summary_en:'Any groundwater extraction exceeding 50 m³/day requires a permit from MEWA. Environmental impact assessment of aquifer depletion is mandatory for industrial operations.',
+ summary_ar:'يتطلب أي استخراج للمياه الجوفية يتجاوز 50 م³ يومياً الحصول على تصريح من وزارة البيئة والمياه والزراعة.',
+ severity:'high',deadline:'Permit renewal every 3 years',deadline_color:'red',
+ authority:'MEWA',penaltyNote:'SAR 500,000 + extraction suspension',
+ details:[
+   {k:'Permit Threshold',v:'> 50 m³/day'},
+   {k:'EIA Required',v:'Yes for > 500 m³/day'},
+   {k:'Monitoring Wells',v:'Min. 2 per extraction site'},
+   {k:'Permit Validity',v:'3 years'},
+   {k:'Renewal Notice',v:'6 months before expiry'},
+ ],
+ keywords:'groundwater water extraction permit aquifer depletion MEWA',
+},
+{id:'WAT-004',category:'water',article:'GAMEP Article 52',
+ title_en:'Desalination Plant Environmental Impact Requirements',
+ title_ar:'متطلبات الأثر البيئي لمحطات التحلية',
+ summary_en:'Desalination plants must submit brine disposal plans, thermal discharge assessments, and chemical additive registers to GAMEP before commissioning and annually thereafter.',
+ summary_ar:'يجب على محطات التحلية تقديم خطط التخلص من المحلول الملحي وتقييمات التصريف الحراري إلى الهيئة قبل التشغيل وسنوياً بعد ذلك.',
+ severity:'high',deadline:'Pre-commissioning + Annual update',deadline_color:'red',
+ authority:'GAMEP',penaltyNote:'Commissioning permit withheld',
+ details:[
+   {k:'Brine Temp Limit',v:'≤ 5°C above ambient sea temp'},
+   {k:'Dilution Zone',v:'300m radius maximum'},
+   {k:'Chlorine Residual',v:'< 0.1 mg/L at discharge'},
+   {k:'Marine Survey',v:'Annual coral & seagrass assessment'},
+ ],
+ keywords:'desalination brine marine coastal water discharge thermal',
+},
+
+/* ── WASTE MANAGEMENT ─────────────────────────────────── */
+{id:'WST-001',category:'waste',article:'GAMEP Article 60',
+ title_en:'Hazardous Waste Classification and Storage',
+ title_ar:'تصنيف النفايات الخطرة وتخزينها',
+ summary_en:'All hazardous waste generators must classify waste according to GAMEP Schedule H, maintain manifests, and store in GAMEP-approved secondary containment facilities not exceeding 90-day accumulation limits.',
+ summary_ar:'يجب على جميع منتجي النفايات الخطرة تصنيف النفايات وفقاً للجدول الزمني H من الهيئة والاحتفاظ بوثائق التتبع.',
+ severity:'high',deadline:'Ongoing — 90-day max on-site storage',deadline_color:'red',
+ authority:'GAMEP',penaltyNote:'SAR 500,000 + criminal prosecution',
+ details:[
+   {k:'Max On-site Storage',v:'90 days'},
+   {k:'Container Labelling',v:'Arabic + English + UN code'},
+   {k:'Manifest System',v:'GAMEP E-Manifest (mandatory)'},
+   {k:'Emergency Plan',v:'Required — updated annually'},
+   {k:'Staff Training',v:'Certified hazmat annually'},
+ ],
+ keywords:'hazardous waste storage classification manifest toxic chemical industrial',
+},
+{id:'WST-002',category:'waste',article:'Royal Decree M/201',
+ title_en:'Construction and Demolition Waste Recycling Requirements',
+ title_ar:'متطلبات إعادة تدوير نفايات البناء والهدم',
+ summary_en:'Construction projects exceeding 5,000 m² must implement a Waste Management Plan achieving minimum 70% diversion of C&D waste from landfill. Applicable to all giga-projects and Vision 2030 developments.',
+ summary_ar:'يجب على مشاريع البناء التي تتجاوز 5000 م² تطبيق خطة إدارة النفايات لتحقيق الحد الأدنى 70٪ من تحويل نفايات البناء والهدم.',
+ severity:'medium',deadline:'Applicable from 01 January 2024',deadline_color:'yellow',
+ authority:'GAMEP / MEWA',penaltyNote:'SAR 100,000 per violation',
+ details:[
+   {k:'Project Threshold',v:'> 5,000 m² gross floor area'},
+   {k:'Diversion Target',v:'70% from landfill'},
+   {k:'WMP Submission',v:'Before construction permit'},
+   {k:'Sorting Required',v:'Concrete, steel, wood separately'},
+   {k:'NEOM / Giga Projects',v:'85% diversion target applies'},
+ ],
+ keywords:'construction demolition waste recycling CDW building NEOM giga project',
+},
+{id:'WST-003',category:'waste',article:'GAMEP Article 67',
+ title_en:'Medical and Clinical Waste Disposal Standards',
+ title_ar:'معايير التخلص من النفايات الطبية والسريرية',
+ summary_en:'Healthcare facilities must segregate, treat, and dispose of clinical waste using licensed contractors only. Incineration must meet temperature and emission standards. No co-disposal with municipal waste.',
+ summary_ar:'يجب على المنشآت الرعاية الصحية فصل النفايات السريرية ومعالجتها والتخلص منها عبر مقاولين مرخصين فقط.',
+ severity:'high',deadline:'Ongoing — Monthly audit log required',deadline_color:'red',
+ authority:'GAMEP / MOH',penaltyNote:'SAR 300,000 + license revocation',
+ details:[
+   {k:'Incineration Temp',v:'850°C minimum'},
+   {k:'Segregation',v:'4-stream minimum (colour coded)'},
+   {k:'Contractor',v:'GAMEP licensed only'},
+   {k:'Tracking',v:'Waste manifest per consignment'},
+   {k:'Storage Time',v:'72 hours maximum (unrefrigerated)'},
+ ],
+ keywords:'medical waste clinical hospital healthcare disposal incineration',
+},
+
+/* ── NOISE ────────────────────────────────────────────── */
+{id:'NOI-001',category:'noise',article:'GAMEP Article 78',
+ title_en:'Industrial Noise Emission Limits',
+ title_ar:'حدود انبعاث الضوضاء الصناعية',
+ summary_en:'Industrial facilities must not exceed 70 dB(A) LAeq at the nearest receptor. Noise impact assessments are required for new developments within 500m of residential zones.',
+ summary_ar:'يجب ألا تتجاوز المنشآت الصناعية 70 ديسيبل عند أقرب مستقبل. تُطلب تقييمات أثر الضوضاء للتطويرات الجديدة ضمن 500 م من المناطق السكنية.',
+ severity:'medium',deadline:'Ongoing — Quarterly monitoring',deadline_color:'yellow',
+ authority:'GAMEP',penaltyNote:'SAR 20,000–200,000',
+ details:[
+   {k:'Daytime Limit',v:'70 dB(A) at boundary'},
+   {k:'Night Limit',v:'60 dB(A) at boundary (22:00–06:00)'},
+   {k:'Residential Buffer',v:'500m NIA trigger distance'},
+   {k:'Monitoring',v:'Quarterly at 4 cardinal points'},
+   {k:'Construction Noise',v:'See NOI-003'},
+ ],
+ keywords:'noise industrial emission dB limit residential buffer sound',
+},
+{id:'NOI-002',category:'noise',article:'GAMEP Article 82',
+ title_en:'Noise Impact Assessment for New Developments',
+ title_ar:'تقييم أثر الضوضاء للمشاريع الجديدة',
+ summary_en:'A baseline noise survey and predictive impact model is required for industrial, infrastructure, and mixed-use developments exceeding 2 hectares or within 1km of noise-sensitive receptors.',
+ summary_ar:'يُطلب إجراء مسح للضوضاء الخلفية ونموذج تأثير تنبؤي للتطويرات الصناعية والبنية التحتية التي تتجاوز 2 هكتار.',
+ severity:'medium',deadline:'Required before planning approval',deadline_color:'yellow',
+ authority:'GAMEP / MEWA',penaltyNote:'Planning permit refused',
+ details:[
+   {k:'Survey Duration',v:'Minimum 7 days continuous'},
+   {k:'Model Standard',v:'ISO 9613-2 / CadnaA'},
+   {k:'Sensitive Receptors',v:'Schools, hospitals, residential'},
+   {k:'Trigger Distance',v:'1km from sensitive receptors'},
+   {k:'Mitigation Plan',v:'Required if limits exceeded'},
+ ],
+ keywords:'noise assessment NIA baseline survey planning development impact',
+},
+{id:'NOI-003',category:'noise',article:'GAMEP Article 85',
+ title_en:'Construction Site Noise Control Requirements',
+ title_ar:'متطلبات التحكم في ضوضاء مواقع البناء',
+ summary_en:'Construction activities generating noise above 75 dB(A) at 10m distance must restrict operations to permitted hours. Night work requires prior GAMEP permit for exceptional cases.',
+ summary_ar:'يجب على أنشطة البناء التي تولد ضوضاء تتجاوز 75 ديسيبل تقييد العمليات خلال ساعات العمل المسموح بها.',
+ severity:'low',deadline:'Permit required for night work',deadline_color:'green',
+ authority:'Municipality / GAMEP',penaltyNote:'SAR 5,000–50,000',
+ details:[
+   {k:'Permitted Hours',v:'07:00 – 21:00 weekdays'},
+   {k:'Weekend Hours',v:'09:00 – 18:00 (Fri/Sat)'},
+   {k:'Night Work Permit',v:'GAMEP approval required'},
+   {k:'Noise Barrier',v:'Required if > 75 dB(A)'},
+   {k:'Neighbour Notice',v:'48 hours advance for piling'},
+ ],
+ keywords:'noise construction site building hours night work piling',
+},
+
+/* ── EIA ──────────────────────────────────────────────── */
+{id:'EIA-001',category:'eia',article:'Royal Decree M/34 + GAMEP EIA Regs',
+ title_en:'Environmental Impact Assessment — Mandatory Threshold Projects',
+ title_ar:'تقييم الأثر البيئي — المشاريع الخاضعة للاشتراط الإلزامي',
+ summary_en:'All projects classified under GAMEP Category A or B require a full EIA before permits are issued. Category A includes power plants, desalination, refineries, airports, and developments > 100 hectares.',
+ summary_ar:'تتطلب جميع المشاريع المصنفة ضمن الفئة A أو B من الهيئة إجراء تقييم شامل للأثر البيئي قبل إصدار التصاريح.',
+ severity:'high',deadline:'Before any construction permit',deadline_color:'red',
+ authority:'GAMEP',penaltyNote:'Construction permit null and void',
+ details:[
+   {k:'Category A (Full EIA)',v:'Power, desalination, refinery, airport'},
+   {k:'Category B (Partial EIA)',v:'Industry, hotels, hospitals > 5ha'},
+   {k:'Category C (Screening)',v:'Small commercial developments'},
+   {k:'GAMEP Review Period',v:'90 days (Category A)'},
+   {k:'Public Consultation',v:'30-day minimum'},
+   {k:'EIA Validity',v:'5 years from approval'},
+ ],
+ keywords:'EIA environmental impact assessment GAMEP category planning permit mandatory',
+},
+{id:'EIA-002',category:'eia',article:'GAMEP EIA Guidelines 2023',
+ title_en:'Strategic Environmental Assessment for Master Plans',
+ title_ar:'التقييم البيئي الاستراتيجي للمخططات الرئيسية',
+ summary_en:'Urban master plans and large-scale development strategies covering more than 500 hectares must undergo Strategic Environmental Assessment (SEA) before ministerial approval.',
+ summary_ar:'يجب أن تخضع المخططات الحضرية الرئيسية واستراتيجيات التطوير واسعة النطاق التي تغطي أكثر من 500 هكتار لتقييم بيئي استراتيجي.',
+ severity:'high',deadline:'Before ministerial plan approval',deadline_color:'red',
+ authority:'GAMEP / MEWA',penaltyNote:'Plan approval withheld',
+ details:[
+   {k:'Threshold',v:'> 500 hectares OR regional plan'},
+   {k:'SEA Scope',v:'Cumulative impacts, alternatives'},
+   {k:'Public Participation',v:'Mandatory — 45-day consultation'},
+   {k:'Independent Review',v:'GAMEP-accredited consultant'},
+   {k:'Applies to',v:'NEOM, Qiddiya, Diriyah, ROSHN'},
+ ],
+ keywords:'EIA SEA strategic environmental assessment master plan urban giga NEOM',
+},
+{id:'EIA-003',category:'eia',article:'GAMEP Article 22',
+ title_en:'Environmental Monitoring and Audit Post-EIA Approval',
+ title_ar:'المراقبة البيئية والتدقيق بعد الموافقة على تقييم الأثر البيئي',
+ summary_en:'Projects approved under EIA must implement the Environmental Management Plan (EMP) and submit quarterly compliance reports. Independent environmental audits are required annually.',
+ summary_ar:'يجب على المشاريع المعتمدة في إطار تقييم الأثر البيئي تنفيذ خطة الإدارة البيئية وتقديم تقارير الامتثال الفصلية.',
+ severity:'medium',deadline:'Quarterly reports + Annual audit',deadline_color:'yellow',
+ authority:'GAMEP',penaltyNote:'EIA approval suspended',
+ details:[
+   {k:'EMP Implementation',v:'From day 1 of construction'},
+   {k:'Quarterly Reports',v:'GAMEP online portal'},
+   {k:'Annual Audit',v:'Independent GAMEP-accredited auditor'},
+   {k:'Audit Report Deadline',v:'31 January each year'},
+   {k:'Non-compliance Response',v:'30-day corrective action plan'},
+ ],
+ keywords:'EIA monitoring audit EMP compliance report post approval environmental management',
+},
+
+/* ── INDUSTRIAL ───────────────────────────────────────── */
+{id:'IND-001',category:'industrial',article:'GAMEP Article 90',
+ title_en:'Chemical Inventory and MSDS Requirements for Industrial Facilities',
+ title_ar:'متطلبات جرد المواد الكيميائية وصحائف بيانات السلامة للمنشآت الصناعية',
+ summary_en:'All industrial facilities handling hazardous chemicals must maintain a current chemical inventory and Safety Data Sheets (SDS) in Arabic and English, accessible to all employees and emergency services.',
+ summary_ar:'يجب على جميع المنشآت الصناعية التي تتعامل مع المواد الكيميائية الخطرة الاحتفاظ بجرد محدث لها وبصحائف بيانات السلامة باللغتين العربية والإنجليزية.',
+ severity:'high',deadline:'Ongoing — Update within 30 days of change',deadline_color:'red',
+ authority:'GAMEP / MHRSD',penaltyNote:'SAR 100,000 + stop-work order',
+ details:[
+   {k:'SDS Format',v:'GHS/UN format (16 sections)'},
+   {k:'Languages',v:'Arabic + English mandatory'},
+   {k:'Update Frequency',v:'Within 30 days of product change'},
+   {k:'Employee Access',v:'Physical + digital copies required'},
+   {k:'Emergency Services',v:'Copy lodged with Civil Defence'},
+ ],
+ keywords:'chemical inventory SDS MSDS industrial hazardous GHS safety data sheet',
+},
+{id:'IND-002',category:'industrial',article:'Royal Decree M/42',
+ title_en:'Environmental Permit for Industrial Facility Operation',
+ title_ar:'التصريح البيئي لتشغيل المنشأة الصناعية',
+ summary_en:'No industrial facility may commence operations without a valid Environmental Operation Permit from GAMEP. Permits are sector-specific and include binding environmental conditions.',
+ summary_ar:'لا يجوز لأي منشأة صناعية البدء في التشغيل دون تصريح تشغيل بيئي صالح من الهيئة.',
+ severity:'high',deadline:'Before any industrial operations begin',deadline_color:'red',
+ authority:'GAMEP',penaltyNote:'SAR 1,000,000 + criminal prosecution',
+ details:[
+   {k:'Application Lead Time',v:'Min. 6 months before operations'},
+   {k:'Permit Validity',v:'5 years (renewable)'},
+   {k:'Renewal Application',v:'12 months before expiry'},
+   {k:'Permit Conditions',v:'Legally binding — non-negotiable'},
+   {k:'Sector Permits',v:'Oil & gas, petrochemical, mining separate'},
+ ],
+ keywords:'industrial permit operation GAMEP license facility environmental approval',
+},
+{id:'IND-003',category:'industrial',article:'GAMEP Article 101',
+ title_en:'Spill Prevention and Emergency Response Plan',
+ title_ar:'خطة منع الانسكابات والاستجابة للطوارئ',
+ summary_en:'Industrial facilities handling > 1,000 litres of liquid hazardous materials must maintain a certified Spill Prevention, Control, and Countermeasure (SPCC) plan updated every 2 years.',
+ summary_ar:'يجب على المنشآت الصناعية التي تتعامل مع أكثر من 1000 لتر من المواد الخطرة السائلة الاحتفاظ بخطة معتمدة للوقاية من الانسكابات.',
+ severity:'high',deadline:'Plan required before permit issuance',deadline_color:'red',
+ authority:'GAMEP / Civil Defence',penaltyNote:'SAR 500,000 + criminal liability',
+ details:[
+   {k:'Volume Threshold',v:'> 1,000 L hazardous liquid'},
+   {k:'Plan Validity',v:'2 years'},
+   {k:'Drill Frequency',v:'Minimum annually'},
+   {k:'Secondary Containment',v:'110% of largest vessel volume'},
+   {k:'Response Time',v:'Equipment on-site within 1 hour'},
+ ],
+ keywords:'spill emergency response plan SPCC hazardous liquid containment industrial',
+},
+
+/* ── MARINE & COASTAL ─────────────────────────────────── */
+{id:'MAR-001',category:'marine',article:'GAMEP Article 112',
+ title_en:'Coastal Development Setback and Buffer Zone Requirements',
+ title_ar:'متطلبات حظر البناء الساحلي ومناطق الحماية',
+ summary_en:'No permanent structures may be built within 200m of the mean high-water mark along Red Sea and Arabian Gulf coastlines without GAMEP coastal zone permit. Marine protected areas require additional authorisation.',
+ summary_ar:'لا يجوز إنشاء منشآت دائمة على بعد 200 م من مستوى الماء المرتفع المتوسط على طول سواحل البحر الأحمر وخليج العرب دون تصريح.',
+ severity:'high',deadline:'Permit required before any coastal works',deadline_color:'red',
+ authority:'GAMEP / MEWA',penaltyNote:'SAR 2,000,000 + demolition order',
+ details:[
+   {k:'Setback Distance',v:'200m from mean high water mark'},
+   {k:'MPA Buffer',v:'500m from Marine Protected Areas'},
+   {k:'Permit Type',v:'Coastal Zone Development Permit'},
+   {k:'EIA Requirement',v:'Full marine EIA mandatory'},
+   {k:'Applies to',v:'Red Sea Global, NEOM, resorts, ports'},
+ ],
+ keywords:'coastal marine setback buffer zone development Red Sea MPA protected area',
+},
+{id:'MAR-002',category:'marine',article:'MARPOL / Royal Decree',
+ title_en:'Ship and Port Discharge Regulations',
+ title_ar:'لوائح التصريف من السفن والموانئ',
+ summary_en:'All vessels in Saudi territorial waters must comply with MARPOL regulations. Ports must provide adequate waste reception facilities. Bilge water and ballast water discharge strictly regulated.',
+ summary_ar:'يجب على جميع السفن في المياه الإقليمية السعودية الامتثال للوائح ماربول. يجب على الموانئ توفير مرافق استقبال النفايات الكافية.',
+ severity:'high',deadline:'Ongoing — MARPOL Annex compliance',deadline_color:'red',
+ authority:'PME / GAMEP',penaltyNote:'SAR 1,000,000 + vessel detention',
+ details:[
+   {k:'Oily Water',v:'< 15 ppm (open sea discharge)'},
+   {k:'Bilge Water',v:'No discharge within 12nm of coast'},
+   {k:'Ballast Water',v:'D-2 standard treatment required'},
+   {k:'Port Reception',v:'Mandatory waste delivery to port'},
+   {k:'IOPP Certificate',v:'Required for all vessels > 400 GT'},
+ ],
+ keywords:'marine ship port discharge MARPOL ballast water bilge coastal',
+},
+{id:'MAR-003',category:'marine',article:'GAMEP Article 118',
+ title_en:'Coral Reef and Seagrass Protection in Development Zones',
+ title_ar:'حماية الشعاب المرجانية والأعشاب البحرية في مناطق التطوير',
+ summary_en:'Any development or dredging activity near coral reef or seagrass habitats requires a Marine Biological Survey, compensation plan, and ongoing ecological monitoring approved by GAMEP.',
+ summary_ar:'يتطلب أي نشاط تطوير أو حفر بالقرب من موائل الشعاب المرجانية أو الأعشاب البحرية إجراء مسح بيولوجي بحري وخطة تعويض ومراقبة بيئية مستمرة.',
+ severity:'high',deadline:'Pre-works biological survey required',deadline_color:'red',
+ authority:'GAMEP',penaltyNote:'SAR 5,000,000 + project suspension',
+ details:[
+   {k:'Survey Requirement',v:'Pre-works marine biological survey'},
+   {k:'No-go Zones',v:'50m radius from live coral'},
+   {k:'Compensation Ratio',v:'3:1 (restored : impacted area)'},
+   {k:'Monitoring Period',v:'5 years post-construction'},
+   {k:'Turbidity Limit',v:'< 10 NTU at coral proximity'},
+ ],
+ keywords:'coral reef marine seagrass protection dredging development biological survey',
+},
+
+/* ── CLIMATE & VISION 2030 ────────────────────────────── */
+{id:'CLI-001',category:'climate',article:'Saudi Green Initiative Framework',
+ title_en:'Carbon Emission Reporting Requirements — Large Industrial Emitters',
+ title_ar:'متطلبات الإبلاغ عن انبعاثات الكربون — الملوثون الصناعيون الكبار',
+ summary_en:'Industrial facilities emitting > 25,000 tCO₂e annually must register with GAMEP National Carbon Registry, submit verified GHG inventory, and report Scope 1 and 2 emissions using ISO 14064.',
+ summary_ar:'يجب على المنشآت الصناعية التي تنبعث منها أكثر من 25000 طن من ثاني أكسيد الكربون سنوياً التسجيل في سجل الكربون الوطني وتقديم جرد محقق لغازات الدفيئة.',
+ severity:'high',deadline:'Annual report by 30 June each year',deadline_color:'red',
+ authority:'GAMEP / NCCC',penaltyNote:'SAR 500,000 per year unreported',
+ details:[
+   {k:'Reporting Threshold',v:'> 25,000 tCO₂e/year'},
+   {k:'Scope Required',v:'Scope 1 + Scope 2 mandatory'},
+   {k:'Scope 3',v:'Voluntary (encouraged by 2026)'},
+   {k:'Verification',v:'Third-party ISO 14064 verifier'},
+   {k:'Registry',v:'GAMEP National Carbon Registry'},
+   {k:'Deadline',v:'30 June annually'},
+ ],
+ keywords:'carbon emission GHG greenhouse gas reporting CO2 climate Vision 2030 Scope',
+},
+{id:'CLI-002',category:'climate',article:'Vision 2030 Circular Carbon Economy',
+ title_en:'Renewable Energy Integration Requirements for Industrial Parks',
+ title_ar:'متطلبات دمج الطاقة المتجددة للمناطق الصناعية',
+ summary_en:'New industrial parks and special economic zones must demonstrate a minimum 30% renewable energy share in their master energy plan as part of the Saudi Vision 2030 green economy framework.',
+ summary_ar:'يجب على المناطق الصناعية الجديدة والمناطق الاقتصادية الخاصة إظهار حصة طاقة متجددة تبلغ 30٪ على الأقل في خطة الطاقة الرئيسية.',
+ severity:'medium',deadline:'All new parks from 2024 onwards',deadline_color:'yellow',
+ authority:'MEWA / MOEI',penaltyNote:'Development license conditions',
+ details:[
+   {k:'Renewable Share',v:'Minimum 30% of energy demand'},
+   {k:'Preferred Sources',v:'Solar PV, wind, geothermal'},
+   {k:'Energy Audit',v:'Required every 3 years'},
+   {k:'Target 2030',v:'50% renewable nationally'},
+   {k:'Giga Projects',v:'100% renewable energy target'},
+ ],
+ keywords:'renewable energy solar wind industrial Vision 2030 carbon net zero climate',
+},
+{id:'CLI-003',category:'climate',article:'GAMEP Circular 2024/08',
+ title_en:'Environmental Requirements for NEOM and Giga-Project Developers',
+ title_ar:'المتطلبات البيئية لمطوري نيوم ومشاريع الجيجا',
+ summary_en:'All giga-project developers (NEOM, Red Sea Global, Qiddiya, Diriyah, ROSHN) are subject to enhanced environmental standards including net-zero construction, 100% renewable energy, and zero liquid discharge targets.',
+ summary_ar:'تخضع جميع مشاريع الجيجا (نيوم، البحر الأحمر العالمية، القدية، الدرعية، روشن) لمعايير بيئية معززة تشمل بناء صافي الصفر.',
+ severity:'high',deadline:'Embedded in project development agreements',deadline_color:'red',
+ authority:'GAMEP / PIF',penaltyNote:'PIF development agreement breach',
+ details:[
+   {k:'Construction Carbon',v:'Net-zero target'},
+   {k:'Operational Energy',v:'100% renewable'},
+   {k:'Water',v:'Zero liquid discharge (ZLD)'},
+   {k:'Waste',v:'Zero waste to landfill'},
+   {k:'Biodiversity',v:'Net Positive Biodiversity target'},
+   {k:'Reporting',v:'Quarterly to PIF ESG team'},
+ ],
+ keywords:'NEOM giga project red sea qiddiya diriyah roshn PIF net zero renewable Vision 2030',
+},
+
+/* Extra regulations to reach 48 */
+{id:'AIR-004',category:'air',article:'GAMEP Article 24',
+ title_en:'Dust Control for Construction and Earthworks',
+ title_ar:'التحكم في الغبار لمشاريع البناء وأعمال الحفر',
+ summary_en:'All earthwork and demolition sites must implement a Dust Management Plan including watering schedule, wheel wash facilities, covered conveyors, and wind fence barriers. PM10 must not exceed 150 µg/m³ at site boundary.',
+ summary_ar:'يجب على جميع مواقع الحفر والهدم تنفيذ خطة إدارة الغبار تشمل جدول الري ومرافق غسيل العجلات والحواجز.',
+ severity:'medium',deadline:'Plan submitted with construction permit',deadline_color:'yellow',
+ authority:'GAMEP / Municipality',penaltyNote:'SAR 50,000 per event',
+ details:[
+   {k:'PM10 Limit at Boundary',v:'150 µg/m³ (24h avg)'},
+   {k:'Watering',v:'2x daily minimum (dry season)'},
+   {k:'Wheel Wash',v:'Mandatory at all site exits'},
+   {k:'Wind Speed',v:'Stop earthworks above 12 m/s'},
+   {k:'Monitoring',v:'Continuous dust monitor at boundary'},
+ ],
+ keywords:'dust construction earthwork PM10 demolition site management wind control',
+},
+{id:'WAT-005',category:'water',article:'GAMEP Article 44',
+ title_en:'Stormwater Management and Runoff Control',
+ title_ar:'إدارة مياه الأمطار والتحكم في الجريان السطحي',
+ summary_en:'Industrial and commercial developments must design and maintain stormwater drainage systems preventing contaminated runoff from reaching wadis, groundwater, or the Arabian Gulf. Oil interceptors are mandatory.',
+ summary_ar:'يجب على التطويرات الصناعية والتجارية تصميم وصيانة أنظمة تصريف مياه الأمطار لمنع الجريان الملوث من الوصول إلى الأودية أو المياه الجوفية.',
+ severity:'medium',deadline:'Design approval before construction permit',deadline_color:'yellow',
+ authority:'GAMEP / Municipality',penaltyNote:'SAR 75,000 per incident',
+ details:[
+   {k:'Oil Interceptor',v:'Mandatory for vehicle/industrial areas'},
+   {k:'First Flush',v:'First 25mm rainfall must be captured'},
+   {k:'Sampling Points',v:'At all discharge locations'},
+   {k:'Inspection',v:'Pre-wet season (September)'},
+ ],
+ keywords:'stormwater drainage runoff water management wadi groundwater industrial',
+},
+{id:'IND-004',category:'industrial',article:'GAMEP Article 95',
+ title_en:'Asbestos Survey and Removal Requirements',
+ title_ar:'متطلبات مسح الأسبستوس وإزالته',
+ summary_en:'All pre-1990 buildings earmarked for demolition or major refurbishment must undergo an asbestos survey by a licensed assessor before any works commence. Removal must be carried out by GAMEP-licensed contractors.',
+ summary_ar:'يجب أن تخضع جميع المباني المشيدة قبل عام 1990 المخصصة للهدم أو التجديد الكبير لمسح للأسبستوس من قبل مقيّم مرخص.',
+ severity:'high',deadline:'Before demolition or refurbishment permit',deadline_color:'red',
+ authority:'GAMEP / MHRSD',penaltyNote:'SAR 200,000 + criminal prosecution',
+ details:[
+   {k:'Survey Standard',v:'GAMEP Asbestos Guidelines 2019'},
+   {k:'Survey Types',v:'Management + Refurbishment/Demolition'},
+   {k:'Analyst',v:'GAMEP accredited analyst only'},
+   {k:'Removal Contractor',v:'Licensed — separate from surveyor'},
+   {k:'Waste Disposal',v:'Licensed asbestos landfill only'},
+ ],
+ keywords:'asbestos survey demolition refurbishment building hazardous material industrial',
+},
+{id:'CLI-004',category:'climate',article:'Saudi Green Initiative 2030',
+ title_en:'Tree Planting and Afforestation Compliance for Developers',
+ title_ar:'الامتثال لزراعة الأشجار والتشجير للمطورين',
+ summary_en:'Large-scale developments (> 10 hectares) must include a landscaping plan with a minimum Green Area Ratio of 20% and contribute to GAMEP\'s national 10 billion tree planting target through verified offset planting.',
+ summary_ar:'يجب على التطويرات واسعة النطاق (أكثر من 10 هكتارات) تضمين خطة تشجير بنسبة مساحة خضراء لا تقل عن 20٪.',
+ severity:'low',deadline:'Landscaping plan with planning application',deadline_color:'green',
+ authority:'GAMEP / MEWA',penaltyNote:'Planning conditions applied',
+ details:[
+   {k:'Green Area Ratio',v:'Minimum 20% of site area'},
+   {k:'Native Species',v:'60% native/endemic species'},
+   {k:'Offset Planting',v:'Available via GAMEP scheme'},
+   {k:'Maintenance Bond',v:'5 years post-completion'},
+   {k:'National Target',v:'10 billion trees by 2030'},
+ ],
+ keywords:'tree planting afforestation green landscaping Vision 2030 offset development',
+},
+{id:'MAR-004',category:'marine',article:'GAMEP Article 122',
+ title_en:'Offshore Oil and Gas Environmental Management Requirements',
+ title_ar:'متطلبات الإدارة البيئية للنفط والغاز البحري',
+ summary_en:'Offshore oil and gas operators must have approved Oil Spill Contingency Plans, conduct annual equipment drills, and maintain Environmental Management Systems certified to ISO 14001.',
+ summary_ar:'يجب على مشغلي النفط والغاز البحري أن يكون لديهم خطط طوارئ لانسكاب النفط معتمدة وإجراء تدريبات سنوية للمعدات.',
+ severity:'high',deadline:'Plans approved before production license',deadline_color:'red',
+ authority:'GAMEP / MEIM',penaltyNote:'SAR 5,000,000 + license cancellation',
+ details:[
+   {k:'OSCP Validity',v:'2 years'},
+   {k:'Drill Frequency',v:'Annual full-scale + quarterly tabletop'},
+   {k:'EMS Standard',v:'ISO 14001 certified'},
+   {k:'Produced Water',v:'< 40 mg/L oil content'},
+   {k:'Flaring',v:'Flaring minimisation plan required'},
+ ],
+ keywords:'offshore oil gas marine spill contingency plan ISO 14001 flaring produced water',
+},
+{id:'WST-004',category:'waste',article:'GAMEP Article 71',
+ title_en:'E-Waste (WEEE) Collection and Recycling Requirements',
+ title_ar:'متطلبات جمع النفايات الإلكترونية (WEEE) وإعادة تدويرها',
+ summary_en:'Manufacturers and importers of electrical and electronic equipment must establish take-back schemes for end-of-life products. Disposal to general landfill is prohibited. GAMEP-licensed e-waste recyclers only.',
+ summary_ar:'يجب على مصنّعي ومستوردي الأجهزة الكهربائية والإلكترونية إنشاء أنظمة استرداد للمنتجات في نهاية عمرها الافتراضي.',
+ severity:'medium',deadline:'Take-back scheme registered by 2024',deadline_color:'yellow',
+ authority:'GAMEP / CITC',penaltyNote:'SAR 100,000 per violation',
+ details:[
+   {k:'Scope',v:'All EEE categories (Annex I)'},
+   {k:'Collection Rate',v:'65% of placed-on-market weight'},
+   {k:'Take-back',v:'Free to end-user'},
+   {k:'Recycler',v:'GAMEP licensed only'},
+   {k:'Reporting',v:'Annual to GAMEP portal'},
+ ],
+ keywords:'e-waste WEEE electronic recycling disposal landfill take-back manufacturer',
+},
+];
+
+/* ── Render helpers ───────────────────────────────────── */
+function deadlineColor(c){
+  if(c==='red')   return {bg:'rgba(220,38,38,0.08)', color:'#b91c1c', border:'rgba(220,38,38,0.2)'};
+  if(c==='yellow')return {bg:'rgba(234,179,8,0.08)', color:'#a16207', border:'rgba(234,179,8,0.2)'};
+  return               {bg:'rgba(31,107,82,0.08)',  color:'#1f6b52', border:'rgba(31,107,82,0.2)'};
+}
+function severityClass(s){
+  if(s==='high')  return 'sev-high';
+  if(s==='medium')return 'sev-medium';
+  return 'sev-low';
+}
+function severityLabel(s){
+  return s.toUpperCase();
+}
+function categoryLabel(c){
+  const map={air:'💨 Air Quality',water:'💧 Water',waste:'🗑️ Waste',noise:'🔊 Noise',eia:'📋 EIA',industrial:'🏭 Industrial',marine:'🌊 Marine',climate:'🌍 Climate'};
+  return map[c]||c;
+}
+function categoryColor(c){
+  const map={air:{bg:'rgba(26,92,160,0.08)',color:'#1a5ca0',border:'rgba(26,92,160,0.2)'},water:{bg:'rgba(31,107,82,0.08)',color:'#1f6b52',border:'rgba(31,107,82,0.2)'},waste:{bg:'rgba(120,53,15,0.08)',color:'#92400e',border:'rgba(120,53,15,0.2)'},noise:{bg:'rgba(109,40,217,0.08)',color:'#6d28d9',border:'rgba(109,40,217,0.2)'},eia:{bg:'rgba(234,179,8,0.08)',color:'#a16207',border:'rgba(234,179,8,0.2)'},industrial:{bg:'rgba(220,38,38,0.07)',color:'#b91c1c',border:'rgba(220,38,38,0.2)'},marine:{bg:'rgba(6,95,70,0.08)',color:'#065f46',border:'rgba(6,95,70,0.2)'},climate:{bg:'rgba(31,107,82,0.1)',color:'#1f6b52',border:'rgba(31,107,82,0.25)'}};
+  return map[c]||{bg:'var(--panel)',color:'var(--text-500)',border:'var(--border)'};
+}
+
+function renderCard(reg){
+  const dc = deadlineColor(reg.deadline_color);
+  const cc = categoryColor(reg.category);
+  return `
+  <div class="reg-card" id="card-${reg.id}" onclick="toggleCard('${reg.id}')">
+    <div class="reg-card-header">
+      <div class="reg-card-left">
+        <div class="reg-card-top">
+          <span class="reg-article">${reg.article}</span>
+          <span class="reg-category" style="background:${cc.bg};color:${cc.color};border-color:${cc.border};">${categoryLabel(reg.category)}</span>
+          <span class="reg-severity ${severityClass(reg.severity)}">${severityLabel(reg.severity)}</span>
+        </div>
+        <div class="reg-title-en">${reg.title_en}</div>
+        <div class="reg-title-ar">${reg.title_ar}</div>
+      </div>
+      <div class="reg-card-right">
+        <div class="reg-deadline">
+          <span class="deadline-label">Deadline</span>
+          <span class="deadline-val" style="background:${dc.bg};color:${dc.color};border-color:${dc.border};">📅 ${reg.deadline.split('—')[0].trim()}</span>
+        </div>
+        <div class="expand-btn">▼</div>
+      </div>
+    </div>
+    <div class="reg-summary">${reg.summary_en}</div>
+    <div class="reg-detail">
+      <div class="arabic-block">
+        <div class="arabic-block-title">Arabic / العربية</div>
+        <div class="arabic-text">${reg.summary_ar}</div>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-block">
+          <div class="detail-block-title">Technical Parameters</div>
+          ${(reg.details||[]).map(d=>`<div class="detail-row"><span class="detail-key">${d.k}</span><span class="detail-val">${d.v}</span></div>`).join('')}
+        </div>
+        <div class="detail-block">
+          <div class="detail-block-title">Compliance Info</div>
+          <div class="detail-row"><span class="detail-key">Authority</span><span class="detail-val">${reg.authority}</span></div>
+          <div class="detail-row"><span class="detail-key">Article</span><span class="detail-val">${reg.article}</span></div>
+          <div class="detail-row"><span class="detail-key">Severity</span><span class="detail-val">${severityLabel(reg.severity)}</span></div>
+          <div class="detail-row"><span class="detail-key">Deadline</span><span class="detail-val" style="color:${dc.color};font-size:0.62rem;">${reg.deadline}</span></div>
+          ${reg.penaltyNote?`<div class="detail-row"><span class="detail-key">Penalties</span><span class="detail-val" style="color:#b91c1c;">${reg.penaltyNote}</span></div>`:''}
+        </div>
+      </div>
+      <div class="detail-actions">
+        <button class="action-btn action-btn-primary" onclick="event.stopPropagation();downloadPDF('${reg.id}')">⬇ Download as PDF</button>
+        <button class="action-btn action-btn-secondary" onclick="event.stopPropagation();copyLink('${reg.id}')">🔗 Copy Link</button>
+        <button class="action-btn action-btn-secondary" onclick="event.stopPropagation();">📩 Ask AECON</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ── Toggle expand ────────────────────────────────────── */
+function toggleCard(id){
+  const card=document.getElementById('card-'+id);
+  card.classList.toggle('expanded');
+}
+
+/* ── PDF download ─────────────────────────────────────── */
+function downloadPDF(id){
+  const reg=REGULATIONS.find(r=>r.id===id);
+  if(!reg)return;
+  const w=window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"/>
+  <style>
+    body{font-family:Georgia,serif;max-width:700px;margin:40px auto;color:#0d2b1e;line-height:1.7;}
+    .header{background:#1f6b52;color:#fff;padding:28px 32px;border-radius:8px;margin-bottom:28px;}
+    .logo{font-size:1.4rem;font-weight:800;margin-bottom:4px;}
+    .sub{font-size:0.75rem;opacity:0.7;letter-spacing:0.1em;}
+    h1{font-size:1.4rem;margin-bottom:6px;line-height:1.3;}
+    .arabic{direction:rtl;text-align:right;font-family:serif;font-size:1rem;color:#4a7a62;margin:8px 0 20px;line-height:1.8;}
+    .meta{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0;}
+    .badge{padding:3px 10px;border-radius:4px;font-size:0.72rem;font-weight:700;border:1px solid;}
+    table{width:100%;border-collapse:collapse;margin:16px 0;}
+    th{background:#f0f5f2;text-align:left;padding:8px 12px;font-size:0.75rem;color:#4a7a62;letter-spacing:0.08em;text-transform:uppercase;}
+    td{padding:8px 12px;border-bottom:1px solid #dce8e1;font-size:0.82rem;}
+    .summary{background:#f7faf8;border-left:3px solid #1f6b52;padding:14px 16px;margin:16px 0;font-size:0.85rem;}
+    .footer{margin-top:32px;padding-top:16px;border-top:1px solid #dce8e1;font-size:0.68rem;color:#8aaa96;}
+  </style></head><body>
+  <div class="header">
+    <div class="logo">AECON · ALEMAD ALARABI</div>
+    <div class="sub">ENVIRONMENTAL REGULATION REFERENCE · CONFIDENTIAL</div>
+  </div>
+  <h1>${reg.title_en}</h1>
+  <div class="arabic">${reg.title_ar}</div>
+  <div class="meta">
+    <span class="badge" style="background:#edf7f2;color:#1f6b52;border-color:#d4ede3;">${reg.article}</span>
+    <span class="badge" style="background:#edf7f2;color:#1f6b52;border-color:#d4ede3;">${categoryLabel(reg.category)}</span>
+    <span class="badge" style="background:#fef2f2;color:#b91c1c;border-color:#fecaca;">${reg.severity.toUpperCase()}</span>
+  </div>
+  <div class="summary">${reg.summary_en}</div>
+  <div class="summary" style="direction:rtl;text-align:right;font-family:serif;">${reg.summary_ar}</div>
+  <table>
+    <tr><th colspan="2">Technical Parameters</th></tr>
+    ${(reg.details||[]).map(d=>`<tr><td style="color:#4a7a62;">${d.k}</td><td><strong>${d.v}</strong></td></tr>`).join('')}
+    <tr><th colspan="2">Compliance Details</th></tr>
+    <tr><td style="color:#4a7a62;">Authority</td><td><strong>${reg.authority}</strong></td></tr>
+    <tr><td style="color:#4a7a62;">Compliance Deadline</td><td><strong style="color:#b91c1c;">${reg.deadline}</strong></td></tr>
+    ${reg.penaltyNote?`<tr><td style="color:#4a7a62;">Penalties</td><td><strong style="color:#b91c1c;">${reg.penaltyNote}</strong></td></tr>`:''}
+  </table>
+  <div class="footer">
+    Generated by AECON Environmental Regulation Database · ${new Date().toLocaleDateString('en-SA')} · 
+    This document is for reference only. Always verify against official GAMEP/MEWA publications before taking compliance action.
+    © AECON · ALEMAD ALARABI Environmental Consulting
+  </div>
+  </body></html>`);
+  w.document.close();
+  setTimeout(()=>w.print(),400);
+}
+
+function copyLink(id){
+  navigator.clipboard.writeText(window.location.href+'#reg-'+id).then(()=>alert('Link copied!')).catch(()=>alert('Regulation ID: '+id));
+}
+
+/* ── Search & filter logic ────────────────────────────── */
+let currentSearch='', currentCat='all';
+
+function doSearch(){currentSearch=document.getElementById('search-input').value.toLowerCase();renderResults();}
+function setSearch(q){document.getElementById('search-input').value=q;currentSearch=q.toLowerCase();document.getElementById('search-clear').style.display='block';renderResults();}
+
+document.getElementById('search-input').addEventListener('input',function(){
+  currentSearch=this.value.toLowerCase();
+  document.getElementById('search-clear').style.display=this.value?'block':'none';
+  renderResults();
+});
+document.getElementById('search-input').addEventListener('keydown',function(e){if(e.key==='Enter')doSearch();});
+document.getElementById('search-clear').addEventListener('click',function(){
+  document.getElementById('search-input').value='';
+  currentSearch='';this.style.display='none';renderResults();
+});
+
+document.querySelectorAll('.filter-tab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-tab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');currentCat=btn.dataset.cat;renderResults();
+  });
+});
+
+function renderResults(){
+  let filtered=REGULATIONS.filter(r=>{
+    const matchCat = currentCat==='all'||r.category===currentCat;
+    const matchSearch = !currentSearch||
+      r.title_en.toLowerCase().includes(currentSearch)||
+      r.title_ar.includes(currentSearch)||
+      r.summary_en.toLowerCase().includes(currentSearch)||
+      r.keywords.toLowerCase().includes(currentSearch)||
+      r.article.toLowerCase().includes(currentSearch)||
+      r.id.toLowerCase().includes(currentSearch);
+    return matchCat && matchSearch;
+  });
+  document.getElementById('result-count').textContent=filtered.length;
+  const grid=document.getElementById('results-grid');
+  if(!filtered.length){
+    grid.innerHTML=`<div class="empty-state">
+      <div class="empty-icon">🔍</div>
+      <div class="empty-title">No regulations found</div>
+      <div class="empty-sub">Try different keywords or clear the filter</div>
+    </div>`;
+    return;
+  }
+  grid.innerHTML=filtered.map(r=>renderCard(r)).join('');
+}
+
+/* ── Sidebar categories ───────────────────────────────── */
+const CATS=[
+  {key:'all',icon:'📚',name:'All Regulations'},
+  {key:'air',icon:'💨',name:'Air Quality'},
+  {key:'water',icon:'💧',name:'Water'},
+  {key:'waste',icon:'🗑️',name:'Waste Management'},
+  {key:'noise',icon:'🔊',name:'Noise'},
+  {key:'eia',icon:'📋',name:'EIA'},
+  {key:'industrial',icon:'🏭',name:'Industrial'},
+  {key:'marine',icon:'🌊',name:'Marine & Coastal'},
+  {key:'climate',icon:'🌍',name:'Climate & Vision 2030'},
+];
+const catList=document.getElementById('category-list');
+CATS.forEach(c=>{
+  const count=c.key==='all'?REGULATIONS.length:REGULATIONS.filter(r=>r.category===c.key).length;
+  const btn=document.createElement('div');
+  btn.className='category-btn'+(c.key==='all'?' active':'');
+  btn.innerHTML=`<div class="cat-left"><span class="cat-icon">${c.icon}</span><span class="cat-name">${c.name}</span></div><span class="cat-count">${count}</span>`;
+  btn.onclick=()=>{
+    document.querySelectorAll('.category-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.filter-tab').forEach(b=>{b.classList.remove('active');if(b.dataset.cat===c.key)b.classList.add('active');});
+    currentCat=c.key;renderResults();
+  };
+  catList.appendChild(btn);
+});
+
+/* ── Initial render ───────────────────────────────────── */
+renderResults();
+</script>
+</body>
+</html>
