@@ -1609,6 +1609,159 @@ _sty.textContent = '@keyframes spin{from{transform:rotate(0deg)}to{transform:rot
 document.head.appendChild(_sty);
 
 document.addEventListener('DOMContentLoaded', () => loadNews());
+    <!-- ───────────────────────────────────────────────
+     PROFESSIONAL WHATSAPP CONTACT FEATURE
+     (stacks above chatbot, matches site theme)
+──────────────────────────────────────────────── -->
+<div id="whatsapp-trigger"
+     class="fixed bottom-28 right-6 z-50 group cursor-pointer">
+  <div class="relative">
+    <div class="w-14 h-14 bg-aecon-primary rounded-full flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 group-hover:scale-110">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12c0 2.08.69 4 1.85 5.55L2 22l4.45-1.85C7.996 21.31 9.922 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.85 0-3.55-.62-4.9-1.65L3.5 19.5l1.65-4.45C4.12 13.75 3.5 12.05 3.5 10c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8z"/>
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.485-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.1-.2.05-.298-.05-.446-.1-.149-.669-.916-.916-1.255-.247-.338-.496-.278-.745-.278-.248 0-.496.089-.745.278-.248.198-1.05.99-1.05 2.358 0 1.367.85 2.685.966 2.87.118.185 1.654 2.52 4.01 3.54 2.356 1.02 2.356.68 2.78.637.424-.043 1.347-.55 1.536-1.08.19-.53.19-.98.134-1.08-.057-.1-.224-.17-.47-.297z"/>
+      </svg>
+      <div id="whatsapp-status-pulse" class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-ping hidden"></div>
+    </div>
+    <div class="absolute bottom-full right-0 mb-3 hidden group-hover:block bg-aecon-dark text-white text-xs rounded-lg px-3 py-1.5 shadow-lg whitespace-nowrap">
+      Talk to an Expert
+    </div>
+  </div>
+</div>
+
+<!-- Slide-in Panel -->
+<div id="whatsapp-panel"
+     class="fixed inset-y-0 right-0 w-full max-w-sm translate-x-full bg-white shadow-2xl transition-transform duration-300 ease-out z-[100] flex flex-col">
+
+  <div class="bg-aecon-primary text-white p-5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-aecon-primary font-bold">A</div>
+      <div>
+        <h3 class="font-semibold text-lg">Speak with Our Team</h3>
+        <p class="text-sm opacity-90">Environmental Experts</p>
+      </div>
+    </div>
+    <button id="close-whatsapp-panel" class="text-white text-2xl hover:opacity-80">&times;</button>
+  </div>
+
+  <div id="whatsapp-status" class="p-4 border-b text-sm flex items-center gap-2 font-medium"></div>
+
+  <div class="flex-1 p-5 overflow-y-auto space-y-6">
+    <p class="text-gray-600 text-sm">Hello! How can our consultants assist you today?</p>
+
+    <div>
+      <p class="text-xs uppercase tracking-wide text-gray-500 mb-3 font-medium">Quick Inquiries</p>
+      <div id="whatsapp-templates" class="space-y-2"></div>
+    </div>
+
+    <div>
+      <label class="block text-xs uppercase tracking-wide text-gray-500 mb-2 font-medium">Your Message</label>
+      <textarea id="whatsapp-message" rows="4"
+                class="w-full border border-gray-200 rounded-xl p-3 text-sm focus:border-aecon-primary focus:ring-1 focus:ring-aecon-primary/30 outline-none resize-none"
+                placeholder="e.g., Interested in ambient air monitoring for a project in Riyadh..."></textarea>
+    </div>
+  </div>
+
+  <div class="p-5 border-t bg-gray-50">
+    <button id="send-to-whatsapp"
+            class="w-full bg-aecon-primary hover:bg-aecon-accent text-white font-medium py-3.5 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2Z"/>
+      </svg>
+      Open WhatsApp
+    </button>
+    <p class="text-center text-xs text-gray-500 mt-3">We typically reply within business hours (Sun–Thu 9 AM–5 PM AST)</p>
+  </div>
+</div>
+
+<script>
+// ── WhatsApp Config ────────────────────────────────────────
+const WHATSAPP_NUMBER = "966503361798";          // ← CHANGE TO YOUR REAL NUMBER
+const COMPANY_NAME    = "AECON - ALEMAD ALARABI";
+
+// Business hours Riyadh (Sun=0 ... Thu=4, 9–17)
+function isBusinessHours() {
+  const d = new Date();
+  const day = d.getDay();
+  const h = d.getUTCHours() + 3; // AST = UTC+3
+  const hour = h % 24;
+  return day >= 0 && day <= 4 && hour >= 9 && hour < 17;
+}
+
+const quickTemplates = [
+  "Interested in Ambient Air Quality Monitoring",
+  "Requesting Stack Emission Testing services",
+  "Need Environmental Impact Assessment (EIA) support",
+  "Looking for a compliance or carbon footprint consultation",
+  "General question about your environmental services"
+];
+
+// ── DOM Elements ───────────────────────────────────────────
+const trigger = document.getElementById('whatsapp-trigger');
+const panel   = document.getElementById('whatsapp-panel');
+const closeBtn = document.getElementById('close-whatsapp-panel');
+const statusEl = document.getElementById('whatsapp-status');
+const templatesEl = document.getElementById('whatsapp-templates');
+const msgBox  = document.getElementById('whatsapp-message');
+const sendBtn = document.getElementById('send-to-whatsapp');
+const pulse   = document.getElementById('whatsapp-status-pulse');
+
+// ── Render quick buttons ───────────────────────────────────
+quickTemplates.forEach(txt => {
+  const btn = document.createElement('button');
+  btn.className = 'w-full text-left text-sm border border-gray-200 hover:border-aecon-primary hover:bg-aecon-light/30 px-4 py-3 rounded-xl transition-colors';
+  btn.textContent = txt;
+  btn.onclick = () => { msgBox.value = `Hello, ${txt.toLowerCase()}. Can you please advise?`; };
+  templatesEl.appendChild(btn);
+});
+
+// ── Update status ──────────────────────────────────────────
+function updateWhatsAppStatus() {
+  if (isBusinessHours()) {
+    statusEl.innerHTML = `<span class="inline-block w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span> Experts online now`;
+    statusEl.className = 'p-4 border-b text-sm flex items-center gap-2 text-green-700 bg-green-50/80';
+    if (pulse) pulse.classList.remove('hidden');
+  } else {
+    statusEl.textContent = 'We will reply during business hours (Sun–Thu 9–17 AST)';
+    statusEl.className = 'p-4 border-b text-sm text-amber-700 bg-amber-50/80';
+    if (pulse) pulse.classList.add('hidden');
+  }
+}
+
+// ── Open / Close ───────────────────────────────────────────
+function openWhatsAppPanel() {
+  panel.classList.remove('translate-x-full');
+  updateWhatsAppStatus();
+  console.log(`WhatsApp panel opened from: ${location.href}`);
+}
+function closeWhatsAppPanel() {
+  panel.classList.add('translate-x-full');
+}
+
+trigger.onclick       = openWhatsAppPanel;
+closeBtn.onclick      = closeWhatsAppPanel;
+panel.onclick = e => { if (e.target === panel) closeWhatsAppPanel(); };
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !panel.classList.contains('translate-x-full')) closeWhatsAppPanel();
+});
+
+// ── Send to WhatsApp ───────────────────────────────────────
+sendBtn.onclick = () => {
+  let message = msgBox.value.trim();
+  if (!message) message = "Hello, I have an inquiry from the AECON website.";
+
+  const fullMessage = `Hello ${COMPANY_NAME} team,\n\n${message}\n\nSent from: ${location.href}`;
+
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(fullMessage)}`;
+
+  console.log(`WhatsApp message prepared from: ${location.href}`);
+  window.open(url, '_blank');
+  closeWhatsAppPanel();
+};
+
+// Initialize
+updateWhatsAppStatus();
+</script>
 </script>
 </body>
 </html>
