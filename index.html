@@ -302,15 +302,124 @@
           .logo-ticker-section { padding: 2.5rem 0 1.5rem; }
           .logo-ticker-header h3 { font-size: 1.1rem; }
           .logo-ticker-header p { font-size: 0.75rem; }
-          .logo-item { min-width: 100px; height: 48px; padding: 0 1rem; }
+          .logo-item { min-width: 100px; height: 48px; gap: 2rem; }
           .logo-ticker-track { gap: 2rem; }
+          @keyframes scroll-logos { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         }
         @media (max-width: 480px) {
           .logo-ticker-wrapper { padding: 1rem 0; }
-          .logo-item { min-width: 80px; height: 40px; padding: 0 0.75rem; }
+          .logo-item { min-width: 80px; height: 40px; padding: 0 1rem; }
           .logo-ticker-track { gap: 1.5rem; }
           .logo-ticker-header h3 { font-size: 0.95rem; }
           .logo-ticker-header p { font-size: 0.7rem; }
+        }
+
+        /* ═══════════════════════════════════════════
+           WHATSAPP BUTTON CSS
+        ═══════════════════════════════════════════ */
+        .whatsapp-container {
+          position: fixed;
+          bottom: 140px;
+          right: 28px;
+          z-index: 999;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .whatsapp-btn {
+          width: 60px;
+          height: 60px;
+          background-color: #25D366;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+          text-decoration: none;
+          transition: all 0.3s ease;
+          border: none;
+          cursor: pointer;
+          position: relative;
+        }
+
+        .whatsapp-btn:hover {
+          transform: scale(1.1);
+          box-shadow: 0 6px 16px rgba(37, 211, 102, 0.6);
+          background-color: #20ba5a;
+        }
+
+        .whatsapp-btn:active {
+          transform: scale(0.95);
+        }
+
+        .whatsapp-icon {
+          width: 32px;
+          height: 32px;
+          fill: white;
+          pointer-events: none;
+        }
+
+        .whatsapp-tooltip {
+          background-color: rgba(0, 0, 0, 0.8);
+          color: white;
+          padding: 8px 12px;
+          border-radius: 6px;
+          font-size: 12px;
+          font-weight: 500;
+          white-space: nowrap;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s ease;
+          position: absolute;
+          top: -40px;
+          right: 0;
+          pointer-events: none;
+        }
+
+        .whatsapp-container:hover .whatsapp-tooltip {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+          .whatsapp-container {
+            bottom: 120px;
+          }
+
+          .whatsapp-btn {
+            width: 50px;
+            height: 50px;
+          }
+
+          .whatsapp-icon {
+            width: 26px;
+            height: 26px;
+          }
+
+          .whatsapp-tooltip {
+            font-size: 11px;
+            padding: 6px 10px;
+            top: -35px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .whatsapp-container {
+            bottom: 110px;
+            right: 20px;
+          }
+
+          .whatsapp-btn {
+            width: 48px;
+            height: 48px;
+          }
+
+          .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+          }
         }
     </style>
 </head>
@@ -902,7 +1011,7 @@
                 <p class="text-gray-600 text-lg mb-8">Ready to support your environmental monitoring and compliance requirements. Contact our team of specialists today.</p>
                 <div class="space-y-6">
                     <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-map-marker-alt text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Head Office</h4><p class="text-gray-600">3083 North Ring Rd, 8241 Al Muruj District<br>Riyadh 12284, Kingdom of Saudi Arabia</p></div></div>
-                    <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-envelope text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Email</h4><p class="text-gray-600"><a href="/cdn-cgi/l/email-protection#22474c544b504d624347414d4c0f51430c414d4f" class="hover:text-aecon-primary transition-colors"><span class="__cf_email__" data-cfemail="472229312e35280726222428296a34266924282a">[email&#160;protected]</span></a></p></div></div>
+                    <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-envelope text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Email</h4><p class="text-gray-600"><a href="mailto:enviro@aecon-sa.com" class="hover:text-aecon-primary transition-colors">enviro@aecon-sa.com</a></p></div></div>
                     <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-phone text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Phone</h4><p class="text-gray-600">+966 11 512 4979</p></div></div>
                     <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-globe text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Website</h4><p class="text-gray-600">www.aecon-sa.com</p></div></div>
                 </div>
@@ -1151,7 +1260,7 @@
 <!-- ════════════════════════════════════════════
      JAVASCRIPT — Main site
 ═════════════════════════════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── Particles ──────────────────────────────
 function createParticles() {
     const c = document.getElementById('particles');
@@ -1724,182 +1833,65 @@ document.addEventListener('DOMContentLoaded', () => loadNews());
 (function() {
   // Logo data: company name and transparent PNG URL from reliable CDN
   const LOGOS = [
-    // Energy & Oil & Gas
     {
       name: 'Saudi Aramco',
       url: 'https://upload.wikimedia.org/wikipedia/en/a/af/Saudi_Aramco_logo.svg',
-      alt: 'Saudi Aramco Logo'
+      alt: 'Saudi Aramco'
+    },
+    {
+      name: 'SABIC',
+      url: 'https://upload.wikimedia.org/wikipedia/en/0/0f/SABIC_logo.svg',
+      alt: 'SABIC'
+    },
+    {
+      name: 'Ma\'aden',
+      url: 'https://upload.wikimedia.org/wikipedia/en/e/e0/Ma%27aden_logo.svg',
+      alt: 'Ma\'aden'
+    },
+    {
+      name: 'NEOM',
+      url: 'https://upload.wikimedia.org/wikipedia/en/6/61/NEOM_logo.svg',
+      alt: 'NEOM'
+    },
+    {
+      name: 'ACWA Power',
+      url: 'https://upload.wikimedia.org/wikipedia/en/7/70/ACWA_Power_logo.svg',
+      alt: 'ACWA Power'
     },
     {
       name: 'Saudi Electricity',
       url: 'https://upload.wikimedia.org/wikipedia/en/e/ef/SEC_Saudi_Electricity_Company_logo.svg',
-      alt: 'Saudi Electricity Company Logo'
+      alt: 'Saudi Electricity Company'
     },
-    {
-      name: 'ACWA Power',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/ACWA_Power_logo.svg/1200px-ACWA_Power_logo.svg.png',
-      alt: 'ACWA Power Logo'
-    },
-    
-    // Chemicals & Materials
-    {
-      name: 'SABIC',
-      url: 'https://upload.wikimedia.org/wikipedia/en/0/0f/SABIC_logo.svg',
-      alt: 'SABIC Logo'
-    },
-    {
-      name: 'Ma\'aden',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Maden-logo.png/800px-Maden-logo.png',
-      alt: 'Ma\'aden Logo'
-    },
-    
-    // Development & Vision 2030
-    {
-      name: 'NEOM',
-      url: 'https://upload.wikimedia.org/wikipedia/en/6/61/NEOM_logo.svg',
-      alt: 'NEOM Logo'
-    },
-    {
-      name: 'Red Sea Global',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Red_Sea_Global_logo.svg/800px-Red_Sea_Global_logo.svg.png',
-      alt: 'Red Sea Global Logo'
-    },
-    {
-      name: 'Qiddiya',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Qiddiya_Logo.svg/800px-Qiddiya_Logo.svg.png',
-      alt: 'Qiddiya Logo'
-    },
-    
-    // Engineering & Consulting
     {
       name: 'AECOM',
       url: 'https://upload.wikimedia.org/wikipedia/en/8/8b/AECOM_logo.svg',
-      alt: 'AECOM Logo'
+      alt: 'AECOM'
     },
-    {
-      name: 'Jacobs',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Jacobs_Engineering_Group_logo.svg/800px-Jacobs_Engineering_Group_logo.svg.png',
-      alt: 'Jacobs Engineering Logo'
-    },
-    {
-      name: 'Ramboll',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Ramboll_logo.svg/800px-Ramboll_logo.svg.png',
-      alt: 'Ramboll Logo'
-    },
-    {
-      name: 'Worley',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Worley_Limited_logo.svg/800px-Worley_Limited_logo.svg.png',
-      alt: 'Worley Logo'
-    },
-    
-    // Major Construction Companies - Saudi Arabia
-    {
-      name: 'Binladin Group',
-      url: 'https://upload.wikimedia.org/wikipedia/en/5/51/Saudi_Binladin_Group_Logo.png',
-      alt: 'Saudi Binladin Group Logo'
-    },
-    {
-      name: 'Oger Saudi',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Oger_Saudi_Arabia_logo.svg/800px-Oger_Saudi_Arabia_logo.svg.png',
-      alt: 'Oger Saudi Arabia Logo'
-    },
-    {
-      name: 'Almabani',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Almabani_logo.svg/800px-Almabani_logo.svg.png',
-      alt: 'Almabani Group Logo'
-    },
-    {
-      name: 'Nesma',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Nesma_Holding_logo.svg/800px-Nesma_Holding_logo.svg.png',
-      alt: 'Nesma Holding Logo'
-    },
-    {
-      name: 'Rajhi Group',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Rajhi_Group_logo.svg/800px-Rajhi_Group_logo.svg.png',
-      alt: 'Rajhi Group Logo'
-    },
-    {
-      name: 'Al-Mojil Group',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Al_Mojil_Group_logo.svg/800px-Al_Mojil_Group_logo.svg.png',
-      alt: 'Mohammed Al-Mojil Group Logo'
-    },
-    
-    // International Construction Companies
-    {
-      name: 'Bechtel',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Bechtel_Corporation_logo.svg/800px-Bechtel_Corporation_logo.svg.png',
-      alt: 'Bechtel Logo'
-    },
-    {
-      name: 'Fluor',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Fluor_logo.svg/800px-Fluor_logo.svg.png',
-      alt: 'Fluor Corporation Logo'
-    },
-    {
-      name: 'Turner',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Turner_Construction_logo.svg/800px-Turner_Construction_logo.svg.png',
-      alt: 'Turner Construction Logo'
-    },
-    {
-      name: 'Kiewit',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Kiewit_logo.svg/800px-Kiewit_logo.svg.png',
-      alt: 'Kiewit Logo'
-    },
-    {
-      name: 'Skanska',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Skanska_logo.svg/800px-Skanska_logo.svg.png',
-      alt: 'Skanska Logo'
-    },
-    
-    // Industrial & Technology
     {
       name: 'Siemens',
       url: 'https://upload.wikimedia.org/wikipedia/commons/5/5f/Siemens_logo.svg',
-      alt: 'Siemens Logo'
+      alt: 'Siemens'
     },
     {
-      name: 'General Electric',
+      name: 'GE Renewable Energy',
       url: 'https://upload.wikimedia.org/wikipedia/en/6/6f/General_Electric_logo.svg',
-      alt: 'General Electric Logo'
+      alt: 'General Electric'
     },
     {
       name: 'Schneider Electric',
       url: 'https://upload.wikimedia.org/wikipedia/en/7/75/Schneider_Electric_logo.svg',
-      alt: 'Schneider Electric Logo'
+      alt: 'Schneider Electric'
     },
-    {
-      name: 'Honeywell',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Honeywell_logo.svg/800px-Honeywell_logo.svg.png',
-      alt: 'Honeywell Logo'
-    },
-    
-    // Renewable Energy & Sustainability
     {
       name: 'Masdar',
       url: 'https://upload.wikimedia.org/wikipedia/en/2/2a/Masdar_logo.svg',
-      alt: 'Masdar Logo'
+      alt: 'Masdar'
     },
-    {
-      name: 'IRENA',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/IRENA_logo.svg/800px-IRENA_logo.svg.png',
-      alt: 'IRENA Logo'
-    },
-    {
-      name: 'First Solar',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/First_Solar_logo.svg/800px-First_Solar_logo.svg.png',
-      alt: 'First Solar Logo'
-    },
-    
-    // Government & Municipal
     {
       name: 'Dubai Municipality',
       url: 'https://upload.wikimedia.org/wikipedia/en/3/30/Dubai_Municipality_logo.svg',
-      alt: 'Dubai Municipality Logo'
-    },
-    {
-      name: 'NWC Saudi',
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/National_Water_Company_Saudi_Arabia_logo.svg/800px-National_Water_Company_Saudi_Arabia_logo.svg.png',
-      alt: 'National Water Company Logo'
+      alt: 'Dubai Municipality'
     }
   ];
 
@@ -1952,22 +1944,87 @@ document.addEventListener('DOMContentLoaded', () => loadNews());
   }
 
   // Initialize when DOM is ready
-  function startTicker() {
-    // Wait a bit to ensure track element is ready
-    setTimeout(function() {
-      const track = document.getElementById('logoTrack');
-      if (track && track.children.length === 0) {
-        initLogoTicker();
-      }
-    }, 100);
-  }
-  
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startTicker);
+    document.addEventListener('DOMContentLoaded', initLogoTicker);
   } else {
-    startTicker();
+    initLogoTicker();
   }
-  window.addEventListener('load', startTicker);
 
   // Reinitialize on window resize (responsive behavior)
-  le
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      // Logos adjust via CSS media queries, no JS reinit needed
+    }, 250);
+  });
+})();
+</script>
+
+<!-- ════════════════════════════════════════════════════════
+     WHATSAPP BUTTON - HTML & JAVASCRIPT
+═════════════════════════════════════════════════════════ -->
+
+<!-- WhatsApp Button HTML -->
+<div id="whatsappContainer" class="whatsapp-container">
+  <a href="#" id="whatsappBtn" class="whatsapp-btn" title="Chat with us on WhatsApp">
+    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004c-1.025 0-2.031.313-2.896.893L4.734 5.309l.92 2.844c-.603.947-.923 2.035-.923 3.181 0 3.291 2.692 5.984 5.982 5.984 1.579 0 3.06-.616 4.181-1.732 1.122-1.117 1.742-2.598 1.742-4.181 0-3.291-2.692-5.984-5.982-5.984zm5.846 12.856c-1.196 1.195-2.786 1.852-4.48 1.852-3.491 0-6.33-2.838-6.33-6.33 0-1.1.292-2.191.847-3.144l.547-1.002-1.841-5.631 5.766.891.953-.517c.878-.478 1.877-.733 2.906-.733 3.49 0 6.33 2.838 6.33 6.33 0 1.694-.657 3.285-1.852 4.481"></path>
+    </svg>
+  </a>
+  <div class="whatsapp-tooltip">Chat with us on WhatsApp</div>
+</div>
+
+<!-- WhatsApp Button JavaScript -->
+<script>
+  (function() {
+    // Configuration
+    const CONFIG = {
+      phone: '+966503361798', // Phone number (no spaces or special chars)
+      message: 'Hi AECON, I\'m interested in your environmental services. Can you provide more information?',
+      buttonId: 'whatsappBtn'
+    };
+
+    // Initialize WhatsApp Button
+    function initWhatsAppButton() {
+      const btn = document.getElementById(CONFIG.buttonId);
+      
+      if (!btn) {
+        console.error('WhatsApp button element not found');
+        return;
+      }
+
+      // Handle click event
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openWhatsApp();
+      });
+
+      // Prevent default link behavior
+      btn.style.pointerEvents = 'auto';
+    }
+
+    // Open WhatsApp with pre-filled message
+    function openWhatsApp() {
+      // Encode the message for URL
+      const encodedMessage = encodeURIComponent(CONFIG.message);
+      
+      // WhatsApp URL format
+      // Uses wa.me for both web and mobile
+      const whatsappUrl = `https://wa.me/${CONFIG.phone}?text=${encodedMessage}`;
+      
+      // Open in new tab/window
+      window.open(whatsappUrl, '_blank');
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initWhatsAppButton);
+    } else {
+      initWhatsAppButton();
+    }
+  })();
+</script>
+
+</body>
+</html>
