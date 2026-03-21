@@ -1,0 +1,231 @@
+<!-- 
+  ═══════════════════════════════════════════════════════════
+  WHATSAPP BUTTON - Complete Implementation
+  ═══════════════════════════════════════════════════════════
+  
+  Location: Right side, above chatbot
+  Phone: +966 50 336 1798
+  Message: Hi AECON, I'm interested in your environmental services. Can you provide more information?
+  Size: 60×60px (desktop), 50×50px (mobile)
+  Color: #25D366 (WhatsApp Green)
+  
+  Instructions:
+  1. Add the HTML code below to your website (any location, end of body is best)
+  2. Add the CSS code to your <style> section
+  3. JavaScript is included in the HTML
+  ═══════════════════════════════════════════════════════════
+-->
+
+<!-- ════════════════════════════════════════════════════════
+     WHATSAPP BUTTON - HTML
+═════════════════════════════════════════════════════════ -->
+
+<div id="whatsappContainer" class="whatsapp-container">
+  <a href="#" id="whatsappBtn" class="whatsapp-btn" title="Chat with us on WhatsApp">
+    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004c-1.025 0-2.031.313-2.896.893L4.734 5.309l.92 2.844c-.603.947-.923 2.035-.923 3.181 0 3.291 2.692 5.984 5.982 5.984 1.579 0 3.06-.616 4.181-1.732 1.122-1.117 1.742-2.598 1.742-4.181 0-3.291-2.692-5.984-5.982-5.984zm5.846 12.856c-1.196 1.195-2.786 1.852-4.48 1.852-3.491 0-6.33-2.838-6.33-6.33 0-1.1.292-2.191.847-3.144l.547-1.002-1.841-5.631 5.766.891.953-.517c.878-.478 1.877-.733 2.906-.733 3.49 0 6.33 2.838 6.33 6.33 0 1.694-.657 3.285-1.852 4.481"></path>
+    </svg>
+  </a>
+  <div class="whatsapp-tooltip">Chat with us on WhatsApp</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     WHATSAPP BUTTON - CSS
+═════════════════════════════════════════════════════════ -->
+
+<style>
+  /* WhatsApp Button Container */
+  .whatsapp-container {
+    position: fixed;
+    bottom: 140px; /* Position above chatbot (adjust if needed) */
+    right: 28px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* WhatsApp Button Styling */
+  .whatsapp-btn {
+    width: 60px;
+    height: 60px;
+    background-color: #25D366; /* WhatsApp Green */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    position: relative;
+  }
+
+  /* WhatsApp Button Hover Effect */
+  .whatsapp-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(37, 211, 102, 0.6);
+    background-color: #20ba5a; /* Slightly darker green on hover */
+  }
+
+  /* WhatsApp Button Active State */
+  .whatsapp-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* WhatsApp Icon Inside Button */
+  .whatsapp-icon {
+    width: 32px;
+    height: 32px;
+    fill: white;
+    pointer-events: none;
+  }
+
+  /* Tooltip Text */
+  .whatsapp-tooltip {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: -40px;
+    right: 0;
+    pointer-events: none;
+  }
+
+  /* Show Tooltip on Hover */
+  .whatsapp-container:hover .whatsapp-tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Mobile Responsive - Smaller Button */
+  @media (max-width: 768px) {
+    .whatsapp-container {
+      bottom: 120px; /* Adjust position for mobile chatbot */
+    }
+
+    .whatsapp-btn {
+      width: 50px;
+      height: 50px;
+    }
+
+    .whatsapp-icon {
+      width: 26px;
+      height: 26px;
+    }
+
+    .whatsapp-tooltip {
+      font-size: 11px;
+      padding: 6px 10px;
+      top: -35px;
+    }
+  }
+
+  /* Extra Small Mobile */
+  @media (max-width: 480px) {
+    .whatsapp-container {
+      bottom: 110px;
+      right: 20px;
+    }
+
+    .whatsapp-btn {
+      width: 48px;
+      height: 48px;
+    }
+
+    .whatsapp-icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  /* Animation - Subtle Pulse Effect (Optional) */
+  @keyframes whatsappPulse {
+    0% {
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    }
+    50% {
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.6);
+    }
+    100% {
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    }
+  }
+
+  /* Apply pulse animation (uncomment to enable) */
+  /* .whatsapp-btn {
+    animation: whatsappPulse 2s ease-in-out infinite;
+  } */
+
+  /* Disable pulse on hover */
+  .whatsapp-btn:hover {
+    animation: none;
+  }
+</style>
+
+<!-- ════════════════════════════════════════════════════════
+     WHATSAPP BUTTON - JAVASCRIPT
+═════════════════════════════════════════════════════════ -->
+
+<script>
+  (function() {
+    // Configuration
+    const CONFIG = {
+      phone: '+966503361798', // Phone number (no spaces or special chars)
+      message: 'Hi AECON, I\'m interested in your environmental services. Can you provide more information?',
+      buttonId: 'whatsappBtn'
+    };
+
+    // Initialize WhatsApp Button
+    function initWhatsAppButton() {
+      const btn = document.getElementById(CONFIG.buttonId);
+      
+      if (!btn) {
+        console.error('WhatsApp button element not found');
+        return;
+      }
+
+      // Handle click event
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openWhatsApp();
+      });
+
+      // Prevent default link behavior
+      btn.style.pointerEvents = 'auto';
+    }
+
+    // Open WhatsApp with pre-filled message
+    function openWhatsApp() {
+      // Encode the message for URL
+      const encodedMessage = encodeURIComponent(CONFIG.message);
+      
+      // WhatsApp URL format
+      // Uses wa.me for both web and mobile
+      const whatsappUrl = `https://wa.me/${CONFIG.phone}?text=${encodedMessage}`;
+      
+      // Open in new tab/window
+      window.open(whatsappUrl, '_blank');
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initWhatsAppButton);
+    } else {
+      initWhatsAppButton();
+    }
+  })();
+</script>
+
+<!-- ════════════════════════════════════════════════════════
+     END OF WHATSAPP BUTTON CODE
+═════════════════════════════════════════════════════════ -->
