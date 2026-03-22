@@ -38,6 +38,71 @@
             }
         }
     </script>
+    <script>
+// ── Carousel ─────────────────────────────────────────────
+(function(){
+  const outer=document.getElementById('carouselOuter');
+  const track=document.getElementById('carouselTrack');
+  const dotsEl=document.getElementById('carouselDots');
+  const prevBtn=document.getElementById('prevBtn');
+  const nextBtn=document.getElementById('nextBtn');
+  const cards=track.querySelectorAll('.svc-card');
+  const total=cards.length;
+  let current=0,startX=0,startScroll=0,isDragging=false,hasDragged=false;
+  cards.forEach((_,i)=>{
+    const d=document.createElement('button');
+    d.className='c-dot'+(i===0?' active':'');
+    d.setAttribute('aria-label',`Go to slide ${i+1}`);
+    d.addEventListener('click',()=>goTo(i));
+    dotsEl.appendChild(d);
+  });
+  function getCardWidth(){return cards[0].getBoundingClientRect().width+16}
+  function goTo(idx,animate=true){
+    current=Math.max(0,Math.min(idx,total-1));
+    if(animate)track.classList.add('snap');
+    track.style.transform=`translateX(-${current*getCardWidth()}px)`;
+    setTimeout(()=>track.classList.remove('snap'),500);
+    dotsEl.querySelectorAll('.c-dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+    prevBtn.disabled=current===0;
+    nextBtn.disabled=current===total-1;
+  }
+  prevBtn.addEventListener('click',()=>goTo(current-1));
+  nextBtn.addEventListener('click',()=>goTo(current+1));
+  outer.addEventListener('mousedown',e=>{isDragging=true;hasDragged=false;startX=e.clientX;startScroll=current*getCardWidth();outer.classList.add('grabbing');track.classList.remove('snap')});
+  window.addEventListener('mousemove',e=>{if(!isDragging)return;const dx=e.clientX-startX;if(Math.abs(dx)>4)hasDragged=true;track.style.transform=`translateX(-${startScroll-dx}px)`});
+  window.addEventListener('mouseup',e=>{if(!isDragging)return;isDragging=false;outer.classList.remove('grabbing');if(hasDragged){const dx=e.clientX-startX;if(dx<-50)goTo(current+1);else if(dx>50)goTo(current-1);else goTo(current)}});
+  outer.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;startScroll=current*getCardWidth();track.classList.remove('snap')},{passive:true});
+  outer.addEventListener('touchmove',e=>{const dx=e.touches[0].clientX-startX;track.style.transform=`translateX(-${startScroll-dx}px)`},{passive:true});
+  outer.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-startX;if(dx<-50)goTo(current+1);else if(dx>50)goTo(current-1);else goTo(current)});
+  let autoTimer=setInterval(()=>goTo(current<total-1?current+1:0),4500);
+  outer.addEventListener('mouseenter',()=>clearInterval(autoTimer));
+  outer.addEventListener('mouseleave',()=>{autoTimer=setInterval(()=>goTo(current<total-1?current+1:0),4500)});
+  goTo(0,false);
+})();
+
+// ── Expert CTA ────────────────────────────────────────────
+function toggleExpert(){document.getElementById('expertCTA').classList.toggle('open')}
+function closeExpert(){document.getElementById('expertCTA').classList.remove('open')}
+document.getElementById('expertTab').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleExpert()}});
+document.addEventListener('click',e=>{const el=document.getElementById('expertCTA');if(el.classList.contains('open')&&!el.contains(e.target))closeExpert()});
+function sendExpertMsg(){
+  const input=document.getElementById('expertMsgInput');
+  const msg=input.value.trim();
+  if(!msg)return;
+  window.open('https://wa.me/966503361798?text='+encodeURIComponent('Hi AECON, I have a question: '+msg),'_blank');
+  input.value='';
+}
+document.getElementById('expertMsgInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendExpertMsg()});
+// Show after scroll
+const ctaEl=document.getElementById('expertCTA');
+ctaEl.style.cssText+='opacity:0;pointer-events:none;transition:opacity .4s ease';
+window.addEventListener('scroll',()=>{
+  const show=window.scrollY>200;
+  ctaEl.style.opacity=show?'1':'0';
+  ctaEl.style.pointerEvents=show?'all':'none';
+},{passive:true});
+</script>
+
     <style>
         .glass-card { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
         .gradient-text { background: linear-gradient(135deg, #0f3d3e 0%, #2d8a8a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
