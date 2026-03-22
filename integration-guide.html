@@ -1,0 +1,317 @@
+<!--
+════════════════════════════════════════════════════════
+  AECON — TWO NEW FEATURES FROM envirosuite.com ANALYSIS
+  File: integration-guide.html
+  Author: Sikander Chishti, Environmental Engineer
+════════════════════════════════════════════════════════
+
+SUMMARY OF FEATURES:
+  1. Services Showcase Carousel — swipeable cards with color overlays
+  2. Expert Consultation CTA — left-side slide-out panel
+
+PLACEMENT IN YOUR index.html:
+  1. Carousel → REPLACE the existing Services tab section  (#services)
+  2. Expert CTA → PASTE just before </body> (alongside your chatbot widget)
+
+════════════════════════════════════════════════════════
+ STEP 1 — Add these styles inside your <style> block
+         (paste before the closing </style> tag)
+════════════════════════════════════════════════════════
+-->
+<style>
+/* ═══ SERVICES CAROUSEL ═══════════════════════════════════ */
+.showcase-section{padding:80px 0 100px;background:#f5f6f7;overflow:hidden}
+.showcase-header{text-align:center;padding:0 24px;margin-bottom:48px}
+.showcase-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a5f5f;background:rgba(26,95,95,.08);padding:6px 16px;border-radius:999px;margin-bottom:16px}
+.showcase-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:#2d8a8a;animation:se-pulse 2s infinite}
+@keyframes se-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.showcase-title{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-.04em;color:#0f3d3e;line-height:1.15;margin-bottom:14px}
+.showcase-title em{font-style:normal;color:#2d8a8a}
+.showcase-sub{font-size:1rem;color:#5a7a6a;max-width:480px;margin:0 auto;line-height:1.7}
+.carousel-outer{position:relative;overflow:hidden;cursor:grab;user-select:none;-webkit-user-select:none}
+.carousel-outer.grabbing{cursor:grabbing}
+.carousel-track{display:flex;gap:16px;padding:8px 5vw;transition:transform 0s;will-change:transform}
+.carousel-track.snap{transition:transform .45s cubic-bezier(.25,.46,.45,.94)}
+.svc-card{position:relative;flex:0 0 320px;height:420px;border-radius:22px;overflow:hidden;box-shadow:0 8px 30px rgba(15,61,62,.12);transition:transform .35s ease,box-shadow .35s ease}
+@media(max-width:640px){.svc-card{flex:0 0 80vw;height:380px}}
+.svc-card:hover{transform:scale(1.025);box-shadow:0 20px 50px rgba(15,61,62,.22)}
+.svc-card img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease;display:block}
+.svc-card:hover img{transform:scale(1.06)}
+.svc-overlay{position:absolute;inset:0;pointer-events:none}
+.svc-content{position:absolute;bottom:0;left:0;right:0;padding:28px 24px 24px;background:linear-gradient(to top,rgba(5,20,20,.88) 0%,transparent 100%)}
+.svc-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:999px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.25);color:#fff;margin-bottom:10px}
+.svc-name{font-size:1.35rem;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1.2;margin-bottom:8px}
+.svc-desc{font-size:.78rem;color:rgba(255,255,255,.7);line-height:1.5;max-width:260px}
+.svc-arrow{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;opacity:0;transform:translateY(-4px);transition:opacity .25s,transform .25s}
+.svc-card:hover .svc-arrow{opacity:1;transform:translateY(0)}
+.carousel-dots{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:32px;padding:0 24px}
+.c-dot{width:8px;height:8px;border-radius:999px;background:rgba(26,95,95,.2);transition:all .35s ease;cursor:pointer;border:none;padding:0}
+.c-dot.active{width:28px;background:#1a5f5f}
+.c-dot:hover{background:rgba(26,95,95,.5)}
+.carousel-nav{display:flex;justify-content:center;gap:12px;margin-top:20px}
+.cnav-btn{width:48px;height:48px;border-radius:50%;background:#fff;border:2px solid rgba(26,95,95,.15);color:#1a5f5f;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease;box-shadow:0 4px 12px rgba(15,61,62,.08)}
+.cnav-btn:hover{background:#1a5f5f;color:#fff;border-color:#1a5f5f;box-shadow:0 8px 20px rgba(26,95,95,.25)}
+.cnav-btn:disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
+
+/* ═══ EXPERT CTA PANEL ════════════════════════════════════ */
+#expertCTA{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:9990;display:flex;flex-direction:row;align-items:center}
+#expertTab{display:flex;align-items:center;gap:0;cursor:pointer;transform:translateX(0);transition:transform .4s cubic-bezier(.34,1.2,.64,1)}
+#expertCTA.open #expertTab{transform:translateX(300px);pointer-events:none}
+.expert-photo-wrap{width:52px;height:52px;border-radius:0 50% 50% 0;overflow:hidden;flex-shrink:0;border:3px solid #1a5f5f;border-left:none;box-shadow:4px 0 16px rgba(26,95,95,.25)}
+.expert-photo-wrap img{width:100%;height:100%;object-fit:cover}
+.expert-label-pill{background:#0f3d3e;color:#fff;padding:10px 14px 10px 10px;border-radius:0 12px 12px 0;font-size:11px;font-weight:700;letter-spacing:.04em;white-space:nowrap;box-shadow:4px 4px 16px rgba(15,61,62,.3);line-height:1.35;display:flex;flex-direction:column;gap:1px}
+.expert-label-pill span:first-child{color:#87c9a8;font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+.expert-label-pill span:last-child{font-size:12px}
+#expertPanel{position:fixed;left:0;top:50%;transform:translateY(-50%) translateX(-340px);width:300px;background:#fff;border-radius:0 20px 20px 0;box-shadow:8px 0 40px rgba(15,61,62,.2);overflow:hidden;transition:transform .45s cubic-bezier(.34,1.2,.64,1);z-index:9989}
+#expertCTA.open #expertPanel{transform:translateY(-50%) translateX(0)}
+.ep-header{background:linear-gradient(135deg,#0f3d3e,#1a5f5f);padding:20px 20px 16px;display:flex;align-items:center;gap:12px;position:relative}
+.ep-photo{width:56px;height:56px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.3);flex-shrink:0}
+.ep-photo img{width:100%;height:100%;object-fit:cover}
+.ep-info{flex:1}
+.ep-name{font-size:14px;font-weight:800;color:#fff}
+.ep-role{font-size:11px;color:rgba(255,255,255,.7);margin-top:2px}
+.ep-status{display:flex;align-items:center;gap:5px;font-size:10px;color:#87e3aa;margin-top:5px;font-weight:600}
+.ep-status::before{content:'';width:6px;height:6px;background:#4ade80;border-radius:50%;animation:se-pulse 2s infinite}
+.ep-close{position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.ep-close:hover{background:rgba(255,255,255,.25);color:#fff}
+.ep-body{padding:18px 20px}
+.ep-question{font-size:13px;font-weight:700;color:#0f3d3e;margin-bottom:4px}
+.ep-hint{font-size:11px;color:#5a7a6a;margin-bottom:16px;line-height:1.5}
+.ep-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.ep-option{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;text-decoration:none;font-size:12px;font-weight:600;transition:all .2s ease;border:1.5px solid transparent}
+.ep-option.whatsapp{background:#f0faf5;color:#1a6b40;border-color:rgba(26,107,64,.15)}
+.ep-option.whatsapp:hover{background:#1a6b40;color:#fff;border-color:#1a6b40}
+.ep-option.email{background:#f0f5ff;color:#1a3f7a;border-color:rgba(26,63,122,.15)}
+.ep-option.email:hover{background:#1a3f7a;color:#fff;border-color:#1a3f7a}
+.ep-option.call{background:#f0f8fa;color:#0f3d3e;border-color:rgba(15,61,62,.15)}
+.ep-option.call:hover{background:#0f3d3e;color:#fff;border-color:#0f3d3e}
+.ep-option i{width:14px;text-align:center;font-size:13px}
+.ep-divider{display:flex;align-items:center;gap:8px;font-size:10px;color:#8aaa99;margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+.ep-divider::before,.ep-divider::after{content:'';flex:1;height:1px;background:rgba(0,0,0,.07)}
+.ep-quick-msg{display:flex;gap:6px}
+.ep-quick-msg input{flex:1;padding:9px 12px;border-radius:10px;border:1.5px solid rgba(26,95,95,.2);font-size:11px;font-family:inherit;outline:none;color:#1e3d32;transition:border-color .2s}
+.ep-quick-msg input:focus{border-color:#1a5f5f}
+.ep-quick-msg button{width:36px;height:36px;border-radius:10px;background:#0f3d3e;color:#fff;border:none;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:background .2s;flex-shrink:0}
+.ep-quick-msg button:hover{background:#2d8a8a}
+.ep-footer{padding:10px 20px 14px;text-align:center;font-size:10px;color:#8aaa99;border-top:1px solid rgba(0,0,0,.05)}
+</style>
+
+<!--
+════════════════════════════════════════════════════════
+ STEP 2 — REPLACE your <section id="services"> block
+          with this entire section
+════════════════════════════════════════════════════════
+-->
+<section id="services" class="showcase-section">
+  <div class="showcase-header">
+    <div class="showcase-eyebrow">Our Expertise</div>
+    <h2 class="showcase-title">Solutions for <em>every</em><br>environmental challenge</h2>
+    <p class="showcase-sub">Full-spectrum environmental monitoring and consultancy across the Kingdom of Saudi Arabia.</p>
+  </div>
+
+  <div class="carousel-outer" id="carouselOuter">
+    <div class="carousel-track" id="carouselTrack">
+
+      <div class="svc-card">
+        <img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=640&h=840&fit=crop&q=80" alt="Ambient Air Quality" onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=640&h=840&fit=crop'">
+        <div class="svc-overlay" style="background:linear-gradient(160deg,rgba(15,61,62,.35) 0%,transparent 50%)"></div>
+        <div class="svc-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="svc-content">
+          <div class="svc-tag" style="background:rgba(45,138,138,.4)">24/7 Monitoring</div>
+          <div class="svc-name">Ambient Air<br>Quality</div>
+          <div class="svc-desc">PM2.5, PM10, NO₂, SO₂ & ozone monitoring with real-time data logging</div>
+        </div>
+      </div>
+
+      <div class="svc-card">
+        <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=640&h=840&fit=crop&q=80" alt="Stack Emission Testing" onerror="this.src='https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=640&h=840&fit=crop'">
+        <div class="svc-overlay" style="background:linear-gradient(160deg,rgba(180,60,20,.35) 0%,transparent 50%)"></div>
+        <div class="svc-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="svc-content">
+          <div class="svc-tag" style="background:rgba(220,80,30,.4)">EPA Certified</div>
+          <div class="svc-name">Stack Emission<br>Testing</div>
+          <div class="svc-desc">US EPA Method 5/9 compliance for industrial stacks and stationary sources</div>
+        </div>
+      </div>
+
+      <div class="svc-card">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=640&h=840&fit=crop&q=80" alt="Indoor Air Quality" onerror="this.src='https://images.unsplash.com/photo-1497366754035-f200581f0b4c?w=640&h=840&fit=crop'">
+        <div class="svc-overlay" style="background:linear-gradient(160deg,rgba(90,40,160,.35) 0%,transparent 50%)"></div>
+        <div class="svc-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="svc-content">
+          <div class="svc-tag" style="background:rgba(120,60,200,.4)">IAQ Assessment</div>
+          <div class="svc-name">Indoor Air<br>Quality</div>
+          <div class="svc-desc">TVOC, formaldehyde, CO₂ profiling and health risk assessment reports</div>
+        </div>
+      </div>
+
+      <div class="svc-card">
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=640&h=840&fit=crop&q=80" alt="EIA" onerror="this.src='https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=640&h=840&fit=crop'">
+        <div class="svc-overlay" style="background:linear-gradient(160deg,rgba(20,90,40,.35) 0%,transparent 50%)"></div>
+        <div class="svc-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="svc-content">
+          <div class="svc-tag" style="background:rgba(30,130,70,.4)">NCEC / IFC</div>
+          <div class="svc-name">Environmental<br>Impact Assessment</div>
+          <div class="svc-desc">Comprehensive EIA/ESIA for industrial, marine and urban development projects</div>
+        </div>
+      </div>
+
+      <div class="svc-card">
+        <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=640&h=840&fit=crop&q=80" alt="Water Analysis" onerror="this.src='https://images.unsplash.com/photo-1559825481-12a05cc00344?w=640&h=840&fit=crop'">
+        <div class="svc-overlay" style="background:linear-gradient(160deg,rgba(20,60,120,.35) 0%,transparent 50%)"></div>
+        <div class="svc-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="svc-content">
+          <div class="svc-tag" style="background:rgba(26,80,160,.4)">ISO/IEC 17025</div>
+          <div class="svc-name">Water & Soil<br>Analysis</div>
+          <div class="svc-desc">Heavy metals, VOCs, microbiological parameters — accredited lab testing</div>
+        </div>
+      </div>
+
+      <div class="svc-card">
+        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=640&h=840&fit=crop&q=80" alt="Environmental Management" onerror="this.src='https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=640&h=840&fit=crop'">
+        <div class="svc-overlay" style="background:linear-gradient(160deg,rgba(15,61,62,.35) 0%,transparent 50%)"></div>
+        <div class="svc-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="svc-content">
+          <div class="svc-tag" style="background:rgba(45,138,138,.4)">ISO 14001</div>
+          <div class="svc-name">Environmental<br>Management Plans</div>
+          <div class="svc-desc">EMP design, emergency response plans and ISO 14001 audit support</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="carousel-dots" id="carouselDots"></div>
+  <div class="carousel-nav">
+    <button class="cnav-btn" id="prevBtn" aria-label="Previous"><i class="fas fa-arrow-left"></i></button>
+    <button class="cnav-btn" id="nextBtn" aria-label="Next"><i class="fas fa-arrow-right"></i></button>
+  </div>
+</section>
+
+
+<!--
+════════════════════════════════════════════════════════
+ STEP 3 — PASTE this just before </body>
+          (after your chatbot widget block)
+════════════════════════════════════════════════════════
+-->
+
+<!-- Expert Consult CTA -->
+<div id="expertCTA">
+  <div id="expertTab" onclick="toggleExpert()" role="button" tabindex="0" aria-label="Speak to an expert">
+    <div class="expert-photo-wrap">
+      <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=120&h=120&fit=crop&q=80" alt="Environmental Expert"
+           onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&h=120&fit=crop'">
+    </div>
+    <div class="expert-label-pill">
+      <span>Ask an Expert</span>
+      <span>Free Consultation →</span>
+    </div>
+  </div>
+  <div id="expertPanel">
+    <div class="ep-header">
+      <div class="ep-photo">
+        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=120&h=120&fit=crop&q=80" alt="Expert"
+             onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&h=120&fit=crop'">
+      </div>
+      <div class="ep-info">
+        <div class="ep-name">Environmental Specialist</div>
+        <div class="ep-role">AECON Consultancy · Riyadh, KSA</div>
+        <div class="ep-status">Available now</div>
+      </div>
+      <button class="ep-close" onclick="closeExpert()" aria-label="Close">✕</button>
+    </div>
+    <div class="ep-body">
+      <div class="ep-question">Have a question?</div>
+      <div class="ep-hint">Our team typically responds within 2 hours during business hours.</div>
+      <div class="ep-options">
+        <a href="https://wa.me/966503361798?text=Hi+AECON%2C+I+have+an+environmental+query" target="_blank" class="ep-option whatsapp">
+          <i class="fab fa-whatsapp"></i> WhatsApp — fastest response
+        </a>
+        <a href="mailto:enviro@aecon-sa.com" class="ep-option email">
+          <i class="fas fa-envelope"></i> Email us directly
+        </a>
+        <a href="tel:+966115124979" class="ep-option call">
+          <i class="fas fa-phone"></i> Call +966 11 512 4979
+        </a>
+      </div>
+      <div class="ep-divider">or send a quick message</div>
+      <div class="ep-quick-msg">
+        <input type="text" id="expertMsgInput" placeholder="e.g. I need a stack test quote..." maxlength="120">
+        <button onclick="sendExpertMsg()" aria-label="Send"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+    <div class="ep-footer">Free consultation · No commitment required</div>
+  </div>
+</div>
+
+<!--
+════════════════════════════════════════════════════════
+ STEP 4 — PASTE this JS before your closing </script>
+          tag (or add as a new <script> block before </body>)
+════════════════════════════════════════════════════════
+-->
+<script>
+// ── Carousel ─────────────────────────────────────────────
+(function(){
+  const outer=document.getElementById('carouselOuter');
+  const track=document.getElementById('carouselTrack');
+  const dotsEl=document.getElementById('carouselDots');
+  const prevBtn=document.getElementById('prevBtn');
+  const nextBtn=document.getElementById('nextBtn');
+  const cards=track.querySelectorAll('.svc-card');
+  const total=cards.length;
+  let current=0,startX=0,startScroll=0,isDragging=false,hasDragged=false;
+  cards.forEach((_,i)=>{
+    const d=document.createElement('button');
+    d.className='c-dot'+(i===0?' active':'');
+    d.setAttribute('aria-label',`Go to slide ${i+1}`);
+    d.addEventListener('click',()=>goTo(i));
+    dotsEl.appendChild(d);
+  });
+  function getCardWidth(){return cards[0].getBoundingClientRect().width+16}
+  function goTo(idx,animate=true){
+    current=Math.max(0,Math.min(idx,total-1));
+    if(animate)track.classList.add('snap');
+    track.style.transform=`translateX(-${current*getCardWidth()}px)`;
+    setTimeout(()=>track.classList.remove('snap'),500);
+    dotsEl.querySelectorAll('.c-dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+    prevBtn.disabled=current===0;
+    nextBtn.disabled=current===total-1;
+  }
+  prevBtn.addEventListener('click',()=>goTo(current-1));
+  nextBtn.addEventListener('click',()=>goTo(current+1));
+  outer.addEventListener('mousedown',e=>{isDragging=true;hasDragged=false;startX=e.clientX;startScroll=current*getCardWidth();outer.classList.add('grabbing');track.classList.remove('snap')});
+  window.addEventListener('mousemove',e=>{if(!isDragging)return;const dx=e.clientX-startX;if(Math.abs(dx)>4)hasDragged=true;track.style.transform=`translateX(-${startScroll-dx}px)`});
+  window.addEventListener('mouseup',e=>{if(!isDragging)return;isDragging=false;outer.classList.remove('grabbing');if(hasDragged){const dx=e.clientX-startX;if(dx<-50)goTo(current+1);else if(dx>50)goTo(current-1);else goTo(current)}});
+  outer.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;startScroll=current*getCardWidth();track.classList.remove('snap')},{passive:true});
+  outer.addEventListener('touchmove',e=>{const dx=e.touches[0].clientX-startX;track.style.transform=`translateX(-${startScroll-dx}px)`},{passive:true});
+  outer.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-startX;if(dx<-50)goTo(current+1);else if(dx>50)goTo(current-1);else goTo(current)});
+  let autoTimer=setInterval(()=>goTo(current<total-1?current+1:0),4500);
+  outer.addEventListener('mouseenter',()=>clearInterval(autoTimer));
+  outer.addEventListener('mouseleave',()=>{autoTimer=setInterval(()=>goTo(current<total-1?current+1:0),4500)});
+  goTo(0,false);
+})();
+
+// ── Expert CTA ────────────────────────────────────────────
+function toggleExpert(){document.getElementById('expertCTA').classList.toggle('open')}
+function closeExpert(){document.getElementById('expertCTA').classList.remove('open')}
+document.getElementById('expertTab').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleExpert()}});
+document.addEventListener('click',e=>{const el=document.getElementById('expertCTA');if(el.classList.contains('open')&&!el.contains(e.target))closeExpert()});
+function sendExpertMsg(){
+  const input=document.getElementById('expertMsgInput');
+  const msg=input.value.trim();
+  if(!msg)return;
+  window.open('https://wa.me/966503361798?text='+encodeURIComponent('Hi AECON, I have a question: '+msg),'_blank');
+  input.value='';
+}
+document.getElementById('expertMsgInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendExpertMsg()});
+// Show after scroll
+const ctaEl=document.getElementById('expertCTA');
+ctaEl.style.cssText+='opacity:0;pointer-events:none;transition:opacity .4s ease';
+window.addEventListener('scroll',()=>{
+  const show=window.scrollY>200;
+  ctaEl.style.opacity=show?'1':'0';
+  ctaEl.style.pointerEvents=show?'all':'none';
+},{passive:true});
+</script>
