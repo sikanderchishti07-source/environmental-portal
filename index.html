@@ -2371,6 +2371,558 @@
     track.innerHTML = html;
   })();
 </script>
+  <script>
+/* ═══════════════════════════════════════════════════════════════
+   SERVICE DATA
+═══════════════════════════════════════════════════════════════ */
+const SDM_SERVICES = [
+  {
+    num: '01',
+    icon: 'fas fa-wind',
+    label: 'Air Quality Monitoring',
+    name: 'Ambient Air Quality',
+    color: '#2d8a8a',
+    colorRgb: '45,138,138',
+    bgA: '#071c1c', bgB: '#0f3d3e',
+    gradFrom: '#0f3d3e', gradTo: '#2d8a8a',
+    titleHtml: 'Continuous <strong>Ambient Air</strong><br>Surveillance',
+    desc: '24/7 real-time monitoring of PM2.5, PM10, NO₂, SO₂, CO, and O₃ across industrial zones and urban receptors — fully aligned with NCEC SAAQS and WHO 2021 guidelines.',
+    features: [
+      { title: 'Beta Attenuation (BAM) Monitoring', text: 'US EPA-certified continuous PM2.5 & PM10 measurements at fixed and campaign stations' },
+      { title: 'Real-Time Telemetry', text: 'Live data transmission to client dashboards, NCEC portals, and our 24/7 operations centre' },
+      { title: 'Meteorological Correlation', text: 'Wind, humidity, and temperature integration for source apportionment and dispersion analysis' },
+      { title: 'Baseline & Periodic Campaigns', text: 'Pre-project, construction, and operational phase monitoring with QA/QC-compliant reporting' },
+    ],
+    cta: { primary: 'Request Air Quality Survey', ghost: 'View Sample Report' },
+    badge: 'NCEC SAAQS Compliant',
+    tags: ['NCEC SAAQS', 'WHO 2021', 'US EPA NAAQS', 'ISO 14001', 'IFC PS 3'],
+    stats: [
+      { label: 'Today\'s AQI · Riyadh', val: '87', unit: 'AQI', sub: 'Moderate · Within NCEC limits', fill: '29' },
+      { label: 'Monitoring Uptime', val: '99.4', unit: '%', sub: 'Continuous CEMS · 365 days/year', fill: '99' },
+    ],
+    chartRows: [
+      { name: 'PM2.5', val: '22 µg/m³', pct: 44 },
+      { name: 'PM10',  val: '38 µg/m³', pct: 76 },
+      { name: 'NO₂',   val: '12 µg/m³', pct: 30 },
+      { name: 'SO₂',   val: '8 µg/m³',  pct: 20 },
+    ],
+    standards: [
+      { title: 'NCEC SAAQS', body: 'Saudi Arabian Ambient Air Quality Standards — our monitoring programs are designed for full NCEC regulatory submission.' },
+      { title: 'WHO Air Quality Guidelines 2021', body: 'Benchmarking against WHO guideline values: PM2.5 annual mean 5 µg/m³, PM10 annual mean 15 µg/m³.' },
+      { title: 'US EPA NAAQS', body: 'Measurement methods aligned with US EPA Federal Reference Methods for all criteria pollutants.' },
+      { title: 'ISO 14001', body: 'Environmental Management System integration with ISO 14001-compliant monitoring programmes.' },
+    ],
+  },
+  {
+    num: '02',
+    icon: 'fas fa-industry',
+    label: 'Stack Emissions',
+    name: 'Stack Emission Testing',
+    color: '#f97316',
+    colorRgb: '249,115,22',
+    bgA: '#1a0800', bgB: '#2d1000',
+    gradFrom: '#7c2d12', gradTo: '#ea580c',
+    titleHtml: 'Industrial <strong>Emission</strong><br>Testing & Compliance',
+    desc: 'Stationary source emission testing using US EPA Method 5/9 for particulate matter, opacity, and gaseous pollutants — from cement kilns to power generation units and petrochemical facilities.',
+    features: [
+      { title: 'US EPA Method 5 / Method 17', text: 'Isokinetic particulate sampling trains for all industrial stacks with on-site gravimetric analysis' },
+      { title: 'Opacity Testing — Method 9', text: 'Visual and COMS-based opacity measurement per NCEC permit conditions and IFC standards' },
+      { title: 'Gaseous Pollutant Analysis', text: 'In-situ and extractive testing for SO₂, NOx, CO, HCl, HF, and VOC emissions' },
+      { title: 'Pre-Commissioning & Compliance Runs', text: 'Full documentation packages for regulatory permit applications, renewals, and annual compliance reports' },
+    ],
+    cta: { primary: 'Request Emission Test', ghost: 'EPA Methods Overview' },
+    badge: 'EPA Method 5 Certified',
+    tags: ['US EPA Method 5', 'Method 9', 'NCEC Stack Limits', 'CEMS', 'IFC PS'],
+    stats: [
+      { label: 'Stacks Tested (2024)', val: '247', unit: 'units', sub: 'Cement · Power · Petrochemical', fill: '82' },
+      { label: 'Permit Success Rate', val: '100', unit: '%', sub: 'All reports accepted by NCEC', fill: '100' },
+    ],
+    chartRows: [
+      { name: 'TSP',  val: '142 mg/Nm³', pct: 52 },
+      { name: 'NOx',  val: '320 mg/Nm³', pct: 75 },
+      { name: 'SO₂',  val: '89 mg/Nm³',  pct: 38 },
+      { name: 'CO',   val: '54 mg/Nm³',  pct: 22 },
+    ],
+    standards: [
+      { title: 'US EPA Method 5', body: 'Isokinetic stack sampling for total particulate matter — the international benchmark for source emission testing.' },
+      { title: 'NCEC Stack Emission Limits', body: 'Full alignment with National Center for Environmental Compliance emission concentration limits for all industrial source categories.' },
+      { title: 'US EPA Method 9', body: 'Visual determination of the opacity of emissions from stationary sources, required for all NCEC permit applications.' },
+      { title: 'CEMS Requirements', body: 'Continuous Emission Monitoring System design, installation, and performance specification per NCEC regulations.' },
+    ],
+  },
+  {
+    num: '03',
+    icon: 'fas fa-building',
+    label: 'Indoor Air Quality',
+    name: 'Indoor Air Quality (IAQ)',
+    color: '#8b5cf6',
+    colorRgb: '139,92,246',
+    bgA: '#0d0620', bgB: '#1a0a30',
+    gradFrom: '#4c1d95', gradTo: '#7c3aed',
+    titleHtml: 'Workplace <strong>IAQ</strong><br>& Health Safety',
+    desc: 'Comprehensive indoor environment assessments for offices, factories, and healthcare facilities — covering TVOC, formaldehyde, CO₂, biological contaminants, and ventilation efficiency.',
+    features: [
+      { title: 'TVOC & Formaldehyde Profiling', text: 'Photoionization detection with GC/MS lab confirmation — aligned with ASHRAE 62.1 and WHO IAQ guidelines' },
+      { title: 'Ventilation Efficiency Evaluation', text: 'Airflow mapping, fresh air rate measurement, and ASHRAE 62.1 compliance assessment' },
+      { title: 'Biological Contaminants', text: 'Mould spore, bacteria, and Legionella risk assessment in cooling towers and water systems' },
+      { title: 'Health Risk Assessment Reports', text: 'OEL analysis per Saudi MoHRE requirements and OSHA occupational exposure standards' },
+    ],
+    cta: { primary: 'Book IAQ Survey', ghost: 'Workplace Standards' },
+    badge: 'ASHRAE 62.1 Aligned',
+    tags: ['ASHRAE 62.1', 'WHO IAQ 2010', 'Saudi MOH', 'ISO 16000', 'MoHRE OELs'],
+    stats: [
+      { label: 'Buildings Assessed', val: '340+', unit: 'sites', sub: 'Commercial · Industrial · Medical', fill: '80' },
+      { label: 'IAQ Compliance Rate', val: '96', unit: '%', sub: 'Sites remediated within 30 days', fill: '96' },
+    ],
+    chartRows: [
+      { name: 'TVOC', val: '0.3 mg/m³',  pct: 43 },
+      { name: 'HCHO', val: '0.02 mg/m³', pct: 28 },
+      { name: 'CO₂',  val: '1080 ppm',   pct: 68 },
+      { name: 'RH',   val: '55 %',        pct: 55 },
+    ],
+    standards: [
+      { title: 'ASHRAE Standard 62.1', body: 'Ventilation for acceptable indoor air quality — the primary design and assessment standard for commercial buildings.' },
+      { title: 'WHO IAQ Guidelines 2010', body: 'Guidelines for nine pollutants: dampness, chemical, biological, combustion and outdoor-sourced pollutants.' },
+      { title: 'Saudi MoHRE OELs', body: 'Ministry of Human Resources and Social Development occupational exposure limits for 600+ substances.' },
+      { title: 'ISO 16000 Series', body: 'International standards for indoor air investigation methods, sampling, and analysis procedures.' },
+    ],
+  },
+  {
+    num: '04',
+    icon: 'fas fa-file-alt',
+    label: 'Environmental Assessment',
+    name: 'Impact Assessment (EIA/ESIA)',
+    color: '#3b82f6',
+    colorRgb: '59,130,246',
+    bgA: '#020c1a', bgB: '#04173a',
+    gradFrom: '#1e3a8a', gradTo: '#2563eb',
+    titleHtml: 'EIA / ESIA <strong>Studies</strong><br>& Management Plans',
+    desc: 'Comprehensive Environmental & Social Impact Assessments for industrial, infrastructure, and mega-development projects — aligned with NCEC, IFC Performance Standards, and Equator Principles.',
+    features: [
+      { title: 'Full ESIA Scoping & Baseline', text: 'Stakeholder engagement plans, receptor mapping, and 12-month baseline data collection campaigns' },
+      { title: 'Air Dispersion Modelling', text: 'AERMOD and CALPUFF modelling for impact prediction, permit support, and Health Risk Assessment' },
+      { title: 'Environmental Management Plans', text: 'ISO 14001-aligned EMP with specific monitoring programmes, mitigation measures, and KPIs' },
+      { title: 'NCEC Regulatory Submission', text: 'Full preparation and management of EIA submission packages, responses, and approval follow-up' },
+    ],
+    cta: { primary: 'Discuss Your Project', ghost: 'IFC Standards Guide' },
+    badge: 'IFC Performance Standards',
+    tags: ['NCEC EIA Regs', 'IFC PS 1–8', 'Equator Principles', 'ISO 14001', 'WHO EHS'],
+    stats: [
+      { label: 'EIA Projects Delivered', val: '85+', unit: 'studies', sub: 'NEOM · RSG · Aramco · NEOM', fill: '85' },
+      { label: 'NCEC Approval Rate', val: '100', unit: '%', sub: 'First-pass approval on all submissions', fill: '100' },
+    ],
+    chartRows: [
+      { name: 'Air',    val: 'Full scope', pct: 100 },
+      { name: 'Noise',  val: 'Full scope', pct: 100 },
+      { name: 'Water',  val: 'Full scope', pct: 100 },
+      { name: 'Social', val: 'Full scope', pct: 80  },
+    ],
+    standards: [
+      { title: 'NCEC EIA Regulations', body: 'Saudi Environmental Law (Royal Decree M/165) and NCEC EIA procedural guidelines for all project categories.' },
+      { title: 'IFC Performance Standards 1–8', body: 'World Bank Group\'s IFC Performance Standards covering E&S assessment, labour, resource efficiency, community health, and more.' },
+      { title: 'Equator Principles IV', body: 'Risk management framework for determining, assessing and managing environmental and social risk in project finance transactions.' },
+      { title: 'ISO 14001:2015', body: 'Environmental Management System standard underpinning all Environmental Management Plans produced by AECON.' },
+    ],
+  },
+  {
+    num: '05',
+    icon: 'fas fa-flask',
+    label: 'Laboratory Analysis',
+    name: 'Water & Soil Analysis',
+    color: '#06b6d4',
+    colorRgb: '6,182,212',
+    bgA: '#001520', bgB: '#002a40',
+    gradFrom: '#164e63', gradTo: '#0891b2',
+    titleHtml: 'Water, Soil &<br><strong>Contaminant</strong> Analysis',
+    desc: 'ISO 17025-accredited laboratory analysis for heavy metals, VOCs, microbiological parameters, and physical/chemical characterisation of water, soil, and sediment samples across KSA.',
+    features: [
+      { title: 'ICP-MS Heavy Metal Analysis', text: 'PerkinElmer NexION for ultra-trace Pb, As, Hg, Cd, Cr at detection limits below WHO drinking water guidelines' },
+      { title: 'VOC & SVOC Groundwater Testing', text: 'GC/MS analysis per EPA Method 8260B and 8270D for petroleum hydrocarbons and chlorinated solvents' },
+      { title: 'Microbiological Parameters', text: 'Total coliform, E.coli, and Legionella testing to WHO Drinking Water Standards and NCEC discharge limits' },
+      { title: 'Soil Contamination Assessment', text: 'Phase II Environmental Site Assessment and risk-based contamination appraisal for brownfield projects' },
+    ],
+    cta: { primary: 'Submit Samples', ghost: 'ISO 17025 Certificate' },
+    badge: 'ISO/IEC 17025 Accredited',
+    tags: ['ISO/IEC 17025', 'EPA 8260B', 'WHO Drinking Water', 'NCEC Discharge', 'Phase II ESA'],
+    stats: [
+      { label: 'Samples Analysed/Year', val: '12k+', unit: 'samples', sub: 'Water · Soil · Sediment · Effluent', fill: '90' },
+      { label: 'Lab Turnaround (standard)', val: '5', unit: 'days', sub: 'Express 48h service available', fill: '60' },
+    ],
+    chartRows: [
+      { name: 'Pb (Lead)', val: '0.012 mg/L',  pct: 18 },
+      { name: 'As (Arsenic)', val: '0.005 mg/L', pct: 8  },
+      { name: 'Cr (Chromium)', val: '0.048 mg/L', pct: 35 },
+      { name: 'pH',          val: '7.2',          pct: 72 },
+    ],
+    standards: [
+      { title: 'ISO/IEC 17025:2017', body: 'Accredited laboratory management system ensuring technically valid, legally defensible analytical results for all sample matrices.' },
+      { title: 'US EPA Methods 8260B / 8270D', body: 'Standard methods for VOC and SVOC analysis in water and soil matrices by GC/MS.' },
+      { title: 'WHO Drinking Water Guidelines', body: '4th edition guidelines for chemical, radiological, and microbiological parameters in drinking water sources.' },
+      { title: 'NCEC Wastewater Discharge Limits', body: 'National standards for effluent quality discharged to municipal sewers, water bodies, and land.' },
+    ],
+  },
+  {
+    num: '06',
+    icon: 'fas fa-clipboard-check',
+    label: 'Environmental Management',
+    name: 'Environmental Management Plans',
+    color: '#87a878',
+    colorRgb: '135,168,120',
+    bgA: '#0a1a08', bgB: '#162d12',
+    gradFrom: '#14532d', gradTo: '#16a34a',
+    titleHtml: 'ISO 14001 <strong>Environmental</strong><br>Management Plans',
+    desc: 'Design and implementation of Environmental Management Plans, emergency response plans, and ISO 14001 audit support for industrial operations across Saudi Arabia and the region.',
+    features: [
+      { title: 'ISO 14001 Gap Analysis & Certification', text: 'Full gap assessment against ISO 14001:2015 requirements and structured pathway to certification' },
+      { title: 'Environmental Management Plan (EMP)', text: 'NCEC-compliant EMP covering air, water, waste, soil, and community aspects with KPIs and monitoring schedules' },
+      { title: 'Emergency Response Plans', text: 'HAZMAT spill response, fire prevention, and environmental incident escalation procedures' },
+      { title: 'Annual Audit & Compliance Reporting', text: 'Third-party audit preparation, regulatory compliance reporting, and corrective action management' },
+    ],
+    cta: { primary: 'Get EMP Consultation', ghost: 'ISO 14001 Overview' },
+    badge: 'ISO 14001 Aligned',
+    tags: ['ISO 14001:2015', 'NCEC EMP Reqs', 'ISO 19011', 'OHSAS 45001', 'IFC PS 1'],
+    stats: [
+      { label: 'EMPs Developed', val: '120+', unit: 'plans', sub: 'Industrial · Construction · Energy', fill: '85' },
+      { label: 'ISO Audits Supported', val: '60+', unit: 'audits', sub: 'Zero failed certifications', fill: '75' },
+    ],
+    chartRows: [
+      { name: 'Air Quality',  val: 'Active', pct: 100 },
+      { name: 'Waste Mgmt',   val: 'Active', pct: 100 },
+      { name: 'Water Mgmt',   val: 'Active', pct: 90  },
+      { name: 'Emergency',    val: 'Active', pct: 85  },
+    ],
+    standards: [
+      { title: 'ISO 14001:2015', body: 'International standard for Environmental Management Systems — the framework used for all AECON EMP programmes.' },
+      { title: 'NCEC EMP Requirements', body: 'National Center for Environmental Compliance mandatory environmental management requirements for licenced industrial facilities.' },
+      { title: 'ISO 19011:2018', body: 'Guidelines for auditing management systems — the standard underpinning all AECON internal and third-party audit programmes.' },
+      { title: 'IFC Performance Standard 1', body: 'Assessment and management of environmental and social risks and impacts — the lender-standard for project finance.' },
+    ],
+  },
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════════════ */
+let sdmCurrentIndex   = 0;
+let sdmCurrentTab     = 0;
+let sdmParticleRAF    = null;
+let sdmParticles      = [];
+let sdmCanvasCtx      = null;
+
+/* ═══════════════════════════════════════════════════════════════
+   OPEN / CLOSE
+═══════════════════════════════════════════════════════════════ */
+function openServiceDetail(index) {
+  sdmCurrentIndex = index;
+  sdmCurrentTab   = 0;
+  document.getElementById('svcDetailOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderSDM(index);
+  resetSDMTabs();
+  /* Trap focus */
+  setTimeout(() => document.querySelector('.sdm-close').focus(), 400);
+}
+
+function closeServiceDetail() {
+  document.getElementById('svcDetailOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  /* Kill particle loop */
+  if (sdmParticleRAF) { cancelAnimationFrame(sdmParticleRAF); sdmParticleRAF = null; }
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('svcDetailOverlay')) closeServiceDetail();
+}
+
+/* Keyboard: Escape to close, arrow keys to navigate */
+document.addEventListener('keydown', function (e) {
+  const overlay = document.getElementById('svcDetailOverlay');
+  if (!overlay.classList.contains('open')) return;
+  if (e.key === 'Escape')      closeServiceDetail();
+  if (e.key === 'ArrowRight')  navigateService(1);
+  if (e.key === 'ArrowLeft')   navigateService(-1);
+});
+
+function navigateService(dir) {
+  const next = (sdmCurrentIndex + dir + SDM_SERVICES.length) % SDM_SERVICES.length;
+  openServiceDetail(next);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RENDER MODAL CONTENT
+═══════════════════════════════════════════════════════════════ */
+function renderSDM(index) {
+  const s = SDM_SERVICES[index];
+
+  /* ── Set CSS vars ── */
+  const modal = document.getElementById('svcDetailModal');
+  modal.style.setProperty('--sdm-color',     s.color);
+  modal.style.setProperty('--sdm-color-rgb', s.colorRgb);
+
+  /* ── Top bar ── */
+  const icon = document.getElementById('sdmIcon');
+  icon.innerHTML = `<i class="${s.icon}"></i>`;
+  icon.style.background = `linear-gradient(135deg, ${s.gradFrom}, ${s.gradTo})`;
+  document.getElementById('sdmLabel').textContent = s.label;
+  document.getElementById('sdmName').textContent  = s.name;
+  document.getElementById('sdmCount').textContent = `${index + 1} / ${SDM_SERVICES.length}`;
+
+  /* ── Tab strip colour update ── */
+  document.querySelectorAll('.sdm-tab').forEach(t => t.style.setProperty('--sdm-color', s.color));
+
+  /* ── Content (tab 0 = Overview) ── */
+  renderSDMOverview(s);
+
+  /* ── Visual panel ── */
+  renderSDMVisual(s);
+}
+
+/* Overview tab content */
+function renderSDMOverview(s) {
+  const content = document.getElementById('sdmContent');
+  content.innerHTML = `
+    <div class="sdm-eyebrow" style="color:${s.color}">${s.label}</div>
+    <h3 class="sdm-title">${s.titleHtml}</h3>
+    <p class="sdm-desc">${s.desc}</p>
+    <ul class="sdm-features">
+      ${s.features.map(f => `
+        <li class="sdm-feature">
+          <div class="sdm-check" style="background:rgba(${s.colorRgb},0.1)">
+            <i class="fas fa-check" style="color:${s.color}"></i>
+          </div>
+          <div class="sdm-feature-text">
+            <strong>${f.title}</strong>${f.text}
+          </div>
+        </li>`).join('')}
+    </ul>
+    <div class="sdm-cta">
+      <button class="sdm-btn-primary" onclick="contactFromSDM()">
+        <i class="fas fa-arrow-right"></i> ${s.cta.primary}
+      </button>
+      <button class="sdm-btn-ghost">
+        <i class="fas fa-file-pdf"></i> ${s.cta.ghost}
+      </button>
+    </div>
+    <div class="sdm-tags">
+      ${s.tags.map(t => `<span class="sdm-tag">${t}</span>`).join('')}
+    </div>`;
+}
+
+/* Standards tab content */
+function renderSDMStandards(s) {
+  const content = document.getElementById('sdmContent');
+  content.innerHTML = `
+    <div class="sdm-eyebrow" style="color:${s.color}">Regulatory Standards</div>
+    <h3 class="sdm-title" style="font-size:1.5rem">Applicable <strong>Regulations</strong></h3>
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:28px">
+      ${s.standards.map(st => `
+        <div style="padding:18px 20px;border-radius:16px;border:1.5px solid rgba(${s.colorRgb},0.14);background:rgba(${s.colorRgb},0.04)">
+          <div style="font-size:13px;font-weight:700;color:#0f3d3e;margin-bottom:5px">${st.title}</div>
+          <div style="font-size:12.5px;line-height:1.65;color:#4a6c6c">${st.body}</div>
+        </div>`).join('')}
+    </div>
+    <div class="sdm-tags">
+      ${s.tags.map(t => `<span class="sdm-tag">${t}</span>`).join('')}
+    </div>`;
+}
+
+/* Contact tab content */
+function renderSDMContact(s) {
+  const content = document.getElementById('sdmContent');
+  content.innerHTML = `
+    <div class="sdm-eyebrow" style="color:${s.color}">Get In Touch</div>
+    <h3 class="sdm-title" style="font-size:1.5rem">Request a <strong>Free Consultation</strong></h3>
+    <p class="sdm-desc" style="margin-bottom:20px">Our specialists will respond within 2 hours during business hours.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px">
+      <input type="text"  placeholder="Your Name"     style="width:100%;padding:12px 16px;border-radius:14px;border:1.5px solid rgba(${s.colorRgb},0.2);font-size:13px;font-family:inherit;outline:none;transition:border-color 0.2s" onfocus="this.style.borderColor='${s.color}'" onblur="this.style.borderColor='rgba(${s.colorRgb},0.2)'" />
+      <input type="email" placeholder="Work Email"    style="width:100%;padding:12px 16px;border-radius:14px;border:1.5px solid rgba(${s.colorRgb},0.2);font-size:13px;font-family:inherit;outline:none;transition:border-color 0.2s" onfocus="this.style.borderColor='${s.color}'" onblur="this.style.borderColor='rgba(${s.colorRgb},0.2)'" />
+      <input type="tel"   placeholder="Phone"         style="width:100%;padding:12px 16px;border-radius:14px;border:1.5px solid rgba(${s.colorRgb},0.2);font-size:13px;font-family:inherit;outline:none;transition:border-color 0.2s" onfocus="this.style.borderColor='${s.color}'" onblur="this.style.borderColor='rgba(${s.colorRgb},0.2)'" />
+      <textarea placeholder="Tell us about your project..." rows="3" style="width:100%;padding:12px 16px;border-radius:14px;border:1.5px solid rgba(${s.colorRgb},0.2);font-size:13px;font-family:inherit;outline:none;resize:none;transition:border-color 0.2s" onfocus="this.style.borderColor='${s.color}'" onblur="this.style.borderColor='rgba(${s.colorRgb},0.2)'"></textarea>
+    </div>
+    <button class="sdm-btn-primary" onclick="alert('Thank you! Our team will contact you shortly.')">
+      <i class="fas fa-paper-plane"></i> Send Enquiry for ${s.name}
+    </button>
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(${s.colorRgb},0.1);display:flex;flex-wrap:wrap;gap:12px">
+      <a href="https://wa.me/966503361798?text=Hi+AECON,+I+need+info+on+${encodeURIComponent(s.name)}" target="_blank" style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:#16a34a;text-decoration:none"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+      <a href="mailto:enviro@aecon-sa.com?subject=Enquiry: ${encodeURIComponent(s.name)}" style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:#0f3d3e;text-decoration:none"><i class="fas fa-envelope"></i> enviro@aecon-sa.com</a>
+    </div>`;
+}
+
+/* ─── Visual panel ─── */
+function renderSDMVisual(s) {
+  const visual = document.getElementById('sdmVisual');
+  visual.style.background = `linear-gradient(145deg, ${s.bgA}, ${s.bgB})`;
+
+  /* Kill previous particle loop */
+  if (sdmParticleRAF) { cancelAnimationFrame(sdmParticleRAF); sdmParticleRAF = null; }
+
+  /* Build inner HTML */
+  visual.innerHTML = `
+    <canvas class="sdm-canvas" id="sdmCanvas"></canvas>
+
+    <svg class="sdm-chart" id="sdmChart" viewBox="0 0 280 148">
+      <defs>
+        <linearGradient id="sdmGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:${s.color};stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:${s.color};stop-opacity:0.65"/>
+        </linearGradient>
+      </defs>
+      <text x="0" y="14" fill="rgba(255,255,255,0.35)" font-size="8.5" font-family="JetBrains Mono">
+        ${s.label.toUpperCase()} — KEY MEASUREMENTS
+      </text>
+      ${s.chartRows.map((row, i) => {
+        const y = 32 + i * 29;
+        return `
+          <text x="0" y="${y}" fill="rgba(255,255,255,0.55)" font-size="8" font-family="JetBrains Mono">${row.name}</text>
+          <rect x="70" y="${y - 9}" width="165" height="7" rx="3.5" fill="rgba(255,255,255,0.06)"/>
+          <rect x="70" y="${y - 9}" width="0" height="7" rx="3.5" fill="url(#sdmGrad)" class="sdm-anim-bar" data-target="${Math.round(row.pct * 1.65)}"/>
+          <text x="243" y="${y}" fill="rgba(255,255,255,0.6)" font-size="8" font-family="JetBrains Mono">${row.val}</text>`;
+      }).join('')}
+      <text x="0" y="145" fill="rgba(255,255,255,0.25)" font-size="7" font-family="JetBrains Mono">
+        AECON field data · accredited laboratory results
+      </text>
+    </svg>
+
+    ${s.stats.map((st, i) => `
+      <div class="sdm-vstat" id="sdmVstat${i}">
+        <div class="sdm-vstat-label">${st.label}</div>
+        <div class="sdm-vstat-val">${st.val}<span class="unit">${st.unit}</span></div>
+        <div class="sdm-vstat-sub">${st.sub}</div>
+        <div class="sdm-vbar-bg">
+          <div class="sdm-vbar-fill" id="sdmFill${i}"
+               style="background:${s.color};--target:${st.fill}%"></div>
+        </div>
+      </div>`).join('')}
+
+    <div class="sdm-badge" id="sdmBadge">${s.badge}</div>`;
+
+  /* Stagger reveals */
+  setTimeout(() => {
+    document.getElementById('sdmChart')?.classList.add('revealed');
+    s.stats.forEach((_, i) => {
+      setTimeout(() => {
+        document.getElementById(`sdmVstat${i}`)?.classList.add('revealed');
+        const fill = document.getElementById(`sdmFill${i}`);
+        if (fill) fill.style.width = s.stats[i].fill + '%';
+      }, 150 + i * 110);
+    });
+    setTimeout(() => document.getElementById('sdmBadge')?.classList.add('revealed'), 450);
+
+    /* Animate SVG bars */
+    document.querySelectorAll('.sdm-anim-bar').forEach((bar, j) => {
+      const target = parseFloat(bar.getAttribute('data-target')) || 0;
+      bar.setAttribute('width', 0);
+      setTimeout(() => {
+        bar.style.transition = `width 0.85s cubic-bezier(0.16,1,0.3,1)`;
+        bar.setAttribute('width', target);
+      }, 200 + j * 70);
+    });
+
+    /* Start particles */
+    startSDMParticles(s.color);
+  }, 100);
+}
+
+/* ─── Canvas particles ─── */
+function startSDMParticles(hexColor) {
+  const canvas = document.getElementById('sdmCanvas');
+  if (!canvas) return;
+
+  function hexToRgb(h) {
+    const r = parseInt(h.slice(1,3),16);
+    const g = parseInt(h.slice(3,5),16);
+    const b = parseInt(h.slice(5,7),16);
+    return `${r},${g},${b}`;
+  }
+
+  const ctx = canvas.getContext('2d');
+  const rgb = hexToRgb(hexColor.startsWith('#') ? hexColor : '#2d8a8a');
+
+  function resize() {
+    canvas.width  = canvas.parentElement.offsetWidth;
+    canvas.height = canvas.parentElement.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  sdmParticles = Array.from({ length: 28 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.8 + 0.4,
+    dx: (Math.random() - 0.5) * 0.35,
+    dy: (Math.random() - 0.5) * 0.35,
+    o: Math.random() * 0.45 + 0.08,
+  }));
+
+  function frame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    sdmParticles.forEach(p => {
+      p.x += p.dx; p.y += p.dy;
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width)  p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${rgb},${p.o})`;
+      ctx.fill();
+    });
+    for (let i = 0; i < sdmParticles.length; i++) {
+      for (let j = i + 1; j < sdmParticles.length; j++) {
+        const dx   = sdmParticles[i].x - sdmParticles[j].x;
+        const dy   = sdmParticles[i].y - sdmParticles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 90) {
+          ctx.beginPath();
+          ctx.moveTo(sdmParticles[i].x, sdmParticles[i].y);
+          ctx.lineTo(sdmParticles[j].x, sdmParticles[j].y);
+          ctx.strokeStyle = `rgba(${rgb},${0.05 * (1 - dist/90)})`;
+          ctx.lineWidth = 0.4;
+          ctx.stroke();
+        }
+      }
+    }
+    sdmParticleRAF = requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+/* ─── Tabs ─── */
+function sdmSwitchTab(idx, btn) {
+  sdmCurrentTab = idx;
+  document.querySelectorAll('.sdm-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const s = SDM_SERVICES[sdmCurrentIndex];
+  if (idx === 0) renderSDMOverview(s);
+  if (idx === 1) renderSDMStandards(s);
+  if (idx === 2) renderSDMContact(s);
+}
+
+function resetSDMTabs() {
+  const tabs = document.querySelectorAll('.sdm-tab');
+  tabs.forEach((t, i) => t.classList.toggle('active', i === 0));
+}
+
+/* ─── Util ─── */
+function contactFromSDM() {
+  closeServiceDetail();
+  setTimeout(() => {
+    const el = document.getElementById('contact');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 350);
+}
+
+/* Accessibility: keyboard activation of cards */
+document.querySelectorAll('.svc-card').forEach(function(card, i) {
+  card.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openServiceDetail(i);
+    }
+  });
+});
+
+</script>
 
 </body>
 </html>
