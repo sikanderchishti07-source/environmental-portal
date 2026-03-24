@@ -955,20 +955,54 @@
     <p class="showcase-sub">Full-spectrum environmental monitoring and consultancy across the Kingdom of Saudi Arabia.</p>
   </div>
 
-  <div class="carousel-outer" id="carouselOuter">
-    <div class="carousel-track" id="carouselTrack">
-
-      <div class="svc-card">
-        <img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=640&h=840&fit=crop&q=80" alt="Ambient Air Quality"
-             onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=640&h=840&fit=crop'" />
-        <div class="svc-overlay" style="background:linear-gradient(160deg,rgba(15,61,62,.35) 0%,transparent 50%)"></div>
-        <div class="svc-arrow"><i class="fas fa-arrow-right"></i></div>
-        <div class="svc-content">
-          <div class="svc-tag" style="background:rgba(45,138,138,.4)">24/7 Monitoring</div>
-          <div class="svc-name">Ambient Air<br>Quality</div>
-          <div class="svc-desc">PM2.5, PM10, NO₂, SO₂ & ozone monitoring with real-time data logging</div>
-        </div>
+  <div id="expertCTA">
+  <div id="expertTab" onclick="toggleExpert()" role="button" tabindex="0" aria-label="Speak to an expert">
+    <div class="expert-photo-wrap">
+      <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=120&h=120&fit=crop&q=80" alt="Environmental Expert"
+           onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&h=120&fit=crop'">
+    </div>
+    <div class="expert-label-pill">
+      <span>Ask an Expert</span>
+      <span>Free Consultation →</span>
+    </div>
+  </div>
+  <div id="expertPanel">
+    <div class="ep-header">
+      <div class="ep-photo">
+        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=120&h=120&fit=crop&q=80" alt="Expert"
+             onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&h=120&fit=crop'">
       </div>
+      <div class="ep-info">
+        <div class="ep-name">Environmental Specialist</div>
+        <div class="ep-role">AECON Consultancy · Riyadh, KSA</div>
+        <div class="ep-status">Available now</div>
+      </div>
+      <button class="ep-close" onclick="closeExpert()" aria-label="Close">✕</button>
+    </div>
+    <div class="ep-body">
+      <div class="ep-question">Have a question?</div>
+      <div class="ep-hint">Our team typically responds within 2 hours during business hours.</div>
+      <div class="ep-options">
+        <a href="https://wa.me/966503361798?text=Hi+AECON%2C+I+have+an+environmental+query" target="_blank" class="ep-option whatsapp">
+          <i class="fab fa-whatsapp"></i> WhatsApp — fastest response
+        </a>
+        <a href="mailto:enviro@aecon-sa.com" class="ep-option email">
+          <i class="fas fa-envelope"></i> Email us directly
+        </a>
+        <a href="tel:+966115124979" class="ep-option call">
+          <i class="fas fa-phone"></i> Call +966 11 512 4979
+        </a>
+      </div>
+      <div class="ep-divider">or send a quick message</div>
+      <div class="ep-quick-msg">
+        <input type="text" id="expertMsgInput" placeholder="e.g. I need a stack test quote..." maxlength="120">
+        <button onclick="sendExpertMsg()" aria-label="Send"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+    <div class="ep-footer">Free consultation · No commitment required</div>
+  </div>
+</div>
+
 
       <div class="svc-card">
         <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=640&h=840&fit=crop&q=80" alt="Stack Emission Testing"
