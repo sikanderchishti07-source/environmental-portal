@@ -1236,123 +1236,51 @@
 <!-- ============================================================
      SERVICES — INTERACTIVE SPLIT-PANEL
      ============================================================ -->
-<section id="services" class="isvc-section">
-  <div class="isvc-header">
-    <div class="showcase-eyebrow">Our Expertise</div>
-    <h2 style="font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-0.04em;color:#0f3d3e;line-height:1.15;margin-bottom:14px;font-family:'Plus Jakarta Sans',sans-serif;">Solutions for <em style="font-style:normal;color:#2d8a8a;">every</em><br>environmental challenge</h2>
-    <p style="font-size:1rem;color:#5a7a6a;max-width:480px;margin:0 auto;line-height:1.7;font-family:'DM Sans',sans-serif;">Full-spectrum environmental monitoring and consultancy across the Kingdom of Saudi Arabia.</p>
+<section id="services" class="svc-section">
+  <div class="svc-inner">
+ 
+    <!-- ── LEFT TEXT PANEL ── -->
+    <div class="svc-left">
+ 
+      <div class="svc-eyebrow reveal">
+        <span class="svc-eyebrow-dot"></span>
+        Our Expertise
+      </div>
+ 
+      <h2 class="svc-heading reveal reveal-d1">
+        Solutions for <em>every</em><br>environmental<br>challenge
+      </h2>
+ 
+      <p class="svc-desc reveal reveal-d2">
+        Full-spectrum environmental monitoring and consultancy across the Kingdom of Saudi Arabia.
+      </p>
+ 
+      <div class="svc-counter reveal reveal-d2">
+        <span class="svc-counter-cur" id="svcCounterCur">01</span>
+        <span class="svc-counter-sep">/</span>
+        <span class="svc-counter-total">06</span>
+      </div>
+ 
+      <div class="svc-nav reveal reveal-d3">
+        <button class="svc-nav-btn" id="svcPrev" aria-label="Previous service">
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <button class="svc-nav-btn" id="svcNext" aria-label="Next service">
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+ 
+      <div class="svc-dots reveal reveal-d3" id="svcDots" role="tablist"></div>
+ 
+    </div>
+ 
+    <!-- ── CARD TRACK ── -->
+    <div class="svc-track-wrap reveal reveal-d2">
+      <div class="svc-track" id="svcTrack"></div>
+    </div>
+ 
   </div>
-
-  <div class="isvc-layout">
-    <!-- LEFT: tabs -->
-    <div class="isvc-tabs isvc-reveal" id="isvcTabs">
-
-      <div class="isvc-tab active" onclick="selectService(0)">
-        <div class="isvc-tab-trigger" style="display:flex;align-items:center;gap:12px;width:100%;">
-          <div class="isvc-tab-num">01</div><div class="isvc-tab-icon"><i class="fas fa-wind"></i></div>
-          <div class="isvc-tab-body"><div class="isvc-tab-name">Ambient Air Quality</div><div class="isvc-tab-short">PM2.5, PM10, NO₂, SO₂ &amp; ozone</div></div>
-          <div class="isvc-tab-chevron"><i class="fas fa-chevron-right"></i></div>
-        </div>
-        <div class="isvc-accordion-content">
-          <img class="isvc-acc-img" src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=800&h=400&fit=crop&q=80" alt="Ambient Air Quality"/>
-          <div class="isvc-acc-body" id="isvc-acc-body-0"></div>
-        </div>
-      </div>
-
-      <div class="isvc-tab" onclick="selectService(1)">
-        <div class="isvc-tab-trigger" style="display:flex;align-items:center;gap:12px;width:100%;">
-          <div class="isvc-tab-num">02</div><div class="isvc-tab-icon"><i class="fas fa-smog"></i></div>
-          <div class="isvc-tab-body"><div class="isvc-tab-name">Stack Emission Testing</div><div class="isvc-tab-short">US EPA Method 5/9 · Industrial stacks</div></div>
-          <div class="isvc-tab-chevron"><i class="fas fa-chevron-right"></i></div>
-        </div>
-        <div class="isvc-accordion-content">
-          <img class="isvc-acc-img" src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=800&h=400&fit=crop&q=80" alt="Stack Emission Testing"/>
-          <div class="isvc-acc-body" id="isvc-acc-body-1"></div>
-        </div>
-      </div>
-
-      <div class="isvc-tab" onclick="selectService(2)">
-        <div class="isvc-tab-trigger" style="display:flex;align-items:center;gap:12px;width:100%;">
-          <div class="isvc-tab-num">03</div><div class="isvc-tab-icon"><i class="fas fa-building"></i></div>
-          <div class="isvc-tab-body"><div class="isvc-tab-name">Indoor Air Quality</div><div class="isvc-tab-short">TVOC, formaldehyde, CO₂ profiling</div></div>
-          <div class="isvc-tab-chevron"><i class="fas fa-chevron-right"></i></div>
-        </div>
-        <div class="isvc-accordion-content">
-          <img class="isvc-acc-img" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=400&fit=crop&q=80" alt="Indoor Air Quality"/>
-          <div class="isvc-acc-body" id="isvc-acc-body-2"></div>
-        </div>
-      </div>
-
-      <div class="isvc-tab" onclick="selectService(3)">
-        <div class="isvc-tab-trigger" style="display:flex;align-items:center;gap:12px;width:100%;">
-          <div class="isvc-tab-num">04</div><div class="isvc-tab-icon"><i class="fas fa-mountain"></i></div>
-          <div class="isvc-tab-body"><div class="isvc-tab-name">Environmental Impact Assessment</div><div class="isvc-tab-short">EIA/ESIA · NCEC / IFC standards</div></div>
-          <div class="isvc-tab-chevron"><i class="fas fa-chevron-right"></i></div>
-        </div>
-        <div class="isvc-accordion-content">
-          <img class="isvc-acc-img" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=400&fit=crop&q=80" alt="EIA"/>
-          <div class="isvc-acc-body" id="isvc-acc-body-3"></div>
-        </div>
-      </div>
-
-      <div class="isvc-tab" onclick="selectService(4)">
-        <div class="isvc-tab-trigger" style="display:flex;align-items:center;gap:12px;width:100%;">
-          <div class="isvc-tab-num">05</div><div class="isvc-tab-icon"><i class="fas fa-tint"></i></div>
-          <div class="isvc-tab-body"><div class="isvc-tab-name">Water &amp; Soil Analysis</div><div class="isvc-tab-short">Heavy metals, VOCs · ISO/IEC 17025</div></div>
-          <div class="isvc-tab-chevron"><i class="fas fa-chevron-right"></i></div>
-        </div>
-        <div class="isvc-accordion-content">
-          <img class="isvc-acc-img" src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=800&h=400&fit=crop&q=80" alt="Water Analysis"/>
-          <div class="isvc-acc-body" id="isvc-acc-body-4"></div>
-        </div>
-      </div>
-
-      <div class="isvc-tab" onclick="selectService(5)">
-        <div class="isvc-tab-trigger" style="display:flex;align-items:center;gap:12px;width:100%;">
-          <div class="isvc-tab-num">06</div><div class="isvc-tab-icon"><i class="fas fa-leaf"></i></div>
-          <div class="isvc-tab-body"><div class="isvc-tab-name">Environmental Management Plans</div><div class="isvc-tab-short">EMP design · ISO 14001 audit support</div></div>
-          <div class="isvc-tab-chevron"><i class="fas fa-chevron-right"></i></div>
-        </div>
-        <div class="isvc-accordion-content">
-          <img class="isvc-acc-img" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=400&fit=crop&q=80" alt="Environmental Management"/>
-          <div class="isvc-acc-body" id="isvc-acc-body-5"></div>
-        </div>
-      </div>
-
-    </div><!-- /isvc-tabs -->
-
-    <!-- RIGHT: detail panel (desktop) -->
-    <div class="isvc-panel-wrap isvc-reveal isvc-reveal-delay-1" id="isvcPanelWrap">
-      <div class="isvc-progress-bar" id="isvcProgressBar" style="width:16.66%"></div>
-
-      <div class="isvc-panel active" id="isvc-panel-0">
-        <div class="isvc-panel-img"><img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=1200&h=520&fit=crop&q=80" alt="Ambient Air Quality" onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&h=520&fit=crop'"/><div class="isvc-panel-img-overlay"></div><div class="isvc-panel-badge" style="background:rgba(45,138,138,.55);">24/7 Monitoring</div><div class="isvc-panel-watermark">01</div></div>
-        <div class="isvc-panel-body" id="isvc-panel-body-0"></div>
-      </div>
-      <div class="isvc-panel" id="isvc-panel-1">
-        <div class="isvc-panel-img"><img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=1200&h=520&fit=crop&q=80" alt="Stack Emission" onerror="this.src='https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&h=520&fit=crop'"/><div class="isvc-panel-img-overlay"></div><div class="isvc-panel-badge" style="background:rgba(180,80,30,.6);">EPA Certified</div><div class="isvc-panel-watermark">02</div></div>
-        <div class="isvc-panel-body" id="isvc-panel-body-1"></div>
-      </div>
-      <div class="isvc-panel" id="isvc-panel-2">
-        <div class="isvc-panel-img"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=520&fit=crop&q=80" alt="Indoor Air" onerror="this.src='https://images.unsplash.com/photo-1497366754035-f200581f0b4c?w=1200&h=520&fit=crop'"/><div class="isvc-panel-img-overlay"></div><div class="isvc-panel-badge" style="background:rgba(90,40,160,.55);">IAQ Assessment</div><div class="isvc-panel-watermark">03</div></div>
-        <div class="isvc-panel-body" id="isvc-panel-body-2"></div>
-      </div>
-      <div class="isvc-panel" id="isvc-panel-3">
-        <div class="isvc-panel-img"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&h=520&fit=crop&q=80" alt="EIA" onerror="this.src='https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1200&h=520&fit=crop'"/><div class="isvc-panel-img-overlay"></div><div class="isvc-panel-badge" style="background:rgba(20,100,50,.6);">NCEC / IFC</div><div class="isvc-panel-watermark">04</div></div>
-        <div class="isvc-panel-body" id="isvc-panel-body-3"></div>
-      </div>
-      <div class="isvc-panel" id="isvc-panel-4">
-        <div class="isvc-panel-img"><img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1200&h=520&fit=crop&q=80" alt="Water Analysis" onerror="this.src='https://images.unsplash.com/photo-1559825481-12a05cc00344?w=1200&h=520&fit=crop'"/><div class="isvc-panel-img-overlay"></div><div class="isvc-panel-badge" style="background:rgba(26,70,160,.55);">ISO/IEC 17025</div><div class="isvc-panel-watermark">05</div></div>
-        <div class="isvc-panel-body" id="isvc-panel-body-4"></div>
-      </div>
-      <div class="isvc-panel" id="isvc-panel-5">
-        <div class="isvc-panel-img"><img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&h=520&fit=crop&q=80" alt="Environmental Management" onerror="this.src='https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1200&h=520&fit=crop'"/><div class="isvc-panel-img-overlay"></div><div class="isvc-panel-badge" style="background:rgba(45,138,138,.55);">ISO 14001</div><div class="isvc-panel-watermark">06</div></div>
-        <div class="isvc-panel-body" id="isvc-panel-body-5"></div>
-      </div>
-    </div><!-- /isvc-panel-wrap -->
-  </div><!-- /isvc-layout -->
 </section>
-
 
 <!-- ============================================================
      TECHNOLOGY & EQUIPMENT
