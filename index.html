@@ -137,8 +137,8 @@
     /* ============================================================
        7. AI CHATBOT
        ============================================================ */
-    #chatbotWidget              { position: fixed; bottom: 28px; right: 28px; z-index: 999; }
-    #chatWindow                 { width: 380px; max-height: 560px; display: none; flex-direction: column; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(15,61,62,0.3); animation: slideInRight 0.3s ease-out; }
+    #chatbotWidget              { position: fixed; bottom: 28px; right: 12px; z-index: 999; }
+    #chatWindow                 { width: 380px; max-width: calc(100vw - 16px); max-height: 560px; display: none; flex-direction: column; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(15,61,62,0.3); animation: slideInRight 0.3s ease-out; }
     #chatWindow.open            { display: flex; }
     .chat-msg                   { max-width: 80%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; }
     .chat-msg.bot               { background: #e8f4f4; color: #0f3d3e; border-bottom-left-radius: 4px; }
@@ -152,7 +152,7 @@
        8. AQI LIVE WIDGET
        ============================================================ */
     #aqiWidget {
-      position: fixed; bottom: 28px; left: 28px; z-index: 998;
+      position: fixed; bottom: 28px; left: 12px; z-index: 998;
       display: flex; flex-direction: column; align-items: flex-start;
       gap: 8px; pointer-events: none;
     }
@@ -172,7 +172,7 @@
     #aqiCard {
       background: linear-gradient(135deg, #0a2a2b, #124040);
       border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 20px; padding: 16px; width: 220px; color: white;
+      border-radius: 20px; padding: 16px; width: min(220px, calc(100vw - 32px)); color: white;
       pointer-events: all;
       transform-origin: bottom left;
       transform: scale(0) translateY(8px); opacity: 0;
@@ -372,7 +372,7 @@
     #expertPanel {
       position: fixed; left: 0; top: 50%;
       transform: translateY(-50%) translateX(-340px);
-      width: 300px; background: #fff; border-radius: 0 20px 20px 0;
+      width: min(300px, calc(100vw - 48px)); background: #fff; border-radius: 0 20px 20px 0;
       box-shadow: 8px 0 40px rgba(15,61,62,.2);
       overflow: hidden; transition: transform .45s cubic-bezier(.34,1.2,.64,1); z-index: 9989;
     }
@@ -425,7 +425,7 @@
     /* ============================================================
        13. WHATSAPP FLOATING BUTTON
        ============================================================ */
-    .whatsapp-container           { position: fixed; bottom: 140px; right: 28px; z-index: 999; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .whatsapp-container           { position: fixed; bottom: 108px; right: 12px; z-index: 999; display: flex; flex-direction: column; align-items: center; gap: 10px; }
     .whatsapp-btn                 { width: 60px; height: 60px; background-color: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(37,211,102,.4); text-decoration: none; transition: all .3s ease; border: none; cursor: pointer; }
     .whatsapp-btn:hover           { transform: scale(1.1); box-shadow: 0 6px 16px rgba(37,211,102,.6); background-color: #20ba5a; }
     .whatsapp-btn:active          { transform: scale(.95); }
@@ -498,6 +498,39 @@
 
     /* ── Utility keyframe for refresh spinner ── */
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* ============================================================
+       16. ADDITIONAL MOBILE FIXES
+       ============================================================ */
+
+    /* ─ Prevent horizontal overflow ─ */
+    body { overflow-x: hidden; }
+
+    /* ─ Floating widgets: tighter layout on mobile ─ */
+    @media (max-width: 768px) {
+      #chatbotWidget { bottom: 16px; right: 10px; }
+      #chatWindow { max-height: 90vh; }
+      .whatsapp-container { bottom: 96px; right: 10px; }
+      .whatsapp-btn { width: 46px; height: 46px; }
+      .whatsapp-icon { width: 24px; height: 24px; }
+      #aqiWidget { bottom: 16px; left: 10px; }
+      #expertCTA { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      #chatWindow { width: calc(100vw - 20px); border-radius: 16px; }
+      #chatbotWidget { right: 10px; bottom: 12px; }
+      .whatsapp-container { bottom: 88px; right: 10px; }
+      #aqiWidget { bottom: 12px; left: 10px; }
+      .modal-box { border-radius: 16px; margin: 8px; max-height: calc(100vh - 16px); }
+      #portalDashboard .w-60 { width: 100%; border-right: none; border-bottom: 1px solid #e5e7eb; flex-direction: row; flex-wrap: wrap; padding: 12px; }
+      #portalDashboard .portal-sidebar-item { padding: 8px 12px; font-size: 12px; }
+    }
+
+    /* ─ Scroll padding for mobile double-bar navbar ─ */
+    @media (max-width: 900px) {
+      body { scroll-padding-top: 108px; }
+    }
   </style>
 </head>
 
@@ -1062,7 +1095,7 @@
 <section class="relative min-h-screen flex items-center hero-gradient overflow-hidden">
   <div id="particles" class="absolute inset-0 overflow-hidden"></div>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 sm:py-32">
     <div class="grid lg:grid-cols-2 gap-12 items-center">
 
       <!-- Left: copy -->
@@ -1071,7 +1104,7 @@
           <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
           <span class="text-sm font-medium">Delivering Excellence Since 2014</span>
         </div>
-        <h1 class="text-5xl lg:text-7xl font-bold leading-tight">
+        <h1 class="text-3xl sm:text-5xl lg:text-7xl font-bold leading-tight">
           Air Quality <br><span class="text-aecon-gold">Monitoring</span> &<br>Environmental<br>Consultancy
         </h1>
         <p class="text-xl text-gray-200 max-w-lg leading-relaxed">
