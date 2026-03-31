@@ -137,8 +137,8 @@
     /* ============================================================
        7. AI CHATBOT
        ============================================================ */
-    #chatbotWidget              { position: fixed; bottom: 28px; right: 12px; z-index: 999; }
-    #chatWindow                 { width: 380px; max-width: calc(100vw - 16px); max-height: 560px; display: none; flex-direction: column; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(15,61,62,0.3); animation: slideInRight 0.3s ease-out; }
+    #chatbotWidget              { position: fixed; bottom: 28px; right: 28px; z-index: 999; }
+    #chatWindow                 { width: 380px; max-height: 560px; display: none; flex-direction: column; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(15,61,62,0.3); animation: slideInRight 0.3s ease-out; }
     #chatWindow.open            { display: flex; }
     .chat-msg                   { max-width: 80%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; }
     .chat-msg.bot               { background: #e8f4f4; color: #0f3d3e; border-bottom-left-radius: 4px; }
@@ -152,7 +152,7 @@
        8. AQI LIVE WIDGET
        ============================================================ */
     #aqiWidget {
-      position: fixed; bottom: 28px; left: 12px; z-index: 998;
+      position: fixed; bottom: 28px; left: 28px; z-index: 998;
       display: flex; flex-direction: column; align-items: flex-start;
       gap: 8px; pointer-events: none;
     }
@@ -172,7 +172,7 @@
     #aqiCard {
       background: linear-gradient(135deg, #0a2a2b, #124040);
       border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 20px; padding: 16px; width: min(220px, calc(100vw - 32px)); color: white;
+      border-radius: 20px; padding: 16px; width: 220px; color: white;
       pointer-events: all;
       transform-origin: bottom left;
       transform: scale(0) translateY(8px); opacity: 0;
@@ -372,7 +372,7 @@
     #expertPanel {
       position: fixed; left: 0; top: 50%;
       transform: translateY(-50%) translateX(-340px);
-      width: min(300px, calc(100vw - 48px)); background: #fff; border-radius: 0 20px 20px 0;
+      width: 300px; background: #fff; border-radius: 0 20px 20px 0;
       box-shadow: 8px 0 40px rgba(15,61,62,.2);
       overflow: hidden; transition: transform .45s cubic-bezier(.34,1.2,.64,1); z-index: 9989;
     }
@@ -425,7 +425,7 @@
     /* ============================================================
        13. WHATSAPP FLOATING BUTTON
        ============================================================ */
-    .whatsapp-container           { position: fixed; bottom: 108px; right: 12px; z-index: 999; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .whatsapp-container           { position: fixed; bottom: 140px; right: 28px; z-index: 999; display: flex; flex-direction: column; align-items: center; gap: 10px; }
     .whatsapp-btn                 { width: 60px; height: 60px; background-color: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(37,211,102,.4); text-decoration: none; transition: all .3s ease; border: none; cursor: pointer; }
     .whatsapp-btn:hover           { transform: scale(1.1); box-shadow: 0 6px 16px rgba(37,211,102,.6); background-color: #20ba5a; }
     .whatsapp-btn:active          { transform: scale(.95); }
@@ -498,39 +498,6 @@
 
     /* ── Utility keyframe for refresh spinner ── */
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-    /* ============================================================
-       16. ADDITIONAL MOBILE FIXES
-       ============================================================ */
-
-    /* ─ Prevent horizontal overflow ─ */
-    body { overflow-x: hidden; }
-
-    /* ─ Floating widgets: tighter layout on mobile ─ */
-    @media (max-width: 768px) {
-      #chatbotWidget { bottom: 16px; right: 10px; }
-      #chatWindow { max-height: 90vh; }
-      .whatsapp-container { bottom: 96px; right: 10px; }
-      .whatsapp-btn { width: 46px; height: 46px; }
-      .whatsapp-icon { width: 24px; height: 24px; }
-      #aqiWidget { bottom: 16px; left: 10px; }
-      #expertCTA { display: none; }
-    }
-
-    @media (max-width: 480px) {
-      #chatWindow { width: calc(100vw - 20px); border-radius: 16px; }
-      #chatbotWidget { right: 10px; bottom: 12px; }
-      .whatsapp-container { bottom: 88px; right: 10px; }
-      #aqiWidget { bottom: 12px; left: 10px; }
-      .modal-box { border-radius: 16px; margin: 8px; max-height: calc(100vh - 16px); }
-      #portalDashboard .w-60 { width: 100%; border-right: none; border-bottom: 1px solid #e5e7eb; flex-direction: row; flex-wrap: wrap; padding: 12px; }
-      #portalDashboard .portal-sidebar-item { padding: 8px 12px; font-size: 12px; }
-    }
-
-    /* ─ Scroll padding for mobile double-bar navbar ─ */
-    @media (max-width: 900px) {
-      body { scroll-padding-top: 108px; }
-    }
   </style>
 </head>
 
@@ -619,11 +586,12 @@
 
 /* ─── DROPDOWN ─── */
 .nav-dropdown {
-  position: absolute; top: calc(100% + 8px); left: 50%;
+  position: absolute; top: 100%; left: 50%;
   transform: translateX(-50%) translateY(-6px);
   opacity: 0; visibility: hidden; pointer-events: none;
   transition: opacity .22s ease, transform .22s ease;
   z-index: 200;
+  padding-top: 8px;
 }
 .nav-item:hover .nav-dropdown {
   opacity: 1; visibility: visible; pointer-events: all;
@@ -884,7 +852,7 @@
         <span class="nav-live-dot"></span>
         <span>Riyadh · Jeddah · Dammam · Cairo · Milan</span>
         <span class="nav-strip-divider"></span>
-        <a href="tel:+966115124979"><i class="fas fa-phone" style="font-size:.6rem;margin-right:4px;"></i>+966 11 512 4979</a>
+        <a href="tel:+966115124979"><i class="fas fa-phone" style="font-size:.6rem;margin-right:4px;"></i>+966 50 336 1798</a>
       </div>
       <div class="hidden md:flex items-center gap-3">
         <span>ISO/IEC 17025 Accredited</span>
@@ -1095,7 +1063,7 @@
 <section class="relative min-h-screen flex items-center hero-gradient overflow-hidden">
   <div id="particles" class="absolute inset-0 overflow-hidden"></div>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 sm:py-32">
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
     <div class="grid lg:grid-cols-2 gap-12 items-center">
 
       <!-- Left: copy -->
@@ -1104,7 +1072,7 @@
           <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
           <span class="text-sm font-medium">Delivering Excellence Since 2014</span>
         </div>
-        <h1 class="text-3xl sm:text-5xl lg:text-7xl font-bold leading-tight">
+        <h1 class="text-5xl lg:text-7xl font-bold leading-tight">
           Air Quality <br><span class="text-aecon-gold">Monitoring</span> &<br>Environmental<br>Consultancy
         </h1>
         <p class="text-xl text-gray-200 max-w-lg leading-relaxed">
@@ -1236,769 +1204,212 @@
 <!-- ============================================================
      SERVICES — INTERACTIVE SPLIT-PANEL
      ============================================================ -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AECON — Services Carousel</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet"/>
-
-  <style>
-    /* ═══════════════════════════════════════════
-       TOKENS
-    ═══════════════════════════════════════════ */
-    :root {
-      --ink:         #0d2b29;
-      --ink-soft:    #1a4a42;
-      --teal-deep:   #0f3d3e;
-      --teal-mid:    #1a5f5f;
-      --teal-bright: #2d8a8a;
-      --teal-pale:   #e4f1f0;
-      --gold:        #c8914e;
-      --muted:       #607a75;
-      --page-bg:     #f2f5f4;
-      --white:       #ffffff;
-      --ease:        cubic-bezier(.22,1,.36,1);
-      --spring:      cubic-bezier(.34,1.4,.64,1);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--page-bg);
-      color: var(--ink);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ═══════════════════════════════════════════
-       SECTION
-    ═══════════════════════════════════════════ */
-    .svc-section {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 100px 0 80px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* Subtle noise-texture overlay */
-    .svc-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-      background-size: 200px 200px;
-      pointer-events: none;
-      opacity: .5;
-    }
-
-    .svc-inner {
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      gap: 0;
-      width: 100%;
-      align-items: center;
-    }
-
-    /* ═══════════════════════════════════════════
-       LEFT PANEL
-    ═══════════════════════════════════════════ */
-    .svc-left {
-      padding: 0 48px 0 clamp(24px, 5vw, 80px);
-      position: relative;
-      z-index: 2;
-    }
-
-    .svc-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--teal-bright);
-      margin-bottom: 20px;
-    }
-    .svc-eyebrow-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--teal-bright);
-      animation: pulse 2.2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity:1; transform:scale(1); }
-      50%      { opacity:.35; transform:scale(1.5); }
-    }
-
-    .svc-heading {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(2.4rem, 4vw, 3.6rem);
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: -.03em;
-      color: var(--ink);
-      margin-bottom: 20px;
-    }
-    .svc-heading em {
-      font-style: italic;
-      color: var(--teal-bright);
-    }
-
-    .svc-desc {
-      font-size: .98rem;
-      line-height: 1.75;
-      color: var(--muted);
-      margin-bottom: 40px;
-      max-width: 280px;
-    }
-
-    /* Counter */
-    .svc-counter {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-      margin-bottom: 36px;
-    }
-    .svc-counter-cur {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 2.8rem;
-      font-weight: 800;
-      color: var(--teal-deep);
-      line-height: 1;
-      transition: all .4s var(--ease);
-    }
-    .svc-counter-sep {
-      font-size: 1.1rem;
-      color: var(--muted);
-      opacity: .5;
-      font-weight: 300;
-    }
-    .svc-counter-total {
-      font-size: 1.1rem;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
-    /* Nav arrows */
-    .svc-nav {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 32px;
-    }
-    .svc-nav-btn {
-      width: 46px; height: 46px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(15,61,62,.2);
-      background: transparent;
-      color: var(--teal-mid);
-      font-size: .85rem;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all .22s var(--ease);
-    }
-    .svc-nav-btn:hover {
-      background: var(--teal-deep);
-      border-color: var(--teal-deep);
-      color: #fff;
-      transform: scale(1.07);
-    }
-    .svc-nav-btn:active { transform: scale(.95); }
-
-    /* Dot indicators */
-    .svc-dots {
-      display: flex;
-      gap: 7px;
-      align-items: center;
-    }
-    .svc-dot {
-      width: 7px; height: 7px;
-      border-radius: 999px;
-      background: rgba(15,61,62,.18);
-      cursor: pointer;
-      transition: all .35s var(--spring);
-      border: none;
-    }
-    .svc-dot.active {
-      width: 26px;
-      background: var(--teal-mid);
-    }
-
-    /* ═══════════════════════════════════════════
-       RIGHT — CARD TRACK
-    ═══════════════════════════════════════════ */
-    .svc-track-wrap {
-      overflow: hidden;
-      position: relative;
-      padding: 20px 0 20px 0;
-      /* fade edges */
-      mask-image: linear-gradient(to right, transparent 0%, black 4%, black 88%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 88%, transparent 100%);
-    }
-
-    .svc-track {
-      display: flex;
-      gap: 18px;
-      transition: transform .6s var(--ease);
-      will-change: transform;
-      padding: 0 20px;
-      cursor: grab;
-      user-select: none;
-    }
-    .svc-track.dragging { cursor: grabbing; transition: none; }
-
-    /* ═══════════════════════════════════════════
-       SERVICE CARD
-    ═══════════════════════════════════════════ */
-    .svc-card {
-      position: relative;
-      width: 290px;
-      height: 420px;
-      border-radius: 20px;
-      overflow: hidden;
-      flex-shrink: 0;
-      cursor: pointer;
-      transition: width .55s var(--ease), box-shadow .35s var(--ease), transform .35s var(--ease);
-      box-shadow: 0 8px 32px rgba(10,40,37,.12);
-    }
-    .svc-card.active {
-      width: 420px;
-      box-shadow: 0 24px 72px rgba(10,40,37,.22);
-      transform: translateY(-4px);
-    }
-    .svc-card:hover:not(.active) {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 48px rgba(10,40,37,.18);
-    }
-
-    /* Image */
-    .svc-card-img {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      transition: transform .8s var(--ease);
-    }
-    .svc-card:hover .svc-card-img,
-    .svc-card.active .svc-card-img { transform: scale(1.06); }
-
-    /* Color overlay — each card has its own tint */
-    .svc-card-overlay {
-      position: absolute;
-      inset: 0;
-      transition: opacity .45s var(--ease);
-    }
-
-    /* Dark gradient for text readability */
-    .svc-card-gradient {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(5,20,20,.06) 0%,
-        rgba(5,20,20,.0) 35%,
-        rgba(5,20,20,.55) 65%,
-        rgba(5,20,20,.92) 100%
-      );
-    }
-
-    /* Content at bottom */
-    .svc-card-content {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 26px 24px 24px;
-    }
-
-    /* Service number */
-    .svc-card-num {
-      font-family: 'DM Sans', monospace;
-      font-size: .62rem;
-      font-weight: 700;
-      letter-spacing: .14em;
-      color: rgba(255,255,255,.5);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-    }
-
-    /* Service name */
-    .svc-card-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.45rem;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.2;
-      letter-spacing: -.02em;
-      margin-bottom: 0;
-      transition: margin-bottom .4s var(--ease);
-    }
-    .svc-card.active .svc-card-name { margin-bottom: 14px; }
-
-    /* Sub-label (only active) */
-    .svc-card-sub {
-      font-size: .75rem;
-      color: rgba(255,255,255,.65);
-      font-weight: 500;
-      line-height: 1.4;
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: max-height .45s var(--ease), opacity .35s var(--ease);
-    }
-    .svc-card.active .svc-card-sub {
-      max-height: 60px;
-      opacity: 1;
-    }
-
-    /* Description (only active) */
-    .svc-card-body {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: max-height .5s var(--ease), opacity .4s .07s var(--ease);
-    }
-    .svc-card.active .svc-card-body {
-      max-height: 280px;
-      opacity: 1;
-    }
-
-    .svc-card-desc {
-      font-size: .78rem;
-      color: rgba(255,255,255,.7);
-      line-height: 1.65;
-      margin-top: 10px;
-      margin-bottom: 14px;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    /* Feature pills */
-    .svc-card-features {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-bottom: 14px;
-    }
-    .svc-card-pill {
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.18);
-      font-size: .62rem;
-      font-weight: 600;
-      color: rgba(255,255,255,.85);
-      backdrop-filter: blur(6px);
-      white-space: nowrap;
-    }
-
-    /* CTA link */
-    .svc-card-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 9px 18px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.15);
-      border: 1px solid rgba(255,255,255,.3);
-      color: #fff;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: .75rem;
-      font-weight: 700;
-      text-decoration: none;
-      backdrop-filter: blur(10px);
-      transition: background .2s, transform .2s;
-      cursor: pointer;
-    }
-    .svc-card-cta:hover {
-      background: rgba(255,255,255,.25);
-      transform: translateX(2px);
-    }
-
-    /* Stats row */
-    .svc-card-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      margin-bottom: 14px;
-    }
-    .svc-card-stat {
-      background: rgba(255,255,255,.1);
-      border: 1px solid rgba(255,255,255,.14);
-      border-radius: 10px;
-      padding: 8px 6px;
-      text-align: center;
-    }
-    .svc-card-stat-val {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: .95rem;
-      font-weight: 800;
-      color: #fff;
-      display: block;
-      line-height: 1;
-      margin-bottom: 2px;
-    }
-    .svc-card-stat-lbl {
-      font-size: .54rem;
-      color: rgba(255,255,255,.5);
-      letter-spacing: .06em;
-      text-transform: uppercase;
-    }
-
-    /* Large decorative number (background) */
-    .svc-card-bg-num {
-      position: absolute;
-      top: 12px; right: 16px;
-      font-family: 'Playfair Display', serif;
-      font-size: 7rem;
-      font-weight: 900;
-      color: rgba(255,255,255,.05);
-      line-height: 1;
-      letter-spacing: -.05em;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    /* ═══════════════════════════════════════════
-       CARD COLOR OVERLAYS (per service)
-    ═══════════════════════════════════════════ */
-    .overlay-0 { background: linear-gradient(140deg, rgba(15,61,62,.72) 0%, rgba(45,138,138,.55) 100%); }
-    .overlay-1 { background: linear-gradient(140deg, rgba(60,35,10,.75) 0%, rgba(180,90,30,.52) 100%); }
-    .overlay-2 { background: linear-gradient(140deg, rgba(30,40,80,.72) 0%, rgba(70,100,180,.50) 100%); }
-    .overlay-3 { background: linear-gradient(140deg, rgba(10,55,30,.75) 0%, rgba(40,130,80,.50) 100%); }
-    .overlay-4 { background: linear-gradient(140deg, rgba(15,40,70,.75) 0%, rgba(30,100,160,.52) 100%); }
-    .overlay-5 { background: linear-gradient(140deg, rgba(30,55,15,.75) 0%, rgba(80,140,50,.48) 100%); }
-
-    /* ═══════════════════════════════════════════
-       REVEAL ANIMATION
-    ═══════════════════════════════════════════ */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity .8s var(--ease), transform .8s var(--ease);
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-d1 { transition-delay: .1s; }
-    .reveal-d2 { transition-delay: .2s; }
-    .reveal-d3 { transition-delay: .3s; }
-
-    /* ═══════════════════════════════════════════
-       RESPONSIVE
-    ═══════════════════════════════════════════ */
-    @media (max-width: 960px) {
-      .svc-inner {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-      }
-      .svc-left {
-        padding: clamp(20px,5vw,40px);
-        padding-bottom: 12px;
-        text-align: center;
-      }
-      .svc-desc { max-width: 100%; margin-left: auto; margin-right: auto; }
-      .svc-nav, .svc-dots { justify-content: center; }
-      .svc-counter { justify-content: center; }
-      .svc-card { width: 260px; height: 370px; }
-      .svc-card.active { width: 340px; }
-      .svc-track-wrap { padding: 12px 0; }
-    }
-
-    @media (max-width: 540px) {
-      .svc-section { padding: 70px 0 60px; }
-      .svc-card { width: 220px; height: 330px; }
-      .svc-card.active { width: 280px; }
-      .svc-card-name { font-size: 1.2rem; }
-      .svc-card-stats { display: none; }
-    }
-  </style>
-</head>
-<body>
-
-<section id="services" class="svc-section">
-  <div class="svc-inner">
-
-    <!-- ── LEFT TEXT PANEL ── -->
-    <div class="svc-left">
-
-      <div class="svc-eyebrow reveal">
-        <span class="svc-eyebrow-dot"></span>
-        Our Expertise
-      </div>
-
-      <h2 class="svc-heading reveal reveal-d1">
-        Solutions for <em>every</em><br>environmental<br>challenge
-      </h2>
-
-      <p class="svc-desc reveal reveal-d2">
-        Full-spectrum environmental monitoring and consultancy across the Kingdom of Saudi Arabia.
-      </p>
-
-      <div class="svc-counter reveal reveal-d2">
-        <span class="svc-counter-cur" id="svcCounterCur">01</span>
-        <span class="svc-counter-sep">/</span>
-        <span class="svc-counter-total">06</span>
-      </div>
-
-      <div class="svc-nav reveal reveal-d3">
-        <button class="svc-nav-btn" id="svcPrev" aria-label="Previous service">
-          <i class="fas fa-arrow-left"></i>
-        </button>
-        <button class="svc-nav-btn" id="svcNext" aria-label="Next service">
-          <i class="fas fa-arrow-right"></i>
-        </button>
-      </div>
-
-      <div class="svc-dots reveal reveal-d3" id="svcDots" role="tablist"></div>
-
-    </div>
-
-    <!-- ── CARD TRACK ── -->
-    <div class="svc-track-wrap reveal reveal-d2">
-      <div class="svc-track" id="svcTrack"></div>
-    </div>
-
+<section id="services" class="isvc-section">
+  <div class="isvc-header">
+    <div class="showcase-eyebrow">Our Expertise</div>
+    <h2 style="font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-0.04em;color:#0f3d3e;line-height:1.15;margin-bottom:14px;font-family:'Plus Jakarta Sans',sans-serif;">Solutions for <em style="font-style:normal;color:#2d8a8a;">every</em><br>environmental challenge</h2>
+    <p style="font-size:1rem;color:#5a7a6a;max-width:480px;margin:0 auto;line-height:1.7;font-family:'DM Sans',sans-serif;">Full-spectrum environmental monitoring and consultancy across the Kingdom of Saudi Arabia.</p>
   </div>
+
+  <div class="isvc-layout">
+    <!-- LEFT: tabs -->
+    <div class="isvc-tabs isvc-reveal" id="isvcTabs">
+
+      <div class="isvc-tab active" onclick="selectService(0)">
+        <div class="isvc-tab-trigger" style="display:flex;align-items:center;gap:12px;width:100%;">
+          <div class="isvc-tab-num">01</div><div class="isvc-tab-icon"><i class="fas fa-wind"></i></div>
+          <div class="isvc-tab-body"><div class="isvc-tab-name">Ambient Air Quality</div><div class="isvc-tab-short">PM2.5, PM10, NO₂, SO₂ &amp; ozone</div></div>
+          <div class="isvc-tab-chevron"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        <div class="isvc-accordion-content">
+          <img class="isvc-acc-img" src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=800&h=400&fit=crop&q=80" alt="Ambient Air Quality"/>
+          <div class="isvc-acc-body" id="isvc-acc-body-0"></div>
+        </div>
+      </div>
+
+      <div class="isvc-tab" onclick="selectService(1)">
+        <div class="isvc-tab-trigger" style="display:flex;align-items:center;gap:12px;width:100%;">
+          <div class="isvc-tab-num">02</div><div class="isvc-tab-icon"><i class="fas fa-smog"></i></div>
+          <div class="isvc-tab-body"><div class="isvc-tab-name">Stack Emission Testing</div><div class="isvc-tab-short">US EPA Method 5/9 · Industrial stacks</div></div>
+          <div class="isvc-tab-chevron"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        <div class="isvc-accordion-content">
+          <img class="isvc-acc-img" src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=800&h=400&fit=crop&q=80" alt="Stack Emission Testing"/>
+          <div class="isvc-acc-body" id="isvc-acc-body-1"></div>
+        </div>
+      </div>
+
+      <div class="isvc-tab" onclick="selectService(2)">
+        <div class="isvc-tab-trigger" style="display:flex;align-items:center;gap:12px;width:100%;">
+          <div class="isvc-tab-num">03</div><div class="isvc-tab-icon"><i class="fas fa-building"></i></div>
+          <div class="isvc-tab-body"><div class="isvc-tab-name">Indoor Air Quality</div><div class="isvc-tab-short">TVOC, formaldehyde, CO₂ profiling</div></div>
+          <div class="isvc-tab-chevron"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        <div class="isvc-accordion-content">
+          <img class="isvc-acc-img" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=400&fit=crop&q=80" alt="Indoor Air Quality"/>
+          <div class="isvc-acc-body" id="isvc-acc-body-2"></div>
+        </div>
+      </div>
+
+      <div class="isvc-tab" onclick="selectService(3)">
+        <div class="isvc-tab-trigger" style="display:flex;align-items:center;gap:12px;width:100%;">
+          <div class="isvc-tab-num">04</div><div class="isvc-tab-icon"><i class="fas fa-mountain"></i></div>
+          <div class="isvc-tab-body"><div class="isvc-tab-name">Environmental Impact Assessment</div><div class="isvc-tab-short">EIA/ESIA · NCEC / IFC standards</div></div>
+          <div class="isvc-tab-chevron"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        <div class="isvc-accordion-content">
+          <img class="isvc-acc-img" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=400&fit=crop&q=80" alt="EIA"/>
+          <div class="isvc-acc-body" id="isvc-acc-body-3"></div>
+        </div>
+      </div>
+
+      <div class="isvc-tab" onclick="selectService(4)">
+        <div class="isvc-tab-trigger" style="display:flex;align-items:center;gap:12px;width:100%;">
+          <div class="isvc-tab-num">05</div><div class="isvc-tab-icon"><i class="fas fa-tint"></i></div>
+          <div class="isvc-tab-body"><div class="isvc-tab-name">Water &amp; Soil Analysis</div><div class="isvc-tab-short">Heavy metals, VOCs · ISO/IEC 17025</div></div>
+          <div class="isvc-tab-chevron"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        <div class="isvc-accordion-content">
+          <img class="isvc-acc-img" src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=800&h=400&fit=crop&q=80" alt="Water Analysis"/>
+          <div class="isvc-acc-body" id="isvc-acc-body-4"></div>
+        </div>
+      </div>
+
+      <div class="isvc-tab" onclick="selectService(5)">
+        <div class="isvc-tab-trigger" style="display:flex;align-items:center;gap:12px;width:100%;">
+          <div class="isvc-tab-num">06</div><div class="isvc-tab-icon"><i class="fas fa-leaf"></i></div>
+          <div class="isvc-tab-body"><div class="isvc-tab-name">Environmental Management Plans</div><div class="isvc-tab-short">EMP design · ISO 14001 audit support</div></div>
+          <div class="isvc-tab-chevron"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        <div class="isvc-accordion-content">
+          <img class="isvc-acc-img" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=400&fit=crop&q=80" alt="Environmental Management"/>
+          <div class="isvc-acc-body" id="isvc-acc-body-5"></div>
+        </div>
+      </div>
+
+    </div><!-- /isvc-tabs -->
+
+    <!-- RIGHT: detail panel (desktop) -->
+    <div class="isvc-panel-wrap isvc-reveal isvc-reveal-delay-1" id="isvcPanelWrap">
+      <div class="isvc-progress-bar" id="isvcProgressBar" style="width:16.66%"></div>
+
+      <div class="isvc-panel active" id="isvc-panel-0">
+        <div class="isvc-panel-img"><img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=1200&h=520&fit=crop&q=80" alt="Ambient Air Quality" onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&h=520&fit=crop'"/><div class="isvc-panel-img-overlay"></div><div class="isvc-panel-badge" style="background:rgba(45,138,138,.55);">24/7 Monitoring</div><div class="isvc-panel-watermark">01</div></div>
+        <div class="isvc-panel-body" id="isvc-panel-body-0"></div>
+      </div>
+      <div class="isvc-panel" id="isvc-panel-1">
+        <div class="isvc-panel-img"><img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=1200&h=520&fit=crop&q=80" alt="Stack Emission" onerror="this.src='https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&h=520&fit=crop'"/><div class="isvc-panel-img-overlay"></div><div class="isvc-panel-badge" style="background:rgba(180,80,30,.6);">EPA Certified</div><div class="isvc-panel-watermark">02</div></div>
+        <div class="isvc-panel-body" id="isvc-panel-body-1"></div>
+      </div>
+      <div class="isvc-panel" id="isvc-panel-2">
+        <div class="isvc-panel-img"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=520&fit=crop&q=80" alt="Indoor Air" onerror="this.src='https://images.unsplash.com/photo-1497366754035-f200581f0b4c?w=1200&h=520&fit=crop'"/><div class="isvc-panel-img-overlay"></div><div class="isvc-panel-badge" style="background:rgba(90,40,160,.55);">IAQ Assessment</div><div class="isvc-panel-watermark">03</div></div>
+        <div class="isvc-panel-body" id="isvc-panel-body-2"></div>
+      </div>
+      <div class="isvc-panel" id="isvc-panel-3">
+        <div class="isvc-panel-img"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&h=520&fit=crop&q=80" alt="EIA" onerror="this.src='https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1200&h=520&fit=crop'"/><div class="isvc-panel-img-overlay"></div><div class="isvc-panel-badge" style="background:rgba(20,100,50,.6);">NCEC / IFC</div><div class="isvc-panel-watermark">04</div></div>
+        <div class="isvc-panel-body" id="isvc-panel-body-3"></div>
+      </div>
+      <div class="isvc-panel" id="isvc-panel-4">
+        <div class="isvc-panel-img"><img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1200&h=520&fit=crop&q=80" alt="Water Analysis" onerror="this.src='https://images.unsplash.com/photo-1559825481-12a05cc00344?w=1200&h=520&fit=crop'"/><div class="isvc-panel-img-overlay"></div><div class="isvc-panel-badge" style="background:rgba(26,70,160,.55);">ISO/IEC 17025</div><div class="isvc-panel-watermark">05</div></div>
+        <div class="isvc-panel-body" id="isvc-panel-body-4"></div>
+      </div>
+      <div class="isvc-panel" id="isvc-panel-5">
+        <div class="isvc-panel-img"><img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&h=520&fit=crop&q=80" alt="Environmental Management" onerror="this.src='https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1200&h=520&fit=crop'"/><div class="isvc-panel-img-overlay"></div><div class="isvc-panel-badge" style="background:rgba(45,138,138,.55);">ISO 14001</div><div class="isvc-panel-watermark">06</div></div>
+        <div class="isvc-panel-body" id="isvc-panel-body-5"></div>
+      </div>
+    </div><!-- /isvc-panel-wrap -->
+  </div><!-- /isvc-layout -->
 </section>
 
 
-<script>
-(function () {
-  'use strict';
+<!-- ============================================================
+     TECHNOLOGY & EQUIPMENT
+     ============================================================ -->
+<section id="technology" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 scroll-reveal">
+      <div class="inline-block px-4 py-2 bg-aecon-light rounded-full text-aecon-primary font-semibold text-sm mb-4">Advanced Equipment</div>
+      <h2 class="text-4xl font-bold text-aecon-dark mb-4">AQMS Technology & Equipment</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">State-of-the-art instrumentation for accurate and reliable environmental data</p>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 scroll-reveal">
 
-  /* ── DATA ─────────────────────────────────── */
-  const SERVICES = [
-    {
-      name: 'Ambient Air Quality',
-      sub: 'PM2.5, PM10, NO₂, SO₂ & ozone',
-      desc: 'AECON deploys state-of-the-art Beta Attenuation Monitors (BAM) and reference-grade gas analysers to continuously measure criteria pollutants across industrial, urban, and sensitive receptor zones — all telemetrically transmitted for immediate regulatory reporting.',
-      img: 'https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=900&h=1200&fit=crop&q=85',
-      overlay: 'overlay-0',
-      features: ['PM2.5 / PM10 / TSP', 'NO₂ · SO₂ · CO · O₃', '24/7 telemetric data', 'NCEC SAAQS compliant'],
-      stats: [{val:'300+',lbl:'Sites'},{val:'24/7',lbl:'Live'},{val:'SAAQS',lbl:'Standard'}]
-    },
-    {
-      name: 'Stack Emission Testing',
-      sub: 'US EPA Method 5/9 · Industrial stacks',
-      desc: 'Our qualified stack-testing teams conduct isokinetic sampling on industrial flue gas stacks using US EPA Methods 1–17, NCEC emission protocols, and EN ISO procedures for cement, power, oil & gas, and chemicals facilities.',
-      img: 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=900&h=1200&fit=crop&q=85',
-      overlay: 'overlay-1',
-      features: ['EPA Methods 1–17', 'CEMS validation', 'HCl · NOx · SO₂ · CO₂', 'QA/QC reporting'],
-      stats: [{val:'500+',lbl:'Tests'},{val:'EPA',lbl:'Certified'},{val:'CEMS',lbl:'Validation'}]
-    },
-    {
-      name: 'Indoor Air Quality',
-      sub: 'TVOC, formaldehyde, CO₂ profiling',
-      desc: 'Comprehensive IAQ surveys for offices, hospitals, schools, and residential developments — quantifying TVOC, formaldehyde, CO₂, CO, particulates and biological contaminants against ASHRAE 62.1, WHO and NCEC guidelines.',
-      img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&h=1200&fit=crop&q=85',
-      overlay: 'overlay-2',
-      features: ['TVOC & formaldehyde', 'PM2.5 / Bioaerosols', 'HVAC auditing', 'ASHRAE 62.1'],
-      stats: [{val:'150+',lbl:'Surveys'},{val:'WHO',lbl:'Benchmarked'},{val:'ISO',lbl:'16000'}]
-    },
-    {
-      name: 'Environmental Impact Assessment',
-      sub: 'EIA/ESIA · NCEC / IFC standards',
-      desc: 'Statutory EIA and ESIA preparation for industrial plants, infrastructure corridors, coastal developments, and Vision 2030 mega-projects — covering air, noise, water, ecology, socio-economics, and cumulative impacts.',
-      img: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&h=1200&fit=crop&q=85',
-      overlay: 'overlay-3',
-      features: ['AERMOD modelling', 'Noise assessment', 'Marine ecology', 'Stakeholder engagement'],
-      stats: [{val:'80+',lbl:'EIA Projects'},{val:'NCEC',lbl:'Approved'},{val:'IFC',lbl:'Aligned'}]
-    },
-    {
-      name: 'Water & Soil Analysis',
-      sub: 'Heavy metals, VOCs · ISO/IEC 17025',
-      desc: 'ISO/IEC 17025-accredited laboratory analysis of groundwater, surface water, marine water, wastewater, drinking water, and soil/sediment using internationally validated methods from sub-ppb trace metals to full organic panels.',
-      img: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=900&h=1200&fit=crop&q=85',
-      overlay: 'overlay-4',
-      features: ['ICP-MS heavy metals', 'GC-MS VOC / PAHs', 'Microbiological', 'LIMS chain-of-custody'],
-      stats: [{val:'17025',lbl:'ISO Accredited'},{val:'200+',lbl:'Parameters'},{val:'ppt',lbl:'Detection'}]
-    },
-    {
-      name: 'Environmental Management Plans',
-      sub: 'EMP design · ISO 14001 audit support',
-      desc: 'Bespoke EMP, EMMP, and ISO 14001 EMS design for clients across construction, operation, and decommissioning phases — plus Emergency Response Plans, spill contingency procedures, and NCEC audit support.',
-      img: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=900&h=1200&fit=crop&q=85',
-      overlay: 'overlay-5',
-      features: ['ISO 14001 gap analysis', 'EMP / EMMP design', 'Emergency response', 'Staff training'],
-      stats: [{val:'120+',lbl:'EMP Projects'},{val:'ISO',lbl:'14001'},{val:'KSA',lbl:'NCEC Approved'}]
-    }
-  ];
-
-  /* ── STATE ────────────────────────────────── */
-  let active  = 0;
-  let busy    = false;
-  let autoTimer = null;
-  const N = SERVICES.length;
-
-  /* ── BUILD CARDS ──────────────────────────── */
-  const track = document.getElementById('svcTrack');
-
-  SERVICES.forEach((svc, i) => {
-    const pills = svc.features.map(f =>
-      `<span class="svc-card-pill">${f}</span>`
-    ).join('');
-
-    const stats = svc.stats.map(s =>
-      `<div class="svc-card-stat">
-        <span class="svc-card-stat-val">${s.val}</span>
-        <span class="svc-card-stat-lbl">${s.lbl}</span>
-      </div>`
-    ).join('');
-
-    const card = document.createElement('div');
-    card.className = 'svc-card' + (i === 0 ? ' active' : '');
-    card.dataset.idx = i;
-    card.setAttribute('role', 'tab');
-    card.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-
-    card.innerHTML = `
-      <div class="svc-card-img" style="background-image:url('${svc.img}')"></div>
-      <div class="svc-card-overlay ${svc.overlay}"></div>
-      <div class="svc-card-gradient"></div>
-      <div class="svc-card-bg-num">0${i + 1}</div>
-      <div class="svc-card-content">
-        <div class="svc-card-num">0${i + 1} — Service</div>
-        <div class="svc-card-name">${svc.name}</div>
-        <div class="svc-card-sub">${svc.sub}</div>
-        <div class="svc-card-body">
-          <p class="svc-card-desc">${svc.desc}</p>
-          <div class="svc-card-stats">${stats}</div>
-          <div class="svc-card-features">${pills}</div>
-          <a class="svc-card-cta" href="#contact" onclick="document.getElementById('contact')?.scrollIntoView({behavior:'smooth'});return false;">
-            Get a Quote <i class="fas fa-arrow-right" style="font-size:.65rem;"></i>
-          </a>
+      <!-- Equipment cards — each has: image, icon, title, description -->
+      <div class="equipment-card bg-gray-50 rounded-2xl border-2 border-transparent hover:border-aecon-primary cursor-pointer group overflow-hidden">
+        <div class="relative w-full h-44 overflow-hidden bg-aecon-light">
+          <img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=600&h=380&fit=crop&q=80" alt="PM2.5/PM10 Monitor" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=380&fit=crop'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-aecon-dark/65 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="absolute bottom-3 left-3 text-xs font-bold text-white bg-aecon-accent px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">US EPA Certified</span>
         </div>
+        <div class="p-5"><div class="flex items-center gap-2 mb-2"><div class="w-7 h-7 bg-aecon-light rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-microscope text-aecon-primary text-xs"></i></div><h4 class="font-bold text-aecon-dark text-sm">PM2.5/PM10 Monitors</h4></div><p class="text-xs text-gray-500 leading-relaxed">Beta Attenuation (BAM) and gravimetric samplers per US EPA standards</p></div>
       </div>
-    `;
 
-    card.addEventListener('click', () => setActive(i));
-    track.appendChild(card);
-  });
+      <div class="equipment-card bg-gray-50 rounded-2xl border-2 border-transparent hover:border-aecon-primary cursor-pointer group overflow-hidden">
+        <div class="relative w-full h-44 overflow-hidden bg-aecon-light">
+          <img src="https://images.unsplash.com/photo-1579165466741-7f35e4755183?w=600&h=380&fit=crop&q=80" alt="GC/MS Systems" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1532187643603-ba119ca4109e?w=600&h=380&fit=crop'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-aecon-dark/65 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="absolute bottom-3 left-3 text-xs font-bold text-white bg-aecon-accent px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">Lab Accredited</span>
+        </div>
+        <div class="p-5"><div class="flex items-center gap-2 mb-2"><div class="w-7 h-7 bg-aecon-light rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-atom text-aecon-primary text-xs"></i></div><h4 class="font-bold text-aecon-dark text-sm">GC/MS Systems</h4></div><p class="text-xs text-gray-500 leading-relaxed">VOC, SVOC, BTEX, and TPH analysis with GC-FID/MS systems</p></div>
+      </div>
 
-  /* ── BUILD DOTS ───────────────────────────── */
-  const dotsEl = document.getElementById('svcDots');
-  for (let i = 0; i < N; i++) {
-    const dot = document.createElement('button');
-    dot.className = 'svc-dot' + (i === 0 ? ' active' : '');
-    dot.setAttribute('aria-label', `Go to service ${i + 1}`);
-    dot.addEventListener('click', () => setActive(i));
-    dotsEl.appendChild(dot);
-  }
+      <div class="equipment-card bg-gray-50 rounded-2xl border-2 border-transparent hover:border-aecon-primary cursor-pointer group overflow-hidden">
+        <div class="relative w-full h-44 overflow-hidden bg-aecon-light">
+          <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&h=380&fit=crop&q=80" alt="Gas Analyzers" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=600&h=380&fit=crop'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-aecon-dark/65 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="absolute bottom-3 left-3 text-xs font-bold text-white bg-aecon-accent px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">Continuous Monitoring</span>
+        </div>
+        <div class="p-5"><div class="flex items-center gap-2 mb-2"><div class="w-7 h-7 bg-aecon-light rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-wind text-aecon-primary text-xs"></i></div><h4 class="font-bold text-aecon-dark text-sm">Gas Analyzers</h4></div><p class="text-xs text-gray-500 leading-relaxed">Electrochemical & UV-fluorescence sensors for NO₂, SO₂, CO, O₃</p></div>
+      </div>
 
-  /* ── SET ACTIVE ───────────────────────────── */
-  function setActive (idx, scroll = true) {
-    if (idx === active || busy) return;
-    busy = true;
+      <div class="equipment-card bg-gray-50 rounded-2xl border-2 border-transparent hover:border-aecon-primary cursor-pointer group overflow-hidden">
+        <div class="relative w-full h-44 overflow-hidden bg-aecon-light">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=380&fit=crop&q=80" alt="Real-Time Data Loggers" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=380&fit=crop'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-aecon-dark/65 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="absolute bottom-3 left-3 text-xs font-bold text-white bg-aecon-accent px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">24/7 Live Feed</span>
+        </div>
+        <div class="p-5"><div class="flex items-center gap-2 mb-2"><div class="w-7 h-7 bg-aecon-light rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-satellite-dish text-aecon-primary text-xs"></i></div><h4 class="font-bold text-aecon-dark text-sm">Real-Time Data Loggers</h4></div><p class="text-xs text-gray-500 leading-relaxed">Telemetric data acquisition systems transmitting live air quality indices</p></div>
+      </div>
 
-    const cards = track.querySelectorAll('.svc-card');
-    const dots  = dotsEl.querySelectorAll('.svc-dot');
+      <div class="equipment-card bg-gray-50 rounded-2xl border-2 border-transparent hover:border-aecon-primary cursor-pointer group overflow-hidden">
+        <div class="relative w-full h-44 overflow-hidden bg-aecon-light">
+          <img src="https://images.unsplash.com/photo-1504608524841-42584120d693?w=600&h=380&fit=crop&q=80" alt="Meteorological Stations" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1561553590-267fc716698a?w=600&h=380&fit=crop'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-aecon-dark/65 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="absolute bottom-3 left-3 text-xs font-bold text-white bg-aecon-accent px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">Auto Weather Station</span>
+        </div>
+        <div class="p-5"><div class="flex items-center gap-2 mb-2"><div class="w-7 h-7 bg-aecon-light rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-cloud-sun text-aecon-primary text-xs"></i></div><h4 class="font-bold text-aecon-dark text-sm">Meteorological Stations</h4></div><p class="text-xs text-gray-500 leading-relaxed">Automatic weather stations measuring wind, temperature, humidity, solar radiation</p></div>
+      </div>
 
-    cards[active].classList.remove('active');
-    cards[active].setAttribute('aria-selected', 'false');
-    dots[active].classList.remove('active');
+      <div class="equipment-card bg-gray-50 rounded-2xl border-2 border-transparent hover:border-aecon-primary cursor-pointer group overflow-hidden">
+        <div class="relative w-full h-44 overflow-hidden bg-aecon-light">
+          <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&h=380&fit=crop&q=80" alt="Stack Emission Samplers" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=600&h=380&fit=crop'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-aecon-dark/65 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="absolute bottom-3 left-3 text-xs font-bold text-white bg-aecon-accent px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">EPA Method 5/17</span>
+        </div>
+        <div class="p-5"><div class="flex items-center gap-2 mb-2"><div class="w-7 h-7 bg-aecon-light rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-smog text-aecon-primary text-xs"></i></div><h4 class="font-bold text-aecon-dark text-sm">Stack Emission Samplers</h4></div><p class="text-xs text-gray-500 leading-relaxed">Isokinetic sampling trains per US EPA Method 5/17</p></div>
+      </div>
 
-    active = ((idx % N) + N) % N;
+      <div class="equipment-card bg-gray-50 rounded-2xl border-2 border-transparent hover:border-aecon-primary cursor-pointer group overflow-hidden">
+        <div class="relative w-full h-44 overflow-hidden bg-aecon-light">
+          <img src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=600&h=380&fit=crop&q=80" alt="ICP-MS Spectrometry" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1576086213369-97a306d36557?w=600&h=380&fit=crop'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-aecon-dark/65 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="absolute bottom-3 left-3 text-xs font-bold text-white bg-aecon-accent px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">ISO/IEC 17025</span>
+        </div>
+        <div class="p-5"><div class="flex items-center gap-2 mb-2"><div class="w-7 h-7 bg-aecon-light rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-vial text-aecon-primary text-xs"></i></div><h4 class="font-bold text-aecon-dark text-sm">ICP-MS Spectrometry</h4></div><p class="text-xs text-gray-500 leading-relaxed">PerkinElmer NexION for ultra-trace heavy metal analysis</p></div>
+      </div>
 
-    cards[active].classList.add('active');
-    cards[active].setAttribute('aria-selected', 'true');
-    dots[active].classList.add('active');
+      <div class="equipment-card bg-gray-50 rounded-2xl border-2 border-transparent hover:border-aecon-primary cursor-pointer group overflow-hidden">
+        <div class="relative w-full h-44 overflow-hidden bg-aecon-light">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=380&fit=crop&q=80" alt="Portable Field Monitors" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&h=380&fit=crop'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-aecon-dark/65 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="absolute bottom-3 left-3 text-xs font-bold text-white bg-aecon-accent px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">Field Ready</span>
+        </div>
+        <div class="p-5"><div class="flex items-center gap-2 mb-2"><div class="w-7 h-7 bg-aecon-light rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-mobile-alt text-aecon-primary text-xs"></i></div><h4 class="font-bold text-aecon-dark text-sm">Portable Field Monitors</h4></div><p class="text-xs text-gray-500 leading-relaxed">Hand-held multi-gas detectors and personal air samplers</p></div>
+      </div>
 
-    // Counter
-    const counterEl = document.getElementById('svcCounterCur');
-    if (counterEl) counterEl.textContent = String(active + 1).padStart(2, '0');
-
-    // Scroll card into center view
-    if (scroll) scrollToActive();
-
-    setTimeout(() => { busy = false; }, 550);
-    resetAuto();
-  }
-
-  /* ── SCROLL TRACK ─────────────────────────── */
-  function scrollToActive () {
-    const cards   = track.querySelectorAll('.svc-card');
-    const wrap    = track.parentElement;
-    const card    = cards[active];
-    if (!card || !wrap) return;
-
-    const wrapW   = wrap.offsetWidth;
-    const cardL   = card.offsetLeft;
-    const cardW   = card.offsetWidth;
-    const target  = cardL - (wrapW / 2) + (cardW / 2) - 20;
-
-    track.style.transform = `translateX(${-Math.max(0, target)}px)`;
-  }
-
-  /* ── NAV BUTTONS ──────────────────────────── */
-  document.getElementById('svcPrev')?.addEventListener('click', () => setActive(active - 1));
-  document.getElementById('svcNext')?.addEventListener('click', () => setActive(active + 1));
-
-  /* ── KEYBOARD ─────────────────────────────── */
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft')  setActive(active - 1);
-    if (e.key === 'ArrowRight') setActive(active + 1);
-  });
-
-  /* ── DRAG / SWIPE ─────────────────────────── */
-  let dragStartX = 0, dragDeltaX = 0, isDragging = false;
-
-  track.addEventListener('mousedown', e => {
-    isDragging = true;
-    dragStartX = e.clientX;
-    dragDeltaX = 0;
-    track.classList.add('dragging');
-  });
-  window.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    dragDeltaX = e.clientX - dragStartX;
-  });
-  window.addEventListener('mouseup', () => {
-    if (!isDragging) return;
-    isDragging = false;
-    track.classList.remove('dragging');
-    if (dragDeltaX < -60) setActive(active + 1);
-    if (dragDeltaX >  60) setActive(active - 1);
-  });
-
-  // Touch
-  track.addEventListener('touchstart', e => { dragStartX = e.touches[0].clientX; dragDeltaX = 0; }, { passive: true });
-  track.addEventListener('touchmove',  e => { dragDeltaX = e.touches[0].clientX - dragStartX; }, { passive: true });
-  track.addEventListener('touchend',   () => {
-    if (dragDeltaX < -50) setActive(active + 1);
-    if (dragDeltaX >  50) setActive(active - 1);
-  });
-
-  /* ── AUTO ROTATE ──────────────────────────── */
-  function resetAuto () {
-    clearInterval(autoTimer);
-    autoTimer = setInterval(() => setActive(active + 1), 5500);
-  }
-
-  // Pause on hover
-  const wrap = document.querySelector('.svc-track-wrap');
-  wrap?.addEventListener('mouseenter', () => clearInterval(autoTimer));
-  wrap?.addEventListener('mouseleave', resetAuto);
-
-  resetAuto();
-
-  /* ── SCROLL REVEAL ────────────────────────── */
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.06 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-  /* Initial scroll position */
-  scrollToActive();
-})();
-</script>
-
-</body>
-</html>
+    </div>
+  </div>
+</section>
 
 
 <!-- ============================================================
@@ -2275,7 +1686,7 @@
         <div class="space-y-6">
           <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-map-marker-alt text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Head Office</h4><p class="text-gray-600">3083 North Ring Rd, 8241 Al Muruj District<br>Riyadh 12284, Kingdom of Saudi Arabia</p></div></div>
           <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-envelope text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Email</h4><p class="text-gray-600"><a href="mailto:enviro@aecon-sa.com" class="hover:text-aecon-primary transition-colors">enviro@aecon-sa.com</a></p></div></div>
-          <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-phone text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Phone</h4><p class="text-gray-600">+966 11 512 4979</p></div></div>
+          <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-phone text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Phone</h4><p class="text-gray-600">+966 50 336 1798</p></div></div>
           <div class="flex items-start space-x-4"><div class="w-12 h-12 bg-aecon-light rounded-xl flex items-center justify-center text-aecon-primary flex-shrink-0"><i class="fas fa-globe text-xl"></i></div><div><h4 class="font-bold text-aecon-dark mb-1">Website</h4><p class="text-gray-600">www.aecon-sa.com</p></div></div>
         </div>
       </div>
@@ -2426,7 +1837,7 @@
         </div>
         <div class="footer-contact-row">
           <div class="footer-contact-icon-box"><i class="fas fa-phone"></i></div>
-          <div><div class="footer-contact-label">Phone</div><div class="footer-contact-value"><a href="tel:+966115124979">+966 11 512 4979</a></div></div>
+          <div><div class="footer-contact-label">Phone</div><div class="footer-contact-value"><a href="tel:+966115124979">+966 50 336 1798</a></div></div>
         </div>
         <div class="footer-contact-row">
           <div class="footer-contact-icon-box"><i class="fab fa-whatsapp"></i></div>
@@ -2738,9 +2149,9 @@
     }
   })();
 
-  // ── Mobile menu (legacy stub — drawer handled by toggleNavDrawer) ────────────
+  // ── Mobile menu ──────────────────────────────────────────────────────────────
   function toggleMobileMenu() {
-    if (typeof toggleNavDrawer === 'function') toggleNavDrawer();
+    document.getElementById('mobileMenu').classList.toggle('hidden');
   }
 
   // ── Scroll-reveal intersection observer ────────────────────────────────────
@@ -2751,8 +2162,10 @@
   document.querySelectorAll('.scroll-reveal').forEach(el => revealObserver.observe(el));
 
   // ── Navbar shadow on scroll ─────────────────────────────────────────────────
-  // NOTE: Navbar scrolled-state is handled by the inline script in the nav block.
-  // The old '.glass-card' reference has been removed (element no longer exists).
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').querySelector('.glass-card')
+      .classList.toggle('shadow-lg', window.scrollY > 50);
+  });
 
   // ── Smooth anchor scrolling ─────────────────────────────────────────────────
   document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -2761,7 +2174,7 @@
       const target = document.querySelector(a.getAttribute('href'));
       if (target) {
         target.scrollIntoView({ behavior: 'smooth' });
-        if (typeof closeNavDrawer === 'function') closeNavDrawer();
+        document.getElementById('mobileMenu').classList.add('hidden');
       }
     });
   });
@@ -3404,3 +2817,4 @@
 
 </body>
 </html>
+
